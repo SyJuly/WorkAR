@@ -34,3 +34,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+#Microsoft/MixedRealityToolkit-Unity
+Assets/HoloToolkit
+Assets/HoloToolkit.meta
