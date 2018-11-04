@@ -18,7 +18,7 @@ public class DayCalendar : MonoBehaviour {
         int newDay = DateTime.Now.Day;
         if (day != newDay) {
             dayDisplay.text = DateTime.Now.ToString("dd");
-            monthYearDisplay.text = DateTime.Now.ToString("mm/yy");
+            monthYearDisplay.text = DateTime.Now.ToString("MM/yy");
         }
 		
 	}
