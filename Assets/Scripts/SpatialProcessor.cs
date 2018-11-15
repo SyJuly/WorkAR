@@ -14,7 +14,7 @@ public class SpatialProcessor : MonoBehaviour
     public bool limitScanningByTime = true;
 
     [Tooltip("How much time (in seconds) that the SurfaceObserver will run after being started; used when 'Limit Scanning By Time' is checked.")]
-    public float scanTime = 30.0f;
+    public float scanTime = 10.0f;
 
     [Tooltip("Material to use when rendering Spatial Mapping meshes while the observer is running.")]
     public Material defaultMaterial;

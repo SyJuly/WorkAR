@@ -61,6 +61,7 @@ GameObject:
   - component: {fileID: 65409307062644614}
   - component: {fileID: 114059132991510800}
   - component: {fileID: 114827337479479656}
+  - component: {fileID: 114066273293756568}
   m_Layer: 0
   m_Name: Clock
   m_TagString: Untagged
@@ -89,8 +90,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1764192379818538}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -0.66, y: 0, z: 10.04}
-  m_LocalScale: {x: 1.0335964, y: 0.69533205, z: 0.32252517}
+  m_LocalPosition: {x: 0.32, y: 0.5, z: 0.43}
+  m_LocalScale: {x: 0.29568782, y: 0.19891828, z: 0.09226693}
   m_Children:
   - {fileID: 4449939886640268}
   m_Father: {fileID: 0}
@@ -257,6 +258,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c56cb08a36d57547abf5fcca11f26c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114066273293756568
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1764192379818538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f1efafb4e5a9a346ab63a4e76d0a3e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InteractibleParameters:
+    Scrollable: 1
+    Placeable: 1
+  TargetFeedbackSound: {fileID: 0}
 --- !u!114 &114827337479479656
 MonoBehaviour:
   m_ObjectHideFlags: 1
