@@ -116,6 +116,7 @@ GameObject:
   - component: {fileID: 4799726044293540}
   - component: {fileID: 114445424693982552}
   - component: {fileID: 114335187714647266}
+  - component: {fileID: 65770269399401784}
   m_Layer: 0
   m_Name: Calendar
   m_TagString: Untagged
@@ -389,6 +390,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65770269399401784
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1745466852325500}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65939747283725842
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -560,7 +573,7 @@ MonoBehaviour:
     type: 2}
   NotPlaceableShadowMaterial: {fileID: 2100000, guid: ca6d4215d30dd1d4fb473ff9a009765d,
     type: 2}
-  PlacementSurface: 1
+  PlacementSurface: 2
   ChildrenToHide: []
 --- !u!114 &114699410903796338
 MonoBehaviour:

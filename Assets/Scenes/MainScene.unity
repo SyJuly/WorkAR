@@ -113,93 +113,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &84787345
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4799726044293540, guid: aab941e48f7fb6640a92d1f9833ef86c, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0.713
-      objectReference: {fileID: 0}
-    - target: {fileID: 4799726044293540, guid: aab941e48f7fb6640a92d1f9833ef86c, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0.386
-      objectReference: {fileID: 0}
-    - target: {fileID: 4799726044293540, guid: aab941e48f7fb6640a92d1f9833ef86c, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0.45
-      objectReference: {fileID: 0}
-    - target: {fileID: 4799726044293540, guid: aab941e48f7fb6640a92d1f9833ef86c, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4799726044293540, guid: aab941e48f7fb6640a92d1f9833ef86c, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4799726044293540, guid: aab941e48f7fb6640a92d1f9833ef86c, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4799726044293540, guid: aab941e48f7fb6640a92d1f9833ef86c, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4799726044293540, guid: aab941e48f7fb6640a92d1f9833ef86c, type: 2}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 114905583635838794, guid: aab941e48f7fb6640a92d1f9833ef86c,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114905583635838794, guid: aab941e48f7fb6640a92d1f9833ef86c,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114173731925790900, guid: aab941e48f7fb6640a92d1f9833ef86c,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114173731925790900, guid: aab941e48f7fb6640a92d1f9833ef86c,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 33708822677380140, guid: aab941e48f7fb6640a92d1f9833ef86c,
-        type: 2}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 33100701702614636, guid: aab941e48f7fb6640a92d1f9833ef86c,
-        type: 2}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114699410903796338, guid: aab941e48f7fb6640a92d1f9833ef86c,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114699410903796338, guid: aab941e48f7fb6640a92d1f9833ef86c,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 33716368276610776, guid: aab941e48f7fb6640a92d1f9833ef86c,
-        type: 2}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: aab941e48f7fb6640a92d1f9833ef86c, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!1 &89781455
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,7 +158,7 @@ MonoBehaviour:
   SurfacePlanePrefab: {fileID: 1000010593991404, guid: 184d6e9ce2d89844489583805253eb83,
     type: 2}
   MinArea: 0.025
-  drawPlanesMask: -1
+  drawPlanesMask: 0
   destroyPlanesMask: 16
 --- !u!4 &89781458
 Transform:
@@ -343,23 +256,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 33.372, y: -15.275001, z: 11.651001}
---- !u!1 &400932442 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1745466852325500, guid: aab941e48f7fb6640a92d1f9833ef86c,
-    type: 2}
-  m_PrefabInternal: {fileID: 84787345}
---- !u!65 &400932443
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 400932442}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1181555788
 GameObject:
   m_ObjectHideFlags: 0
