@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Academy.HoloToolkit.Unity;
 using HoloToolkit.Unity.SpatialMapping;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Enumeration containing the surfaces on which a GameObject
@@ -26,7 +28,7 @@ public enum PlacementSurfaces
 /// * A transparent cube representing the object's box collider.
 /// * Shadow on the target surface indicating whether or not placement is valid.
 /// </summary>
-public class Placeable : MonoBehaviour
+public class Placeable : MonoBehaviour, ISelectHandler
 {
     [Tooltip("The base material used to render the bounds asset when placement is allowed.")]
     public Material PlaceableBoundsMaterial = null;
@@ -89,7 +91,7 @@ public class Placeable : MonoBehaviour
 
     // The location at which the object will be placed.
     private Vector3 targetPosition;
-
+    
     /// <summary>
     /// Called when the GameObject is created.
     /// </summary>
@@ -117,16 +119,32 @@ public class Placeable : MonoBehaviour
         shadowAsset = GameObject.CreatePrimitive(PrimitiveType.Quad);
         shadowAsset.transform.parent = gameObject.transform;
         shadowAsset.SetActive(false);
+
+        HoloToolkit.Unity.InputModule.InputManager.Instance.AddGlobalListener(gameObject);
     }
 
     /// <summary>
     /// Called when our object is selected.  Generally called by
     /// a gesture management component.
     /// </summary>
-    public void OnSelect()
+
+    void OnSelect()
     {
         /* TODO: 4.a CODE ALONG 4.a */
+        Debug.Log("Placable onSelect");
+        if (!IsPlacing)
+        {
+            OnPlacementStart();
+        }
+        else
+        {
+            OnPlacementStop();
+        }
+    }
 
+    public void OnSelect(BaseEventData eventData)
+    {
+        Debug.Log("Placable: ISelecetHandler says Selected");
         if (!IsPlacing)
         {
             OnPlacementStart();
@@ -326,7 +344,8 @@ public class Placeable : MonoBehaviour
 
         // Tell the gesture manager that it is to assume
         // all input is to be given to this object.
-        //TODO: GestureManager.Instance.OverrideFocusedObject = gameObject;
+        Debug.Log("GestureManager.Instance = " + GestureManager.Instance);
+        GestureManager.Instance.OverrideFocusedObject = gameObject;
 
         // Enter placement mode.
         IsPlacing = true;
@@ -366,7 +385,7 @@ public class Placeable : MonoBehaviour
 
         // Tell the gesture manager that it is to resume
         // its normal behavior.
-        // TODO: GestureManager.Instance.OverrideFocusedObject = null;
+        GestureManager.Instance.OverrideFocusedObject = null;
 
         // Exit placement mode.
         IsPlacing = false;
@@ -507,15 +526,20 @@ public class Placeable : MonoBehaviour
                             Vector3 surfaceNormal,
                             bool canBePlaced)
     {
-        // Rotate the shadow so that it is displayed on the correct surface and matches the object.
+        // Rotate and scale the shadow so that it is displayed on the correct surface and matches the object.
         float rotationX = 0.0f;
+
         if (PlacementSurface == PlacementSurfaces.Horizontal)
         {
             rotationX = 90.0f;
+            shadowAsset.transform.localScale = new Vector3(boxCollider.size.x, boxCollider.size.z, 1);
         }
-        Quaternion rotation = Quaternion.Euler(rotationX, gameObject.transform.rotation.eulerAngles.y, 0);
+        else
+        {
+            shadowAsset.transform.localScale = boxCollider.size;
+        }
 
-        shadowAsset.transform.localScale = boxCollider.size;
+        Quaternion rotation = Quaternion.Euler(rotationX, gameObject.transform.rotation.eulerAngles.y, 0);
         shadowAsset.transform.rotation = rotation;
 
         // Apply the appropriate material.

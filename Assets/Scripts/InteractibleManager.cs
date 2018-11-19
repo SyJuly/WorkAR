@@ -1,5 +1,5 @@
-﻿using HoloToolkit.Unity;
-using HoloToolkit.Unity.InputModule;
+﻿using Academy.HoloToolkit.Unity;
+using HoloToolkit.Unity;
 using UnityEngine;
 
 /// <summary>
@@ -21,12 +21,13 @@ public class InteractibleManager : Singleton<InteractibleManager>
     {
         oldFocusedGameObject = FocusedGameObject;
 
-        if (GazeManager.Instance.HitObject) //changed original code
+        if (GazeManager.Instance.Hit)
         {
             RaycastHit hitInfo = GazeManager.Instance.HitInfo;
             if (hitInfo.collider != null)
             {
                 FocusedGameObject = hitInfo.collider.gameObject;
+                Debug.Log("Focussed object: " + FocusedGameObject.name);
             }
             else
             {
@@ -46,6 +47,7 @@ public class InteractibleManager : Singleton<InteractibleManager>
             {
                 if (FocusedGameObject.GetComponent<Interactible>() != null)
                 {
+                    Debug.Log("Error source = Focussed object: " + FocusedGameObject);
                     FocusedGameObject.SendMessage("GazeEntered");
                 }
             }
@@ -58,6 +60,7 @@ public class InteractibleManager : Singleton<InteractibleManager>
         {
             if (oldFocusedGameObject.GetComponent<Interactible>() != null)
             {
+                Debug.Log("Error source = Focussed object: " + oldFocusedGameObject.name);
                 oldFocusedGameObject.SendMessage("GazeExited");
             }
         }

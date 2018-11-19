@@ -40,7 +40,6 @@ GameObject:
   - component: {fileID: 4449939886640268}
   - component: {fileID: 33113536153894558}
   - component: {fileID: 23442069426720650}
-  - component: {fileID: 65363989713297884}
   m_Layer: 0
   m_Name: ClockPlane
   m_TagString: Untagged
@@ -223,18 +222,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1146811204829982}
   m_Mesh: {fileID: 0}
---- !u!65 &65363989713297884
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1541024071221616}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65409307062644614
 BoxCollider:
   m_ObjectHideFlags: 1
