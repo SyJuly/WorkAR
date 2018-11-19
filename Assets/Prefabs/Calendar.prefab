@@ -115,7 +115,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4799726044293540}
   - component: {fileID: 114445424693982552}
-  - component: {fileID: 114335187714647266}
   - component: {fileID: 65770269399401784}
   m_Layer: 0
   m_Name: Calendar
@@ -386,7 +385,7 @@ BoxCollider:
   m_GameObject: {fileID: 1421510324072084}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -410,7 +409,7 @@ BoxCollider:
   m_GameObject: {fileID: 1402498743423776}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -539,21 +538,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   m_maskType: 0
---- !u!114 &114335187714647266
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1745466852325500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f1efafb4e5a9a346ab63a4e76d0a3e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InteractibleParameters:
-    Scrollable: 1
-    Placeable: 1
-  TargetFeedbackSound: {fileID: 0}
 --- !u!114 &114445424693982552
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -575,6 +559,7 @@ MonoBehaviour:
     type: 2}
   PlacementSurface: 2
   ChildrenToHide: []
+  display: {fileID: 0}
 --- !u!114 &114699410903796338
 MonoBehaviour:
   m_ObjectHideFlags: 1

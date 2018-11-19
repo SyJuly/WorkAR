@@ -23,7 +23,7 @@ namespace Academy.HoloToolkit.Unity
 
         private List<uint> trackedHands = new List<uint>();
 
-        void Awake()
+        override protected void Awake()
         {
             InteractionManager.InteractionSourceDetected += InteractionManager_InteractionSourceDetected;
             InteractionManager.InteractionSourceLost += InteractionManager_InteractionSourceLost;
@@ -54,7 +54,7 @@ namespace Academy.HoloToolkit.Unity
             }
         }
 
-        void OnDestroy()
+        override protected void OnDestroy()
         {
             InteractionManager.InteractionSourceDetected -= InteractionManager_InteractionSourceDetected;
             InteractionManager.InteractionSourceLost -= InteractionManager_InteractionSourceLost;

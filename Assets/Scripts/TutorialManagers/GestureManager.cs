@@ -53,7 +53,8 @@ namespace Academy.HoloToolkit.Unity
             Debug.Log("Gesture recognized: tabbed");
             if (focusedObject != null)
             {
-                Debug.Log("Gesture recognized: focusedObject not null");
+                Debug.Log("Gesture recognized: focusedObject not null: " + focusedObject);
+                Debug.Log("Gesture recognized: overridefocussedobj not null: " + OverrideFocusedObject);
                 focusedObject.SendMessage("OnSelect");
             }
         }
@@ -85,7 +86,7 @@ namespace Academy.HoloToolkit.Unity
             }
         }
 
-        void OnDestroy()
+        override protected void OnDestroy()
         {
             gestureRecognizer.StopCapturingGestures();
             gestureRecognizer.Tapped -= GestureRecognizer_Tapped;

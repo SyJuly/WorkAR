@@ -60,7 +60,6 @@ GameObject:
   - component: {fileID: 65409307062644614}
   - component: {fileID: 114059132991510800}
   - component: {fileID: 114827337479479656}
-  - component: {fileID: 114066273293756568}
   m_Layer: 0
   m_Name: Clock
   m_TagString: Untagged
@@ -245,21 +244,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c56cb08a36d57547abf5fcca11f26c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114066273293756568
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1764192379818538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f1efafb4e5a9a346ab63a4e76d0a3e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InteractibleParameters:
-    Scrollable: 1
-    Placeable: 1
-  TargetFeedbackSound: {fileID: 0}
 --- !u!114 &114827337479479656
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -281,6 +265,7 @@ MonoBehaviour:
     type: 2}
   PlacementSurface: 2
   ChildrenToHide: []
+  display: {fileID: 0}
 --- !u!114 &114862389489912128
 MonoBehaviour:
   m_ObjectHideFlags: 1

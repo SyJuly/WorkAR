@@ -3,6 +3,8 @@ using UnityEngine;
 using Academy.HoloToolkit.Unity;
 using HoloToolkit.Unity.SpatialMapping;
 using UnityEngine.EventSystems;
+using HoloToolkit.Unity.InputModule;
+using TMPro;
 
 /// <summary>
 /// Enumeration containing the surfaces on which a GameObject
@@ -28,7 +30,7 @@ public enum PlacementSurfaces
 /// * A transparent cube representing the object's box collider.
 /// * Shadow on the target surface indicating whether or not placement is valid.
 /// </summary>
-public class Placeable : MonoBehaviour, ISelectHandler
+public class Placeable : MonoBehaviour/*, UnityEngine.EventSystems.ISelectHandler, IInputClickHandler*/
 {
     [Tooltip("The base material used to render the bounds asset when placement is allowed.")]
     public Material PlaceableBoundsMaterial = null;
@@ -130,30 +132,56 @@ public class Placeable : MonoBehaviour, ISelectHandler
 
     void OnSelect()
     {
-        /* TODO: 4.a CODE ALONG 4.a */
-        Debug.Log("Placable onSelect");
-        if (!IsPlacing)
+       Debug.Log("Placable: onSelect says clicked");
+        if (true)
         {
-            OnPlacementStart();
-        }
-        else
-        {
-            OnPlacementStop();
+            if (!IsPlacing)
+            {
+                OnPlacementStart();
+            }
+            else
+            {
+                OnPlacementStop();
+            }
         }
     }
 
-    public void OnSelect(BaseEventData eventData)
+    /*public void OnSelect(BaseEventData eventData)
     {
         Debug.Log("Placable: ISelecetHandler says Selected");
         if (!IsPlacing)
         {
+            Debug.Log("startplacing: " + gameObject);
+            display.text = "start: " + gameObject.name;
             OnPlacementStart();
         }
         else
         {
+            Debug.Log("stop placing: " + gameObject);
+            display.text = "stop: " + gameObject.name;
             OnPlacementStop();
         }
-    }
+    }*/
+
+    /* public void OnInputClicked(InputClickedEventData eventData)
+     {
+         Debug.Log("Placable: IInputClickedHandler says clicked");
+         if (!eventData.used)
+         {
+             if (!IsPlacing)
+             {
+                 display.text = "start: " + gameObject.name;
+                 OnPlacementStart();
+             }
+             else
+             {
+                 display.text = "stop: " + gameObject.name;
+                 OnPlacementStop();
+             }
+             eventData.Use();
+         }
+
+     }*/
 
     /// <summary>
     /// Called once per frame.
@@ -344,7 +372,6 @@ public class Placeable : MonoBehaviour, ISelectHandler
 
         // Tell the gesture manager that it is to assume
         // all input is to be given to this object.
-        Debug.Log("GestureManager.Instance = " + GestureManager.Instance);
         GestureManager.Instance.OverrideFocusedObject = gameObject;
 
         // Enter placement mode.
