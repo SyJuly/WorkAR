@@ -98,7 +98,7 @@ public class WidgetPositioner : Singleton<WidgetPositioner>
             // If we do find a good plane we can do something smarter.
             if (index >= 0)
             {
-                Debug.Log("place widget somewhere smarter" + item.name);
+                Debug.Log("Place widget at wall: " + item.name);
                 UsedPlanes.Add(index);
                 GameObject surface = surfaces[index];
                 SurfacePlane plane = surface.GetComponent<SurfacePlane>();

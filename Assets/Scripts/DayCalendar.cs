@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HoloToolkit.Unity.InputModule;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,7 +15,7 @@ public class DayCalendar : MonoBehaviour {
 
     int day = 0;
 
-	void Update () {
+    void Update () {
         int newDay = DateTime.Now.Day;
         if (day != newDay) {
             dayDisplay.text = DateTime.Now.ToString("dd");

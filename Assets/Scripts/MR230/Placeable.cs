@@ -30,7 +30,7 @@ public enum PlacementSurfaces
 /// * A transparent cube representing the object's box collider.
 /// * Shadow on the target surface indicating whether or not placement is valid.
 /// </summary>
-public class Placeable : MonoBehaviour/*, UnityEngine.EventSystems.ISelectHandler, IInputClickHandler*/
+public class Placeable : MonoBehaviour, IInputClickHandler, IFocusable
 {
     [Tooltip("The base material used to render the bounds asset when placement is allowed.")]
     public Material PlaceableBoundsMaterial = null;
@@ -122,66 +122,8 @@ public class Placeable : MonoBehaviour/*, UnityEngine.EventSystems.ISelectHandle
         shadowAsset.transform.parent = gameObject.transform;
         shadowAsset.SetActive(false);
 
-        HoloToolkit.Unity.InputModule.InputManager.Instance.AddGlobalListener(gameObject);
+        InputManager.Instance.AddGlobalListener(gameObject);
     }
-
-    /// <summary>
-    /// Called when our object is selected.  Generally called by
-    /// a gesture management component.
-    /// </summary>
-
-    void OnSelect()
-    {
-       Debug.Log("Placable: onSelect says clicked");
-        if (true)
-        {
-            if (!IsPlacing)
-            {
-                OnPlacementStart();
-            }
-            else
-            {
-                OnPlacementStop();
-            }
-        }
-    }
-
-    /*public void OnSelect(BaseEventData eventData)
-    {
-        Debug.Log("Placable: ISelecetHandler says Selected");
-        if (!IsPlacing)
-        {
-            Debug.Log("startplacing: " + gameObject);
-            display.text = "start: " + gameObject.name;
-            OnPlacementStart();
-        }
-        else
-        {
-            Debug.Log("stop placing: " + gameObject);
-            display.text = "stop: " + gameObject.name;
-            OnPlacementStop();
-        }
-    }*/
-
-    /* public void OnInputClicked(InputClickedEventData eventData)
-     {
-         Debug.Log("Placable: IInputClickedHandler says clicked");
-         if (!eventData.used)
-         {
-             if (!IsPlacing)
-             {
-                 display.text = "start: " + gameObject.name;
-                 OnPlacementStart();
-             }
-             else
-             {
-                 display.text = "stop: " + gameObject.name;
-                 OnPlacementStop();
-             }
-             eventData.Use();
-         }
-
-     }*/
 
     /// <summary>
     /// Called once per frame.
@@ -372,7 +314,7 @@ public class Placeable : MonoBehaviour/*, UnityEngine.EventSystems.ISelectHandle
 
         // Tell the gesture manager that it is to assume
         // all input is to be given to this object.
-        GestureManager.Instance.OverrideFocusedObject = gameObject;
+        // GestureManager.Instance.OverrideFocusedObject = gameObject;
 
         // Enter placement mode.
         IsPlacing = true;
@@ -412,7 +354,7 @@ public class Placeable : MonoBehaviour/*, UnityEngine.EventSystems.ISelectHandle
 
         // Tell the gesture manager that it is to resume
         // its normal behavior.
-        GestureManager.Instance.OverrideFocusedObject = null;
+        // GestureManager.Instance.OverrideFocusedObject = null;
 
         // Exit placement mode.
         IsPlacing = false;
@@ -620,5 +562,47 @@ public class Placeable : MonoBehaviour/*, UnityEngine.EventSystems.ISelectHandle
         boundsAsset = null;
         Destroy(shadowAsset);
         shadowAsset = null;
+    }
+
+    /* Change event handling: This code differs from the Tutorial from https://docs.microsoft.com/en-us/windows/mixed-reality/holograms-230*/
+
+    GameObject currentFocussedWidget = null;
+
+    /// <summary>
+    /// Record which object is focussed.
+    /// </summary>
+
+    public void OnFocusEnter()
+    {
+        Placeable newFocussedWidget = gameObject.GetComponent<Placeable>();
+        if (newFocussedWidget)
+        {
+            currentFocussedWidget = newFocussedWidget.gameObject;
+        }
+    }
+
+    public void OnFocusExit()
+    {
+        currentFocussedWidget = null;
+    }
+
+    /// <summary>
+    /// On Airtab start or stop placing.
+    /// </summary>
+    public void OnInputClicked(InputClickedEventData eventData)
+    {
+        if (!eventData.used && currentFocussedWidget && currentFocussedWidget == gameObject)
+        {
+            if (!IsPlacing)
+            {
+                OnPlacementStart();
+            }
+            else
+            {
+                OnPlacementStop();
+            }
+            eventData.Use();
+        }
+
     }
 }

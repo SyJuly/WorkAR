@@ -586,13 +586,13 @@ PlayerSettings:
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: WorkAR
-  metroPackageVersion: 1.0.23.0
+  metroPackageVersion: 1.0.27.0
   metroCertificatePath: Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: DefaultCompany
   metroCertificateIssuer: DefaultCompany
   metroCertificateNotAfter: 804cec5e7799d501
-  metroApplicationDescription: Template_3D
+  metroApplicationDescription: WorkAR
   wsaImages: {}
   metroTileShortName: WorkAR
   metroTileShowName: 0
