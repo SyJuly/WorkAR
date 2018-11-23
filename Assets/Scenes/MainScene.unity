@@ -346,7 +346,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4625992731509116, guid: aab941e48f7fb6640a92d1f9833ef86c, type: 2}
       propertyPath: m_LocalScale.y
-      value: 1.7
+      value: 1.9067202
       objectReference: {fileID: 0}
     - target: {fileID: 4625992731509116, guid: aab941e48f7fb6640a92d1f9833ef86c, type: 2}
       propertyPath: m_LocalPosition.x
@@ -368,6 +368,16 @@ Prefab:
       propertyPath: borderTop
       value: 0.08
       objectReference: {fileID: 0}
+    - target: {fileID: 4625992731509116, guid: aab941e48f7fb6640a92d1f9833ef86c, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -0.156
+      objectReference: {fileID: 0}
+    - target: {fileID: 114146411789937572, guid: aab941e48f7fb6640a92d1f9833ef86c,
+        type: 2}
+      propertyPath: weekDayDisplayPrefab
+      value: 
+      objectReference: {fileID: 1326562085628012, guid: f7cf7f651add0f948883bc82b7a07362,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aab941e48f7fb6640a92d1f9833ef86c, type: 2}
   m_IsPrefabAsset: 0

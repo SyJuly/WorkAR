@@ -22,6 +22,15 @@ public class Scheduler : MonoBehaviour {
 
     int day = 0;
 
+    // days in a week
+    int numberOfRows = 7;
+
+    // possible weeks in a month plus one for weekdays display
+    int numberOfColumns = 6;
+
+    string[] weekDays = new string[] { "MON","TUE", "WED", "THU", "FRI", "SAT", "SUN" };
+
+
     private void Start()
     {
         renderer = GetComponent<Renderer>();
@@ -39,29 +48,39 @@ public class Scheduler : MonoBehaviour {
 
     private void startEditingMode()
     {
-        gameObject.transform.position = new Vector3(-0.8f, gameObject.transform.position.y, gameObject.transform.position.z);
-        gameObject.transform.localScale = new Vector3(2.3f, 1.7f, 1f);
-
         float x = renderer.bounds.size.x;
         float y = renderer.bounds.size.y;
-        float divX = ((x - borderLeft * 2) / 7);
-        float divY = ((y - borderTop * 2) / 5);
+        float divX = ((x - borderLeft * 2) / numberOfRows);
+        float divY = ((y - borderTop * 2) / numberOfColumns);
 
         float divCounterY = divY;
-        for (int n = 0; n < 5; n++)
+        for (int n = 0; n < numberOfColumns; n++)
         {
             float divCounterX = divX;
             float topAlign = ((y - borderTop * 2)/ 2);
-            float fieldY = gameObject.transform.position.y - divCounterY + topAlign - topAlign / 6 + divY / 2;
+            float fieldY = gameObject.transform.position.y - divCounterY + topAlign - topAlign / numberOfColumns + divY / 2;
             divCounterY += divY;
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < numberOfRows; i++)
             {
                 GameObject dayField = Instantiate(dayPrefab);
+                if (n == 0)
+                {
+                    makeWeekDayField(dayField, i);
+                }
                 float leftAlign = ((x - borderLeft * 2) / 2);
                 dayField.transform.position = new Vector3(gameObject.transform.position.x + divCounterX - leftAlign - divX / 2, fieldY, gameObject.transform.position.z - 0.02f);
                 divCounterX += divX;
             }
         }
 
+    }
+
+    private void makeWeekDayField(GameObject dayField, int i)
+    {
+        TextMeshPro tm = dayField.GetComponentInChildren<TextMeshPro>();
+        tm.text = weekDays[i];
+        Color defaultColor = dayField.GetComponent<MeshRenderer>().material.color;
+        Color transparentColor = new Color(defaultColor.r, defaultColor.g, defaultColor.b, 0);
+        dayField.GetComponent<MeshRenderer>().material.color = transparentColor;
     }
 }
