@@ -20,7 +20,9 @@ public class MonthCalendar : MonoBehaviour {
     [SerializeField]
     float borderTop = 0.25f;
 
-    int day = 0;
+    int indexFirstDayOfWeekOfMonth = 0;
+
+    int daysInMonth = 30;
 
     // days in a week
     int numberOfRows = 7;
@@ -28,22 +30,18 @@ public class MonthCalendar : MonoBehaviour {
     // possible weeks in a month plus one for weekdays display
     int numberOfColumns = 6;
 
-    string[] weekDays = new string[] { "MON","TUE", "WED", "THU", "FRI", "SAT", "SUN" };
 
 
     private void Start()
     {
         renderer = GetComponent<Renderer>();
+        DateTime today = DateTime.Now;
+        monthDisplay.text = today.ToString("MMMM");
+        DateTime firstOfMonth = new DateTime(today.Year, today.Month, 1);
+        indexFirstDayOfWeekOfMonth = (int)firstOfMonth.DayOfWeek;
+        daysInMonth = DateTime.DaysInMonth(today.Year, today.Month);
         PlaceDayFields();
-    }
-
-    void Update()
-    {
-        int newDay = DateTime.Now.Day;
-        if (day != newDay)
-        {
-            monthDisplay.text = DateTime.Now.ToString("MMMM");
-        }
+        
     }
 
     private void PlaceDayFields()
@@ -54,58 +52,56 @@ public class MonthCalendar : MonoBehaviour {
         float divY = ((y - borderTop * 2) / numberOfColumns);
         float leftAlign = ((x - borderLeft * 2) / 2);
         float topAlign = ((y - borderTop * 2) / 2);
-
-        float divCounterX = divX;
         
-        for (int n = 0; n < numberOfRows; n++)
-        {
-            float fieldX = gameObject.transform.position.x + divCounterX - leftAlign - divX / 2;
-            divCounterX += divX;
-            float divCounterY = divY;
-            for (int i = 0; i < numberOfColumns; i++)
-            {
-                GameObject dayField = Instantiate(dayPrefab);
-                dayField.transform.parent = transform;
-                if (i == 0)
-                {
-                    makeWeekDayField(dayField, n);
-                }
-                float fieldY = gameObject.transform.position.y - divCounterY + topAlign - topAlign / numberOfColumns + divY / 2;
-                dayField.transform.position = new Vector3(fieldX, fieldY, gameObject.transform.position.z - 0.02f);
-                divCounterY += divY;
-            }
-        }
+        int dayIndex = 0;
+        bool startIndexing = false;
 
-
-        /*float divCounterY = divY;
+        float divCounterY = divY;
         for (int n = 0; n < numberOfColumns; n++)
         {
             float divCounterX = divX;
-            float topAlign = ((y - borderTop * 2)/ 2);
             float fieldY = gameObject.transform.position.y - divCounterY + topAlign - topAlign / numberOfColumns + divY / 2;
             divCounterY += divY;
             for (int i = 0; i < numberOfRows; i++)
             {
+
                 GameObject dayField = Instantiate(dayPrefab);
                 dayField.transform.parent = transform;
-                if (n == 0)
-                {
-                    makeWeekDayField(dayField, i);
-                }
-                float leftAlign = ((x - borderLeft * 2) / 2);
-                dayField.transform.position = new Vector3(gameObject.transform.position.x + divCounterX - leftAlign - divX / 2, fieldY, gameObject.transform.position.z - 0.02f);
+                float fieldX = gameObject.transform.position.x + divCounterX - leftAlign - divX / 2;
+                dayField.transform.position = new Vector3(fieldX, fieldY, gameObject.transform.position.z - 0.02f);
                 divCounterX += divX;
-            }
-        }*/
 
+                if (n == 0)
+                {   //first row shows days of week
+                    makeWeekDayField(dayField, i);
+                } else if (!startIndexing)
+                {   
+                    if(n == 1 && i == indexFirstDayOfWeekOfMonth)
+                    {   //when first week day of current month is drawn, start counting
+                        dayIndex = 1;
+                        startIndexing = true;
+                    } else
+                    {   //if dayField is before first week day of current month
+                        dayField.SetActive(false);
+                    }
+                } else
+                {
+                    dayField.GetComponent<DayField>().representedDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, dayIndex);
+                    dayIndex++;
+                    if (dayIndex > daysInMonth)
+                    {
+                        startIndexing = false;
+                    }
+                }
+            }
+        }
     }
 
-    private void makeWeekDayField(GameObject dayField, int i)
+    private void makeWeekDayField(GameObject dayFieldGO, int i)
     {
-        TextMeshPro tm = dayField.GetComponentInChildren<TextMeshPro>();
-        tm.text = weekDays[i];
-        Color defaultColor = dayField.GetComponent<MeshRenderer>().material.color;
-        Color transparentColor = new Color(defaultColor.r, defaultColor.g, defaultColor.b, 0);
-        dayField.GetComponent<MeshRenderer>().material.color = transparentColor;
+        DayField dayField = dayFieldGO.GetComponent<DayField>();
+        dayField.isDayOfWeekField = true;
+        dayField.dayOfWeek = i;
+
     }
 }
