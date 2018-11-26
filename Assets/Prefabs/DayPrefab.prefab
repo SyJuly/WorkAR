@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23148583157775644}
   - component: {fileID: 65448867830855532}
   - component: {fileID: 114708565981347256}
+  - component: {fileID: 114986176841329692}
   m_Layer: 0
   m_Name: DayPrefab
   m_TagString: Untagged
@@ -283,7 +284,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c8e7994d75ac5340803751c3fc46241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDayOfWeekField: 0
+--- !u!114 &114986176841329692
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1740143631476046}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e0248f7c078c84479ed4e9f745310fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   dayOfWeek: 0
 --- !u!222 &222884904487177452
 CanvasRenderer:

@@ -99,9 +99,9 @@ public class MonthCalendar : MonoBehaviour {
 
     private void makeWeekDayField(GameObject dayFieldGO, int i)
     {
-        DayField dayField = dayFieldGO.GetComponent<DayField>();
-        dayField.isDayOfWeekField = true;
-        dayField.dayOfWeek = i;
-
+        dayFieldGO.GetComponent<DayField>().enabled = false;
+        WeekDayField weekDayField = dayFieldGO.GetComponent<WeekDayField>();
+        weekDayField.enabled = true;
+        weekDayField.dayOfWeek = i;
     }
 }
