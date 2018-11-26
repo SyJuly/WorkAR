@@ -10,15 +10,36 @@ public class DayField : MonoBehaviour {
 
     GoogleCalendar googleCalendar;
 
-    TextMeshPro textField;
-    
-	void Start () {
-        googleCalendar = GetComponentInParent<GoogleCalendar>();
-        textField = GetComponentInChildren<TextMeshPro>();
+    [SerializeField]
+    TextMeshPro dayNumberTextField;
 
+    [SerializeField]
+    TextMeshPro eventTextField;
+
+    void Start () {
+        googleCalendar = GetComponentInParent<GoogleCalendar>();
     }
 	
 	void Update () {
-        textField.text = representedDay.Day.ToString();
-	}
+        dayNumberTextField.text = representedDay.Day.ToString();
+        StartCoroutine(UpdateEvent());
+    }
+
+    IEnumerator UpdateEvent()
+    {
+        if (googleCalendar.events != null)
+        {
+            foreach(GoogleCalendarEvent calendarEvent in googleCalendar.events)
+            {
+                DateTime startTime = DateTime.Parse(calendarEvent.start);
+                Debug.Log("Event: " + startTime);
+                Debug.Log("DateTime: " + representedDay.ToString());
+                if (startTime.Day == representedDay.Day)
+                {
+                    eventTextField.text = calendarEvent.summary;
+                }
+            }
+        }
+        yield return new WaitForSeconds(1);
+    }
 }

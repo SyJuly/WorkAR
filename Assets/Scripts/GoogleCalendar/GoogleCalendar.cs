@@ -11,7 +11,7 @@ public class GoogleCalendar : MonoBehaviour
 
     GoogleAccessToken gat;
 
-    public GoogleCalendarEvent[] events;
+    public GoogleCalendarEvent[] events = null;
 
     void Start()
     {
