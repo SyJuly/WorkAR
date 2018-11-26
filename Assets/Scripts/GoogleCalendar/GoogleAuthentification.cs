@@ -58,15 +58,12 @@ public class GoogleAuthentification : MonoBehaviour
 
     IEnumerator GetAccessToken(String authentificationCode)
     {
-
         List<IMultipartFormSection> parameters = new List<IMultipartFormSection>();
         parameters.Add(new MultipartFormDataSection("client_secret", credentials.client_secret));
         parameters.Add(new MultipartFormDataSection("grant_type", "authorization_code"));
         parameters.Add(new MultipartFormDataSection("code", authentificationCode));
         parameters.Add(new MultipartFormDataSection("redirect_uri", credentials.redirect_uri));
         parameters.Add(new MultipartFormDataSection("client_id", credentials.client_id));
-        Debug.Log(credentials.client_id);
-
 
         UnityWebRequest wwwPost = UnityWebRequest.Post(credentials.token_uri, parameters);
         yield return wwwPost.SendWebRequest();
