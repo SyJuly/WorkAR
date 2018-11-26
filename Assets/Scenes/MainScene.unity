@@ -272,6 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 907f5fba90ba5cd4db62a580d0bb0dd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  events: []
 --- !u!1001 &594921541
 Prefab:
   m_ObjectHideFlags: 0
@@ -394,6 +395,10 @@ Prefab:
       value: 
       objectReference: {fileID: 1326562085628012, guid: f7cf7f651add0f948883bc82b7a07362,
         type: 2}
+    - target: {fileID: 1402498743423776, guid: aab941e48f7fb6640a92d1f9833ef86c, type: 2}
+      propertyPath: m_Name
+      value: MonthCalendar
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aab941e48f7fb6640a92d1f9833ef86c, type: 2}
   m_IsPrefabAsset: 0

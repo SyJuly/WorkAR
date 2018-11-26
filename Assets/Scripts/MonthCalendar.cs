@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Scheduler : MonoBehaviour {
+public class MonthCalendar : MonoBehaviour {
 
     [SerializeField]
     TextMeshPro monthDisplay;
@@ -34,7 +34,7 @@ public class Scheduler : MonoBehaviour {
     private void Start()
     {
         renderer = GetComponent<Renderer>();
-        startEditingMode();
+        PlaceDayFields();
     }
 
     void Update()
@@ -46,14 +46,38 @@ public class Scheduler : MonoBehaviour {
         }
     }
 
-    private void startEditingMode()
+    private void PlaceDayFields()
     {
         float x = renderer.bounds.size.x;
         float y = renderer.bounds.size.y;
         float divX = ((x - borderLeft * 2) / numberOfRows);
         float divY = ((y - borderTop * 2) / numberOfColumns);
+        float leftAlign = ((x - borderLeft * 2) / 2);
+        float topAlign = ((y - borderTop * 2) / 2);
 
-        float divCounterY = divY;
+        float divCounterX = divX;
+        
+        for (int n = 0; n < numberOfRows; n++)
+        {
+            float fieldX = gameObject.transform.position.x + divCounterX - leftAlign - divX / 2;
+            divCounterX += divX;
+            float divCounterY = divY;
+            for (int i = 0; i < numberOfColumns; i++)
+            {
+                GameObject dayField = Instantiate(dayPrefab);
+                dayField.transform.parent = transform;
+                if (i == 0)
+                {
+                    makeWeekDayField(dayField, n);
+                }
+                float fieldY = gameObject.transform.position.y - divCounterY + topAlign - topAlign / numberOfColumns + divY / 2;
+                dayField.transform.position = new Vector3(fieldX, fieldY, gameObject.transform.position.z - 0.02f);
+                divCounterY += divY;
+            }
+        }
+
+
+        /*float divCounterY = divY;
         for (int n = 0; n < numberOfColumns; n++)
         {
             float divCounterX = divX;
@@ -63,6 +87,7 @@ public class Scheduler : MonoBehaviour {
             for (int i = 0; i < numberOfRows; i++)
             {
                 GameObject dayField = Instantiate(dayPrefab);
+                dayField.transform.parent = transform;
                 if (n == 0)
                 {
                     makeWeekDayField(dayField, i);
@@ -71,7 +96,7 @@ public class Scheduler : MonoBehaviour {
                 dayField.transform.position = new Vector3(gameObject.transform.position.x + divCounterX - leftAlign - divX / 2, fieldY, gameObject.transform.position.z - 0.02f);
                 divCounterX += divX;
             }
-        }
+        }*/
 
     }
 
