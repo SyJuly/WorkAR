@@ -9,7 +9,7 @@ public class MonthCalendar : MonoBehaviour {
     [SerializeField]
     TextMeshPro monthDisplay;
 
-    Renderer renderer;
+    Bounds bounds;
 
     [SerializeField]
     GameObject dayPrefab;
@@ -30,11 +30,9 @@ public class MonthCalendar : MonoBehaviour {
     // possible weeks in a month plus one for weekdays display
     int numberOfColumns = 6;
 
-
-
     private void Start()
     {
-        renderer = GetComponent<Renderer>();
+        bounds = GetComponent<MeshFilter>().mesh.bounds;
         DateTime today = DateTime.Now;
         monthDisplay.text = today.ToString("MMMM");
         DateTime firstOfMonth = new DateTime(today.Year, today.Month, 1);
@@ -46,8 +44,9 @@ public class MonthCalendar : MonoBehaviour {
 
     private void PlaceDayFields()
     {
-        float x = renderer.bounds.size.x;
-        float y = renderer.bounds.size.y;
+        float x = bounds.size.x;
+        float y = bounds.size.y;
+
         float divX = ((x - borderLeft * 2) / numberOfRows);
         float divY = ((y - borderTop * 2) / numberOfColumns);
         float leftAlign = ((x - borderLeft * 2) / 2);
@@ -55,21 +54,23 @@ public class MonthCalendar : MonoBehaviour {
         
         int dayIndex = 0;
         bool startIndexing = false;
-        Debug.Log("indexFirstDayOfWeekOfMonth:" + indexFirstDayOfWeekOfMonth);
 
         float divCounterY = divY;
         for (int n = 0; n < numberOfColumns; n++)
         {
             float divCounterX = divX;
-            float fieldY = gameObject.transform.position.y - divCounterY + topAlign - topAlign / numberOfColumns + divY / 2;
+            float fieldY = gameObject.transform.localPosition.y - divCounterY + topAlign - topAlign / numberOfColumns + divY / 2;
             divCounterY += divY;
             for (int i = 0; i < numberOfRows; i++)
             {
 
                 GameObject dayField = Instantiate(dayPrefab);
-                dayField.transform.parent = transform;
-                float fieldX = gameObject.transform.position.x + divCounterX - leftAlign - divX / 2;
-                dayField.transform.position = new Vector3(fieldX, fieldY, gameObject.transform.position.z - 0.02f);
+                dayField.transform.parent = gameObject.transform;
+                float fieldX = gameObject.transform.localPosition.x + divCounterX - leftAlign - divX / 2;
+                dayField.transform.localPosition = new Vector3(fieldX, fieldY, - 0.5f);
+                dayField.transform.localRotation = Quaternion.identity;
+                dayField.transform.localScale = dayPrefab.transform.localScale;
+                
                 divCounterX += divX;
                 
                 if (n == 0)

@@ -33,7 +33,6 @@ public class DayField : MonoBehaviour {
             foreach(GoogleCalendarEvent calendarEvent in googleCalendar.events)
             {
                 DateTime startTime = DateTime.ParseExact(calendarEvent.start.dateTime, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture);
-                DateTime otherTime = Convert.ToDateTime(calendarEvent.start.dateTime);
                 if (startTime.Day == representedDay.Day)
                 {
                     eventTextField.text = calendarEvent.summary;

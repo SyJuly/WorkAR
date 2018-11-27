@@ -4,6 +4,7 @@ using UnityEngine.Networking;
 using System.Collections.Generic;
 using System.IO;
 using System;
+using System.Text;
 
 public class GoogleCalendar : MonoBehaviour
 {
@@ -73,21 +74,26 @@ public class GoogleCalendar : MonoBehaviour
 
     void ReadGoogleCalendarCredentials()
     {
-        string path = "Credentials/credentials_googlecalendar_workAR.json";
+        String path = "Credentials/credentials_googlecalendar_workAR.json";
         credentials = JsonUtility.FromJson<GoogleCrendentials>(ReadFile(path));
     }
 
     void ReadGoogleCalendarAccessToken()
     {
-        string path = "Credentials/access_token.json";
+        String path = "Credentials/access_token.json";
         gat = JsonUtility.FromJson<GoogleAccessToken>(ReadFile(path));
     }
 
     String ReadFile(String path)
     {
-        StreamReader reader = new StreamReader(path);
-        string fileText = reader.ReadToEnd();
-        reader.Close();
-        return fileText;
+        using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate))
+        {
+            using (StreamReader reader = new StreamReader(fileStream, Encoding.UTF8))
+            {
+                String fileText = reader.ReadToEnd();
+                reader.Dispose();
+                return fileText;
+            }
+        }
     }
 }

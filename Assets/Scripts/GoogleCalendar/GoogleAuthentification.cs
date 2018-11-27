@@ -9,24 +9,24 @@ using System;
 // for implementation of asking user for authentification
 public class GoogleAuthentification : MonoBehaviour
 {
-    GoogleCrendentials credentials;
+    /*GoogleCrendentials credentials;
 
     [Serializable]
     public class Access_Token_Response
     {
-        public string access_token;
-        public string expires_in;
-        public string refresh_token;
-        public string scope;
-        public string token_type;
+        public String access_token;
+        public String expires_in;
+        public String refresh_token;
+        public String scope;
+        public String token_type;
     }
 
     void ReadGoogleCalendarCredentials()
     {
-        string path = "Credentials/credentials_googlecalendar_workAR.json";
+        String path = "Credentials/credentials_googlecalendar_workAR.json";
 
         StreamReader reader = new StreamReader(path);
-        string fileText = reader.ReadToEnd();
+        String fileText = reader.ReadToEnd();
         reader.Close();
 
         credentials = JsonUtility.FromJson<GoogleCrendentials>(fileText);
@@ -48,7 +48,7 @@ public class GoogleAuthentification : MonoBehaviour
         }
         else
         {
-            string response = AuthentificationCodeRequest.downloadHandler.text;
+            String response = AuthentificationCodeRequest.downloadHandler.text;
 
             //TODO: Show user authentification window to accept
 
@@ -74,7 +74,7 @@ public class GoogleAuthentification : MonoBehaviour
         }
         else
         {
-            string response = wwwPost.downloadHandler.text;
+            String response = wwwPost.downloadHandler.text;
 
             //Access_Token_Response atr = JsonUtility.FromJson<Access_Token_Response>(response);
 
@@ -84,11 +84,11 @@ public class GoogleAuthentification : MonoBehaviour
 
     void SaveAccessToken(String accesstoken)
     {
-        string path = "Credentials/access_token.json";
+        String path = "Credentials/access_token.json";
 
         //Write some text to the test.txt file
         StreamWriter writer = new StreamWriter(path, false);
         writer.WriteLine(accesstoken);
         writer.Close();
-    }
+    }*/
 }
