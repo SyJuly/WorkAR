@@ -12,7 +12,13 @@ public struct GoogleCalendarEvent
 {
     public string id;
     public string summary;
-    public string start;
-    public string end;
+    public GoogleTime start;
+    public GoogleTime end;
     public string sequence;
+}
+
+[Serializable]
+public struct GoogleTime
+{
+    public string dateTime;
 }

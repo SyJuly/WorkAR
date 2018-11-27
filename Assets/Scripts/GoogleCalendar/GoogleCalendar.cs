@@ -47,7 +47,6 @@ public class GoogleCalendar : MonoBehaviour
         {
             GoogleCalendarEventsResponse eventsResponse = JsonUtility.FromJson<GoogleCalendarEventsResponse>(AlleCalendarEventsRequest.downloadHandler.text);
             events = eventsResponse.items;
-            Debug.Log(events);
         }
     }
 

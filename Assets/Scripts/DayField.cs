@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using TMPro;
 using UnityEngine;
 
@@ -31,9 +32,8 @@ public class DayField : MonoBehaviour {
         {
             foreach(GoogleCalendarEvent calendarEvent in googleCalendar.events)
             {
-                DateTime startTime = DateTime.Parse(calendarEvent.start);
-                Debug.Log("Event: " + startTime);
-                Debug.Log("DateTime: " + representedDay.ToString());
+                DateTime startTime = DateTime.ParseExact(calendarEvent.start.dateTime, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture);
+                DateTime otherTime = Convert.ToDateTime(calendarEvent.start.dateTime);
                 if (startTime.Day == representedDay.Day)
                 {
                     eventTextField.text = calendarEvent.summary;

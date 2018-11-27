@@ -38,7 +38,7 @@ public class MonthCalendar : MonoBehaviour {
         DateTime today = DateTime.Now;
         monthDisplay.text = today.ToString("MMMM");
         DateTime firstOfMonth = new DateTime(today.Year, today.Month, 1);
-        indexFirstDayOfWeekOfMonth = (int)firstOfMonth.DayOfWeek;
+        indexFirstDayOfWeekOfMonth = (int)firstOfMonth.DayOfWeek - 1;
         daysInMonth = DateTime.DaysInMonth(today.Year, today.Month);
         PlaceDayFields();
         
@@ -55,6 +55,7 @@ public class MonthCalendar : MonoBehaviour {
         
         int dayIndex = 0;
         bool startIndexing = false;
+        Debug.Log("indexFirstDayOfWeekOfMonth:" + indexFirstDayOfWeekOfMonth);
 
         float divCounterY = divY;
         for (int n = 0; n < numberOfColumns; n++)
@@ -70,7 +71,7 @@ public class MonthCalendar : MonoBehaviour {
                 float fieldX = gameObject.transform.position.x + divCounterX - leftAlign - divX / 2;
                 dayField.transform.position = new Vector3(fieldX, fieldY, gameObject.transform.position.z - 0.02f);
                 divCounterX += divX;
-
+                
                 if (n == 0)
                 {   //first row shows days of week
                     makeWeekDayField(dayField, i);
@@ -84,8 +85,8 @@ public class MonthCalendar : MonoBehaviour {
                     {   //if dayField is before first week day of current month
                         dayField.SetActive(false);
                     }
-                } else
-                {
+                }
+                if(startIndexing){
                     dayField.GetComponent<DayField>().representedDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, dayIndex);
                     dayIndex++;
                     if (dayIndex > daysInMonth)
