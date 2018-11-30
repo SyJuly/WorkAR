@@ -6,6 +6,8 @@
 UWP/
 Credentials/
 Assets/AssetStoreTools*
+Assets/Resources/Credentials
+Assets/Resources/Credentials.meta
 
 # Visual Studio cache directory
 .vs/
