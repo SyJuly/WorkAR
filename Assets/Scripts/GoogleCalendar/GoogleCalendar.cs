@@ -22,7 +22,7 @@ public class GoogleCalendar : MonoBehaviour
     {
         ReadGoogleCalendarCredentials();
         ReadGoogleCalendarAccessToken();
-        StartCoroutine(GetCalendarEvents());
+        StartCoroutine(UpdateCalendar());
         errorField.text = "bro??";
     }
 
@@ -44,6 +44,7 @@ public class GoogleCalendar : MonoBehaviour
 
     IEnumerator GetCalendarEvents()
     {
+        Debug.Log("Try get new calendar events");
         errorField.text = "Get calendar events";
         UnityWebRequest AlleCalendarEventsRequest = UnityWebRequest.Get(credentials.calendar_endpoint + credentials.calendar_id + "/events?access_token=" + gat.access_token + "&t=" + getUTCTime());
         AlleCalendarEventsRequest.chunkedTransfer = false;
