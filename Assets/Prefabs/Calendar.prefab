@@ -155,6 +155,8 @@ GameObject:
   - component: {fileID: 65770269399401784}
   - component: {fileID: 114703321355138880}
   - component: {fileID: 114416427767232096}
+  - component: {fileID: 114930271980612400}
+  - component: {fileID: 114710028965343588}
   m_Layer: 0
   m_Name: Calendar
   m_TagString: Untagged
@@ -549,8 +551,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.1648242, y: 1.936345, z: 0.21048228}
+  m_Center: {x: 0.051843356, y: 0.0051978314, z: 0.39475885}
 --- !u!65 &65939747283725842
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -702,7 +704,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 907f5fba90ba5cd4db62a580d0bb0dd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  errorField: {fileID: 114948597330336744}
   events: []
 --- !u!114 &114699410903796338
 MonoBehaviour:
@@ -838,6 +839,17 @@ MonoBehaviour:
     type: 2}
   PlacementSurface: 2
   ChildrenToHide: []
+--- !u!114 &114710028965343588
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1745466852325500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7efad6bbec6ed12418a6405027ae83d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114802926739799326
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -962,6 +974,17 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   m_maskType: 0
+--- !u!114 &114930271980612400
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1745466852325500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3a9aec33ad90e8489cde8446259c44d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114948597330336744
 MonoBehaviour:
   m_ObjectHideFlags: 1

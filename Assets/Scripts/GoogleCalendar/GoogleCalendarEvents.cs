@@ -10,15 +10,25 @@ public struct GoogleCalendarEventsResponse
 [Serializable]
 public struct GoogleCalendarEvent
 {
-    public string id;
+    public GoogleCalendarEvent(string summary, DateTime start, DateTime end)
+    {
+        this.summary = summary;
+        this.start = new GoogleTime(start);
+        this.end = new GoogleTime(end);
+    }
+    //public string id;
     public string summary;
     public GoogleTime start;
     public GoogleTime end;
-    public string sequence;
+    //public string sequence;
 }
 
 [Serializable]
 public struct GoogleTime
 {
+    public GoogleTime(DateTime dateTimeToString)
+    {
+        dateTime = dateTimeToString.ToString("yyyy-MM-ddTHH:mm:sszzz");
+    }
     public string dateTime;
 }

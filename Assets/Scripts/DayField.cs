@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using TMPro;
 using UnityEngine;
@@ -9,7 +8,7 @@ public class DayField : MonoBehaviour {
     
     public DateTime representedDay;
 
-    GoogleCalendar googleCalendar;
+    ReadFromGoogleCalendar googleCalendarReader;
 
     [SerializeField]
     TextMeshPro dayNumberTextField;
@@ -18,7 +17,7 @@ public class DayField : MonoBehaviour {
     TextMeshPro eventTextField;
 
     void Start () {
-        googleCalendar = GetComponentInParent<GoogleCalendar>();
+        googleCalendarReader = GetComponentInParent<ReadFromGoogleCalendar>();
     }
 	
 	void Update () {
@@ -28,9 +27,9 @@ public class DayField : MonoBehaviour {
 
     IEnumerator UpdateEvent()
     {
-        if (googleCalendar.events != null)
+        if (googleCalendarReader.events != null)
         {
-            foreach(GoogleCalendarEvent calendarEvent in googleCalendar.events)
+            foreach(GoogleCalendarEvent calendarEvent in googleCalendarReader.events)
             {
                 DateTime startTime = DateTime.ParseExact(calendarEvent.start.dateTime, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture);
                 if (startTime.Day == representedDay.Day)

@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 65448867830855532}
   - component: {fileID: 114708565981347256}
   - component: {fileID: 114986176841329692}
+  - component: {fileID: 114629410295800686}
   m_Layer: 0
   m_Name: DayPrefab
   m_TagString: Untagged
@@ -335,6 +336,18 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   m_maskType: 0
+--- !u!114 &114629410295800686
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1740143631476046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c6360621360d6942a4dc7655901183d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventTextField: {fileID: 114991207684873962}
 --- !u!114 &114708565981347256
 MonoBehaviour:
   m_ObjectHideFlags: 1

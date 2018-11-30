@@ -1,15 +1,41 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
-using System.Collections.Generic;
-using System.IO;
-using System;
-
 
 // for implementation of asking user for authentification
-public class GoogleAuthentification : MonoBehaviour
+public class GoogleAuthentification
 {
-    /*GoogleCrendentials credentials;
+    public GoogleAccessToken gat { get; private set; }
+
+    public GoogleAuthentification() {
+        ReadGoogleCalendarAccessToken();
+    }
+
+    public IEnumerator GetNewAccessToken(UnityWebRequest getAccessTokenHTTPRequest)
+    {
+        UnityWebRequest NewAccessTokenRequest = getAccessTokenHTTPRequest;
+        NewAccessTokenRequest.chunkedTransfer = false;
+        yield return NewAccessTokenRequest.SendWebRequest();
+        if (NewAccessTokenRequest.isNetworkError || NewAccessTokenRequest.isHttpError)
+        {
+            Debug.Log(NewAccessTokenRequest.downloadHandler.text);
+        }
+        else
+        {
+            string refresh_token = gat.refresh_token;
+            gat = JsonUtility.FromJson<GoogleAccessToken>(NewAccessTokenRequest.downloadHandler.text);
+            gat.refresh_token = refresh_token;
+            Debug.Log("ACCESS: " + gat.access_token);
+        }
+    }
+
+    void ReadGoogleCalendarAccessToken()
+    {
+        TextAsset txtAsset = (TextAsset)Resources.Load("Credentials/access_token", typeof(TextAsset));
+        gat = JsonUtility.FromJson<GoogleAccessToken>(txtAsset.text);
+    }
+
+    /*
 
     [Serializable]
     public class Access_Token_Response

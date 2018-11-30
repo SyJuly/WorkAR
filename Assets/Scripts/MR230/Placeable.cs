@@ -590,7 +590,8 @@ public class Placeable : MonoBehaviour, IInputClickHandler, IFocusable
     /// </summary>
     public void OnInputClicked(InputClickedEventData eventData)
     {
-        if (!eventData.used && currentFocussedWidget && currentFocussedWidget == gameObject)
+        /*TODO: turn back on
+         * if (!eventData.used && currentFocussedWidget && currentFocussedWidget == gameObject)
         {
             if (!IsPlacing)
             {
@@ -601,7 +602,7 @@ public class Placeable : MonoBehaviour, IInputClickHandler, IFocusable
                 OnPlacementStop();
             }
             eventData.Use();
-        }
+        }*/
 
     }
 }
