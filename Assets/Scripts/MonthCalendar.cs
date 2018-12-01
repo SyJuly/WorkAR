@@ -88,6 +88,7 @@ public class MonthCalendar : MonoBehaviour {
                     }
                 }
                 if(startIndexing){
+                    Debug.Log("I do know that the month we are in is: " + DateTime.Now.Month.ToString());
                     dayField.GetComponent<DayField>().representedDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, dayIndex);
                     dayIndex++;
                     if (dayIndex > daysInMonth)

@@ -1,14 +1,14 @@
 ﻿using System;
 
 [Serializable]
-public struct GoogleCalendarEventsResponse
+public class GoogleCalendarEventsResponse
 {
     public string updated;
     public GoogleCalendarEvent[] items;
 }
 
 [Serializable]
-public struct GoogleCalendarEvent
+public class GoogleCalendarEvent
 {
     public GoogleCalendarEvent(string summary, DateTime start, DateTime end)
     {
@@ -24,7 +24,7 @@ public struct GoogleCalendarEvent
 }
 
 [Serializable]
-public struct GoogleTime
+public class GoogleTime
 {
     public GoogleTime(DateTime dateTimeToString)
     {

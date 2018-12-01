@@ -16,7 +16,7 @@ public class GoogleCalendarAPI : MonoBehaviour {
         ReadGoogleCalendarCredentials();
     }
 
-    public void RefreshAccessToken()
+    public void RefreshAccessToken(IRefreshedTokenRequester requester)
     {
         List<IMultipartFormSection> parameters = new List<IMultipartFormSection>();
         parameters.Add(new MultipartFormDataSection("client_secret", credentials.client_secret));
@@ -25,7 +25,7 @@ public class GoogleCalendarAPI : MonoBehaviour {
         parameters.Add(new MultipartFormDataSection("client_id", credentials.client_id));
         parameters.Add(new MultipartFormDataSection("t", getUTCTime()));
 
-        StartCoroutine(authentificator.GetNewAccessToken(UnityWebRequest.Post(credentials.token_uri, parameters)));
+        StartCoroutine(authentificator.GetNewAccessToken(UnityWebRequest.Post(credentials.token_uri, parameters), requester));
     }
 
     public UnityWebRequest GetCalendarEventsHTTPRequest()

@@ -2,6 +2,11 @@
 using System.Collections;
 using UnityEngine.Networking;
 
+public interface IRefreshedTokenRequester
+{
+    void AfterRefreshedToken();
+}
+
 // for implementation of asking user for authentification
 public class GoogleAuthentification
 {
@@ -11,7 +16,7 @@ public class GoogleAuthentification
         ReadGoogleCalendarAccessToken();
     }
 
-    public IEnumerator GetNewAccessToken(UnityWebRequest getAccessTokenHTTPRequest)
+    public IEnumerator GetNewAccessToken(UnityWebRequest getAccessTokenHTTPRequest, IRefreshedTokenRequester requester)
     {
         UnityWebRequest NewAccessTokenRequest = getAccessTokenHTTPRequest;
         NewAccessTokenRequest.chunkedTransfer = false;
@@ -25,7 +30,7 @@ public class GoogleAuthentification
             string refresh_token = gat.refresh_token;
             gat = JsonUtility.FromJson<GoogleAccessToken>(NewAccessTokenRequest.downloadHandler.text);
             gat.refresh_token = refresh_token;
-            Debug.Log("ACCESS: " + gat.access_token);
+            requester.AfterRefreshedToken();
         }
     }
 

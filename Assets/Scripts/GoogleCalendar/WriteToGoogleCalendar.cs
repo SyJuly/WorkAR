@@ -4,37 +4,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class WriteToGoogleCalendar : MonoBehaviour {
+public class WriteToGoogleCalendar : MonoBehaviour, IRefreshedTokenRequester {
 
     GoogleCalendarAPI calendarAPI;
 
-    bool tryAgain = false;
+    GoogleCalendarEvent eventToBeInserted;
 
     void Start()
     {
         calendarAPI = GetComponent<GoogleCalendarAPI>();
     }
 
-    private void Update()
+    public void SendEventToCalendar(GoogleCalendarEvent eventToInsert)
     {
-        if (tryAgain)
-        {
-            StartCoroutine(InsertEvent());
-            tryAgain = false;
-        }
-    }
-
-    public void SendEventToCalendar(string eventName)
-    {
+        eventToBeInserted = eventToInsert;
         StartCoroutine(InsertEvent());
-        
     }
 
     IEnumerator InsertEvent()
     {
-        Debug.Log("send new event......DRAAAAAAAAAAAAAAAAGOOOOOOOOOOOOOONS");
-        GoogleCalendarEvent eventToInsert = new GoogleCalendarEvent("blaevent", DateTime.Now, DateTime.Now);
-        UnityWebRequest InserEventRequest = calendarAPI.InsertCalendarevent(eventToInsert);
+        UnityWebRequest InserEventRequest = calendarAPI.InsertCalendarevent(eventToBeInserted);
 
         yield return InserEventRequest.SendWebRequest();
         if (InserEventRequest.isNetworkError || InserEventRequest.isHttpError)
@@ -42,13 +31,20 @@ public class WriteToGoogleCalendar : MonoBehaviour {
             if (InserEventRequest.responseCode == 401)
             {
                 Debug.Log("Refreshed token");
-                calendarAPI.RefreshAccessToken();
-                tryAgain = true;
+                calendarAPI.RefreshAccessToken(this);
             }
         }
         else
         {
-            Debug.Log("success sending post");
+            eventToBeInserted = null;
+        }
+    }
+
+    public void AfterRefreshedToken()
+    {
+        if(eventToBeInserted != null)
+        {
+            StartCoroutine(InsertEvent());
         }
     }
 }

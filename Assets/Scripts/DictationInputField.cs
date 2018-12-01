@@ -1,48 +1,33 @@
 ﻿using HoloToolkit.Unity.InputModule;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Windows.Speech;
 
-public class DictationInputField : MonoBehaviour, IInputClickHandler, IFocusable
+public class DictationInputField : MonoBehaviour, IInputClickHandler, IFocusable, IDictationInputReceiver
 {
     WriteToGoogleCalendar googleCalendarWriter;
 
-    DictationRecognizer dictationRecognizer;
+    DictationInputHandler dictationHandler;
+
+    DayField dayField;
+
+    [SerializeField]
+    int hourAllEventsBegin = 8;
+
+    [SerializeField]
+    int hourAllEventsEnd = 18;
 
     [SerializeField]
     TextMeshPro eventTextField;
 
-    bool dictateModeOn = false;
-
     bool isFocussed = false;
 
     void Start () {
-        dictationRecognizer = new DictationRecognizer();
-        dictationRecognizer.DictationResult += DictationRecognizer_DictationResult;
-        dictationRecognizer.DictationComplete += DictationRecognizer_DictationComplete;
-        dictationRecognizer.DictationError += DictationRecognizer_DictationError;
-
+        dayField = GetComponent<DayField>();
+        dictationHandler = DictationInputHandler.Instance.gameObject.GetComponent<DictationInputHandler>();
         googleCalendarWriter = GetComponentInParent<WriteToGoogleCalendar>();
         Debug.Log("dictation recognizer instantiated.");
-    }
-
-    private void DictationRecognizer_DictationResult(string text, ConfidenceLevel confidence)
-    {
-        Debug.Log("DictationResult: " + text);
-        eventTextField.text = text;
-        googleCalendarWriter.SendEventToCalendar(text);
-    }
-
-    private void DictationRecognizer_DictationComplete(DictationCompletionCause cause)
-    {
-        Debug.Log("Completeing dictation: " + cause);
-        dictationRecognizer.Stop();
-    }
-
-    private void DictationRecognizer_DictationError(string error, int hresult)
-    {
-        Debug.Log("Error during dictation: " + error);
-        dictationRecognizer.Stop();
     }
 
     public void OnFocusEnter()
@@ -59,8 +44,16 @@ public class DictationInputField : MonoBehaviour, IInputClickHandler, IFocusable
     {
         if (isFocussed)
         {
-            Debug.Log("input clicked, let's start Dictation");
-            dictationRecognizer.Start();
+            dictationHandler.ActivateInputField(this);
         }
+    }
+
+    public void ReceiveDictationResult(string message)
+    {
+        eventTextField.text = message;
+        DateTime start = new DateTime(dayField.representedDay.Year, dayField.representedDay.Month, dayField.representedDay.Day, hourAllEventsBegin, 0, 0); 
+        DateTime end = new DateTime(dayField.representedDay.Year, dayField.representedDay.Month, dayField.representedDay.Day, hourAllEventsEnd, 0, 0); 
+        GoogleCalendarEvent createdEvent = new GoogleCalendarEvent(message, start, end);
+        googleCalendarWriter.SendEventToCalendar(createdEvent);
     }
 }

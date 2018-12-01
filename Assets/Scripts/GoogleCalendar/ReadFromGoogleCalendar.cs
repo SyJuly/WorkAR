@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.Networking;
 
-public class ReadFromGoogleCalendar : MonoBehaviour
+public class ReadFromGoogleCalendar : MonoBehaviour, IRefreshedTokenRequester
 {
     GoogleCalendarAPI calendarAPI;
 
@@ -35,7 +35,7 @@ public class ReadFromGoogleCalendar : MonoBehaviour
             if (AlleCalendarEventsRequest.responseCode == 401)
             {
                 Debug.Log("Refreshed token");
-                calendarAPI.RefreshAccessToken();
+                calendarAPI.RefreshAccessToken(this);
             }
         }
         else
@@ -45,5 +45,8 @@ public class ReadFromGoogleCalendar : MonoBehaviour
         }
     }
 
-    
+    public void AfterRefreshedToken()
+    {
+        StartCoroutine(GetCalendarEvents());
+    }
 }
