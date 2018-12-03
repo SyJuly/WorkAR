@@ -15,6 +15,9 @@ public class MonthCalendar : MonoBehaviour {
     GameObject dayPrefab;
 
     [SerializeField]
+    GameObject weekDayPrefab;
+
+    [SerializeField]
     float borderLeft = 0.05f;
 
     [SerializeField]
@@ -64,31 +67,27 @@ public class MonthCalendar : MonoBehaviour {
             for (int i = 0; i < numberOfRows; i++)
             {
 
-                GameObject dayField = Instantiate(dayPrefab);
+                GameObject dayField = (n==0) ? GetNewWeekDayField(i) : GetNewDayField();
                 dayField.transform.parent = gameObject.transform;
                 float fieldX = gameObject.transform.localPosition.x + divCounterX - leftAlign - divX / 2;
                 dayField.transform.localPosition = new Vector3(fieldX, fieldY, - 0.5f);
                 dayField.transform.localRotation = Quaternion.identity;
-                dayField.transform.localScale = dayPrefab.transform.localScale;
+                dayField.transform.localScale = new Vector3(dayPrefab.transform.localScale.x, dayPrefab.transform.localScale.y, 0.5f);
                 
                 divCounterX += divX;
                 
-                if (n == 0)
-                {   //first row shows days of week
-                    makeWeekDayField(dayField, i);
-                } else if (!startIndexing)
+                if (!startIndexing)
                 {   
                     if(n == 1 && i == indexFirstDayOfWeekOfMonth)
                     {   //when first week day of current month is drawn, start counting
                         dayIndex = 1;
                         startIndexing = true;
-                    } else
+                    } else if (n != 0)
                     {   //if dayField is before first week day of current month
                         dayField.SetActive(false);
                     }
                 }
                 if(startIndexing){
-                    Debug.Log("I do know that the month we are in is: " + DateTime.Now.Month.ToString());
                     dayField.GetComponent<DayField>().representedDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, dayIndex);
                     dayIndex++;
                     if (dayIndex > daysInMonth)
@@ -100,11 +99,17 @@ public class MonthCalendar : MonoBehaviour {
         }
     }
 
-    private void makeWeekDayField(GameObject dayFieldGO, int i)
+    private GameObject GetNewWeekDayField(int i)
     {
-        dayFieldGO.GetComponent<DayField>().enabled = false;
-        WeekDayField weekDayField = dayFieldGO.GetComponent<WeekDayField>();
+        GameObject weekDayFieldGO = Instantiate(weekDayPrefab);
+        WeekDayField weekDayField = weekDayFieldGO.GetComponent<WeekDayField>();
         weekDayField.enabled = true;
         weekDayField.dayOfWeek = i;
+        return weekDayFieldGO;
+    }
+
+    private GameObject GetNewDayField()
+    {
+        return Instantiate(dayPrefab);
     }
 }

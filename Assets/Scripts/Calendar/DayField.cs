@@ -1,23 +1,28 @@
-﻿using System;
+﻿using HoloToolkit.Unity.InputModule;
+using System;
 using System.Collections;
 using System.Globalization;
 using TMPro;
 using UnityEngine;
 
-public class DayField : MonoBehaviour {
+public class DayField : MonoBehaviour, IFocusable {
     
     public DateTime representedDay;
 
     ReadFromGoogleCalendar googleCalendarReader;
 
     [SerializeField]
-    TextMeshPro dayNumberTextField;
+    TextMeshProUGUI dayNumberTextField;
 
     [SerializeField]
-    TextMeshPro eventTextField;
+    TextMeshProUGUI eventTitleTextField;
+
+    EventCreationButton eventCreationButton;
 
     void Start () {
         googleCalendarReader = GetComponentInParent<ReadFromGoogleCalendar>();
+        eventCreationButton = GetComponentInChildren<EventCreationButton>();
+        eventCreationButton.gameObject.SetActive(false);
     }
 	
 	void Update () {
@@ -36,10 +41,20 @@ public class DayField : MonoBehaviour {
                     && startTime.Month == representedDay.Month
                     && startTime.Day == representedDay.Day)
                 {
-                    eventTextField.text = calendarEvent.summary;
+                    eventTitleTextField.text = calendarEvent.summary;
                 }
             }
         }
         yield return new WaitForSeconds(1);
+    }
+
+    public void OnFocusEnter()
+    {
+        eventCreationButton.gameObject.SetActive(true);
+    }
+
+    public void OnFocusExit()
+    {
+        eventCreationButton.gameObject.SetActive(false);
     }
 }

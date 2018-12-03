@@ -19,7 +19,7 @@ public class DictationInputField : MonoBehaviour, IInputClickHandler, IFocusable
     int hourAllEventsEnd = 18;
 
     [SerializeField]
-    TextMeshPro eventTextField;
+    TextMeshProUGUI eventTitleTextField;
 
     bool isFocussed = false;
 
@@ -50,7 +50,7 @@ public class DictationInputField : MonoBehaviour, IInputClickHandler, IFocusable
 
     public void ReceiveDictationResult(string message)
     {
-        eventTextField.text = message;
+        eventTitleTextField.text = message;
         DateTime start = new DateTime(dayField.representedDay.Year, dayField.representedDay.Month, dayField.representedDay.Day, hourAllEventsBegin, 0, 0); 
         DateTime end = new DateTime(dayField.representedDay.Year, dayField.representedDay.Month, dayField.representedDay.Day, hourAllEventsEnd, 0, 0); 
         GoogleCalendarEvent createdEvent = new GoogleCalendarEvent(message, start, end);
