@@ -349,7 +349,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hourAllEventsBegin: 8
   hourAllEventsEnd: 18
-  eventTextField: {fileID: 114991207684873962}
+  eventTitleTextField: {fileID: 0}
 --- !u!114 &114708565981347256
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -361,8 +361,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c8e7994d75ac5340803751c3fc46241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayNumberTextField: {fileID: 114325496446342918}
-  eventTextField: {fileID: 114991207684873962}
+  dayNumberTextField: {fileID: 0}
+  eventLinePrefab: {fileID: 0}
 --- !u!114 &114986176841329692
 MonoBehaviour:
   m_ObjectHideFlags: 1
