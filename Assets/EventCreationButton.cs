@@ -3,28 +3,34 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Experimental.UIElements;
+using UnityEngine.UI;
 
-public class EventCreationButton : MonoBehaviour, IInputClickHandler
+public class EventCreationButton : MonoBehaviour, IReactOnDictationInput
 {
-    [SerializeField]
     Image buttonImage;
 
     [SerializeField]
     Sprite creating;
 
     [SerializeField]
-    Texture recording;
+    Sprite recording;
 
     TextMeshProUGUI buttonTextField;
 
     void Start() {
         buttonTextField = GetComponentInChildren<TextMeshProUGUI>();
+        buttonImage = GetComponentInChildren<Image>();
     }
 
-    public void OnInputClicked(InputClickedEventData eventData)
+    public void ReactOnDictationStart()
     {
         buttonTextField.text = "Recording";
-        buttonImage.image = recording;
+        buttonImage.sprite = recording;
+    }
+
+    public void ReactOnDictationStop()
+    {
+        buttonTextField.text = "Create Event";
+        buttonImage.sprite = creating;
     }
 }

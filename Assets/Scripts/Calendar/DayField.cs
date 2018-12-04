@@ -5,7 +5,8 @@ using System.Globalization;
 using TMPro;
 using UnityEngine;
 
-public class DayField : MonoBehaviour, IFocusable {
+public class DayField : MonoBehaviour, IFocusable
+{
     
     public DateTime representedDay;
 

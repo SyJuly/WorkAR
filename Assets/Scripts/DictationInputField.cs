@@ -4,6 +4,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Windows.Speech;
 
+public interface IReactOnDictationInput
+{
+    void ReactOnDictationStart();
+    void ReactOnDictationStop();
+}
+
 public class DictationInputField : MonoBehaviour, IInputClickHandler, IFocusable, IDictationInputReceiver
 {
     WriteToGoogleCalendar googleCalendarWriter;
@@ -11,6 +17,8 @@ public class DictationInputField : MonoBehaviour, IInputClickHandler, IFocusable
     DictationInputHandler dictationHandler;
 
     DayField dayField;
+
+    IReactOnDictationInput button;
 
     [SerializeField]
     int hourAllEventsBegin = 8;
@@ -24,10 +32,10 @@ public class DictationInputField : MonoBehaviour, IInputClickHandler, IFocusable
     bool isFocussed = false;
 
     void Start () {
-        dayField = GetComponent<DayField>();
+        dayField = GetComponentInParent<DayField>();
         dictationHandler = DictationInputHandler.Instance.gameObject.GetComponent<DictationInputHandler>();
         googleCalendarWriter = GetComponentInParent<WriteToGoogleCalendar>();
-        Debug.Log("dictation recognizer instantiated.");
+        button = GetComponent<EventCreationButton>();
     }
 
     public void OnFocusEnter()
@@ -45,11 +53,13 @@ public class DictationInputField : MonoBehaviour, IInputClickHandler, IFocusable
         if (isFocussed)
         {
             dictationHandler.ActivateInputField(this);
+            button.ReactOnDictationStart();
         }
     }
 
     public void ReceiveDictationResult(string message)
     {
+        button.ReactOnDictationStop();
         eventTitleTextField.text = message;
         DateTime start = new DateTime(dayField.representedDay.Year, dayField.representedDay.Month, dayField.representedDay.Day, hourAllEventsBegin, 0, 0); 
         DateTime end = new DateTime(dayField.representedDay.Year, dayField.representedDay.Month, dayField.representedDay.Day, hourAllEventsEnd, 0, 0); 
