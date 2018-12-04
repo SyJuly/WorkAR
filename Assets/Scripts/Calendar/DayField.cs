@@ -15,10 +15,12 @@ public class DayField : MonoBehaviour, IFocusable
     [SerializeField]
     TextMeshProUGUI dayNumberTextField;
 
-    [SerializeField]
-    TextMeshProUGUI eventTitleTextField;
-
     EventCreationButton eventCreationButton;
+
+    [SerializeField]
+    EventLine eventLinePrefab;
+
+    int numberOfEventsShowing = 0;
 
     void Start () {
         googleCalendarReader = GetComponentInParent<ReadFromGoogleCalendar>();
@@ -31,7 +33,7 @@ public class DayField : MonoBehaviour, IFocusable
         StartCoroutine(UpdateEvent());
     }
 
-    IEnumerator UpdateEvent()
+   IEnumerator UpdateEvent()
     {
         if (googleCalendarReader.events != null)
         {
@@ -40,9 +42,15 @@ public class DayField : MonoBehaviour, IFocusable
                 DateTime startTime = DateTime.ParseExact(calendarEvent.start.dateTime, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture);
                 if (startTime.Year == representedDay.Year
                     && startTime.Month == representedDay.Month
-                    && startTime.Day == representedDay.Day)
+                    && startTime.Day == representedDay.Day
+                    && numberOfEventsShowing < 1)
                 {
-                    eventTitleTextField.text = calendarEvent.summary;
+                    EventLine eventToShow = Instantiate(eventLinePrefab);
+                    eventToShow.transform.SetParent(GetComponentInChildren<Canvas>().transform, false);
+                    numberOfEventsShowing++;
+                    eventToShow.eventTitleTextField.text = calendarEvent.summary;
+                    DateTime endTime = DateTime.ParseExact(calendarEvent.end.dateTime, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture);
+                    eventToShow.eventTimeTextField.text = startTime.ToString("HH:mm") + "\n" + endTime.ToString("HH:mm");
                 }
             }
         }
