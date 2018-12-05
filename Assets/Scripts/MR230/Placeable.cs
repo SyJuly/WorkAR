@@ -29,7 +29,7 @@ public enum PlacementSurfaces
 /// * A transparent cube representing the object's box collider.
 /// * Shadow on the target surface indicating whether or not placement is valid.
 /// </summary>
-public class Placeable : MonoBehaviour, IInputClickHandler, IFocusable
+public class Placeable : MonoBehaviour, IInputClickHandler
 {
     [Tooltip("The base material used to render the bounds asset when placement is allowed.")]
     public Material PlaceableBoundsMaterial = null;
@@ -565,24 +565,29 @@ public class Placeable : MonoBehaviour, IInputClickHandler, IFocusable
 
     /* Change event handling: This code differs from the Tutorial from https://docs.microsoft.com/en-us/windows/mixed-reality/holograms-230*/
 
-    GameObject currentFocussedWidget = null;
+
+    bool isPlacementButtonFocused = false;
+
+    void Start()
+    {
+        PlacementButton button = GetComponentInChildren<PlacementButton>();
+        if (button != null)
+        {
+            button.source = this;
+        } else
+        {
+            throw new System.Exception("No placement button found in children.");
+        }
+        
+    }
 
     /// <summary>
     /// Record which object is focussed.
     /// </summary>
 
-    public void OnFocusEnter()
+    public void IsFocused(bool isFocused)
     {
-        Placeable newFocussedWidget = gameObject.GetComponent<Placeable>();
-        if (newFocussedWidget)
-        {
-            currentFocussedWidget = newFocussedWidget.gameObject;
-        }
-    }
-
-    public void OnFocusExit()
-    {
-        currentFocussedWidget = null;
+        isPlacementButtonFocused = isFocused;
     }
 
     /// <summary>
@@ -590,8 +595,7 @@ public class Placeable : MonoBehaviour, IInputClickHandler, IFocusable
     /// </summary>
     public void OnInputClicked(InputClickedEventData eventData)
     {
-        /*TODO: turn back on
-         * if (!eventData.used && currentFocussedWidget && currentFocussedWidget == gameObject)
+        if (!eventData.used && isPlacementButtonFocused)
         {
             if (!IsPlacing)
             {
@@ -602,7 +606,7 @@ public class Placeable : MonoBehaviour, IInputClickHandler, IFocusable
                 OnPlacementStop();
             }
             eventData.Use();
-        }*/
+        }
 
     }
 }
