@@ -5,7 +5,7 @@ using System.Globalization;
 using TMPro;
 using UnityEngine;
 
-public class DayField : MonoBehaviour, IFocusable
+public class DayField : MonoBehaviour
 {
     
     public DateTime representedDay;
@@ -15,8 +15,6 @@ public class DayField : MonoBehaviour, IFocusable
     [SerializeField]
     TextMeshProUGUI dayNumberTextField;
 
-    EventCreationButton eventCreationButton;
-
     [SerializeField]
     EventLine eventLinePrefab;
 
@@ -24,8 +22,6 @@ public class DayField : MonoBehaviour, IFocusable
 
     void Start () {
         googleCalendarReader = GetComponentInParent<ReadFromGoogleCalendar>();
-        eventCreationButton = GetComponentInChildren<EventCreationButton>();
-        eventCreationButton.gameObject.SetActive(false);
     }
 	
 	void Update () {
@@ -45,7 +41,6 @@ public class DayField : MonoBehaviour, IFocusable
                     && startTime.Day == representedDay.Day
                     && numberOfEventsShowing < 1)
                 {
-                    ErrorField.Instance.textMesh.text = "DayField knows its event\n" + ErrorField.Instance.textMesh.text;
                     EventLine eventToShow = Instantiate(eventLinePrefab);
                     eventToShow.transform.SetParent(GetComponentInChildren<Canvas>().transform, false);
                     numberOfEventsShowing++;
@@ -56,15 +51,5 @@ public class DayField : MonoBehaviour, IFocusable
             }
         }
         yield return new WaitForSeconds(1);
-    }
-
-    public void OnFocusEnter()
-    {
-        eventCreationButton.gameObject.SetActive(true);
-    }
-
-    public void OnFocusExit()
-    {
-        eventCreationButton.gameObject.SetActive(false);
     }
 }

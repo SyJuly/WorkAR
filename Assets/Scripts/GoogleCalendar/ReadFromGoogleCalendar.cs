@@ -19,7 +19,7 @@ public class ReadFromGoogleCalendar : MonoBehaviour, IRefreshedTokenRequester
         while(true)
         {
             StartCoroutine(GetCalendarEvents());
-            yield return new WaitForSeconds(15);
+            yield return new WaitForSeconds(10);
         }
     }
 
@@ -28,6 +28,7 @@ public class ReadFromGoogleCalendar : MonoBehaviour, IRefreshedTokenRequester
         Debug.Log("Try get new calendar events");
         UnityWebRequest AlleCalendarEventsRequest = calendarAPI.GetCalendarEventsHTTPRequest();
         AlleCalendarEventsRequest.chunkedTransfer = false;
+        AlleCalendarEventsRequest.timeout = 100000;
 
         yield return AlleCalendarEventsRequest.SendWebRequest();
         if (AlleCalendarEventsRequest.isNetworkError || AlleCalendarEventsRequest.isHttpError)
@@ -36,18 +37,12 @@ public class ReadFromGoogleCalendar : MonoBehaviour, IRefreshedTokenRequester
             if (AlleCalendarEventsRequest.responseCode == 401)
             {
                 Debug.Log("Refreshed token");
-                ErrorField.Instance.textMesh.text = "Refreshed token\n" + ErrorField.Instance.textMesh.text;
                 calendarAPI.RefreshAccessToken(this);
             }
-            ErrorField.Instance.textMesh.text =
-                "some error while calendar request "
-                + AlleCalendarEventsRequest.responseCode
-                + AlleCalendarEventsRequest.downloadHandler.text
-                + "\n" + ErrorField.Instance.textMesh.text;
+            Debug.Log("An error occured receiving events: " + AlleCalendarEventsRequest.responseCode);
         }
         else
         {
-            ErrorField.Instance.textMesh.text = "events received\n" + ErrorField.Instance.textMesh.text;
             GoogleCalendarEventsResponse eventsResponse = JsonUtility.FromJson<GoogleCalendarEventsResponse>(AlleCalendarEventsRequest.downloadHandler.text);
             events = eventsResponse.items;
         }

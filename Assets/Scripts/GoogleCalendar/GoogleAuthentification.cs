@@ -19,19 +19,17 @@ public class GoogleAuthentification
     public IEnumerator GetNewAccessToken(UnityWebRequest getAccessTokenHTTPRequest, IRefreshedTokenRequester requester)
     {
         UnityWebRequest NewAccessTokenRequest = getAccessTokenHTTPRequest;
-        ErrorField.Instance.textMesh.text = "sending new access token request\n" + ErrorField.Instance.textMesh.text;
         NewAccessTokenRequest.chunkedTransfer = false;
+        NewAccessTokenRequest.timeout = 100000;
         yield return NewAccessTokenRequest.SendWebRequest();
         if (NewAccessTokenRequest.isNetworkError || NewAccessTokenRequest.isHttpError)
         {
             Debug.Log(NewAccessTokenRequest.downloadHandler.text);
-            ErrorField.Instance.textMesh.text = "error while getting new access token:" + NewAccessTokenRequest.downloadHandler.text + "\n" + ErrorField.Instance.textMesh.text;
         }
         else
         {
             string refresh_token = gat.refresh_token;
             gat = JsonUtility.FromJson<GoogleAccessToken>(NewAccessTokenRequest.downloadHandler.text);
-            ErrorField.Instance.textMesh.text = "got new access token\n" + ErrorField.Instance.textMesh.text;
             gat.refresh_token = refresh_token;
             requester.AfterRefreshedToken();
         }
@@ -39,9 +37,7 @@ public class GoogleAuthentification
 
     void ReadGoogleCalendarAccessToken()
     {
-        ErrorField.Instance.textMesh.text = "reading access token\n" + ErrorField.Instance.textMesh.text;
         TextAsset txtAsset = (TextAsset)Resources.Load("Credentials/access_token", typeof(TextAsset));
-        ErrorField.Instance.textMesh.text = "reading access token successfully?" + (txtAsset != null) + "\n" + ErrorField.Instance.textMesh.text;
         gat = JsonUtility.FromJson<GoogleAccessToken>(txtAsset.text);
     }
     /*

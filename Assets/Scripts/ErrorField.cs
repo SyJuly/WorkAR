@@ -24,6 +24,23 @@ public class ErrorField : MonoBehaviour {
         }
     }
 
+    void OnEnable()
+    {
+        //TODO: Uncomment for logging debugs
+        //Application.logMessageReceived += handleUnityLog;
+    }
+
+    private void handleUnityLog(string logString, string stackTrace, LogType type)
+    {
+        ErrorField.Instance.textMesh.text = "Trace: " + logString + "\n" + ErrorField.Instance.textMesh.text;
+        ErrorField.Instance.textMesh.text = "StackTrace: " + stackTrace.ToString() + "\n" + ErrorField.Instance.textMesh.text;
+    }
+
+    void OnDisable()
+    {
+        Application.logMessageReceived -= handleUnityLog;
+    }
+
     private void Start()
     {
         textMesh = GetComponentInChildren<TextMeshPro>();
