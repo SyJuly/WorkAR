@@ -11,7 +11,35 @@ public class GoogleCalendarAPI : MonoBehaviour {
     GoogleAuthentification authentificator;
 
     // Use this for initialization
-    void OnEnable () {
+    void Awake () {
+        authentificator = new GoogleAuthentification();
+        ReadGoogleCalendarCredentials();
+    }
+
+    void OnEnable()
+    {
+        ErrorField.Instance.textMesh.text = "Awake happened: authentificator?" + (authentificator != null) +"\n" + ErrorField.Instance.textMesh.text;
+        ErrorField.Instance.textMesh.text = "OnEnable: creating google authentificator\n" + ErrorField.Instance.textMesh.text;
+        Application.logMessageReceived += handleUnityLog;
+        authentificator = new GoogleAuthentification();
+        ReadGoogleCalendarCredentials();
+    }
+
+    private void handleUnityLog(string logString, string stackTrace, LogType type)
+    {
+        ErrorField.Instance.textMesh.text = "Trace: " + logString + "\n" + ErrorField.Instance.textMesh.text;
+        ErrorField.Instance.textMesh.text = "StackTrace: " + stackTrace.ToString() + "\n" + ErrorField.Instance.textMesh.text;
+    }
+
+    void OnDisable()
+    {
+        Application.logMessageReceived -= handleUnityLog;
+    }
+
+    void Start()
+    {
+        ErrorField.Instance.textMesh.text = "Awake happened: authentificator?" + (authentificator != null) + "\n" + ErrorField.Instance.textMesh.text;
+        ErrorField.Instance.textMesh.text = "Start: creating google authentificator\n" + ErrorField.Instance.textMesh.text;
         authentificator = new GoogleAuthentification();
         ReadGoogleCalendarCredentials();
     }
@@ -30,13 +58,16 @@ public class GoogleCalendarAPI : MonoBehaviour {
 
     public UnityWebRequest GetCalendarEventsHTTPRequest()
     {
+        ErrorField.Instance.textMesh.text = "get calendar events\n" + ErrorField.Instance.textMesh.text;
+        ErrorField.Instance.textMesh.text = "is authentificator available?" + (authentificator != null) + "\n" + ErrorField.Instance.textMesh.text;
+        ErrorField.Instance.textMesh.text = "is credentials available?" + (credentials.calendar_id != null) + "\n" + ErrorField.Instance.textMesh.text;
+        ErrorField.Instance.textMesh.text = "is gat available?" + (authentificator.gat != null) +"\n" + ErrorField.Instance.textMesh.text;
         return UnityWebRequest.Get(credentials.calendar_endpoint + credentials.calendar_id + "/events?access_token=" + authentificator.gat.access_token + "&t=" + getUTCTime());
     }
 
     public UnityWebRequest InsertCalendarevent(GoogleCalendarEvent eventToInsert)
     {
         string stringEventToInsert = JsonUtility.ToJson(eventToInsert);
-
         UnityWebRequest post = new UnityWebRequest(credentials.calendar_endpoint + credentials.calendar_id + "/events?access_token=" + authentificator.gat.access_token + "&t=" + getUTCTime(), "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(stringEventToInsert);
         post.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -47,6 +78,7 @@ public class GoogleCalendarAPI : MonoBehaviour {
 
     void ReadGoogleCalendarCredentials()
     {
+        ErrorField.Instance.textMesh.text = "read google credentials\n" + ErrorField.Instance.textMesh.text;
         TextAsset txtAsset = (TextAsset)Resources.Load("Credentials/credentials_googlecalendar_workAR", typeof(TextAsset));
         credentials = JsonUtility.FromJson<GoogleCrendentials>(txtAsset.text);
     }

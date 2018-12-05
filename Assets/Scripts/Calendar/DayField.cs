@@ -45,6 +45,7 @@ public class DayField : MonoBehaviour, IFocusable
                     && startTime.Day == representedDay.Day
                     && numberOfEventsShowing < 1)
                 {
+                    ErrorField.Instance.textMesh.text = "DayField knows its event\n" + ErrorField.Instance.textMesh.text;
                     EventLine eventToShow = Instantiate(eventLinePrefab);
                     eventToShow.transform.SetParent(GetComponentInChildren<Canvas>().transform, false);
                     numberOfEventsShowing++;

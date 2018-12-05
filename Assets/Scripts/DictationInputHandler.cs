@@ -41,6 +41,7 @@ public class DictationInputHandler : MonoBehaviour
     public void ActivateInputField(IDictationInputReceiver dictationReceiver)
     {
         Debug.Log("input clicked, let's start Dictation");
+        ErrorField.Instance.textMesh.text = "starting dictation";
         activatedInputField = dictationReceiver;
         StartRecording();
     }
@@ -57,8 +58,9 @@ public class DictationInputHandler : MonoBehaviour
     private void DictationRecognizer_DictationResult(string text, ConfidenceLevel confidence)
     {
         Debug.Log("DictationResult: " + text);
-        activatedInputField.ReceiveDictationResult(text);
+        ErrorField.Instance.textMesh.text = "DictationResult: " + text + "\n" + ErrorField.Instance.textMesh.text;
         StopRecording();
+        activatedInputField.ReceiveDictationResult(text);
     }
 
     private void DictationRecognizer_DictationComplete(DictationCompletionCause cause)
