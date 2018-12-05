@@ -20,6 +20,7 @@ public class GoogleAuthentification
     {
         UnityWebRequest NewAccessTokenRequest = getAccessTokenHTTPRequest;
         NewAccessTokenRequest.chunkedTransfer = false;
+        NewAccessTokenRequest.timeout = 100000;
         yield return NewAccessTokenRequest.SendWebRequest();
         if (NewAccessTokenRequest.isNetworkError || NewAccessTokenRequest.isHttpError)
         {
@@ -39,7 +40,6 @@ public class GoogleAuthentification
         TextAsset txtAsset = (TextAsset)Resources.Load("Credentials/access_token", typeof(TextAsset));
         gat = JsonUtility.FromJson<GoogleAccessToken>(txtAsset.text);
     }
-
     /*
 
     [Serializable]

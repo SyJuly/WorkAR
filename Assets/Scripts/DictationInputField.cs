@@ -60,7 +60,6 @@ public class DictationInputField : MonoBehaviour, IInputClickHandler, IFocusable
     public void ReceiveDictationResult(string message)
     {
         button.ReactOnDictationStop();
-        eventTitleTextField.text = message;
         DateTime start = new DateTime(dayField.representedDay.Year, dayField.representedDay.Month, dayField.representedDay.Day, hourAllEventsBegin, 0, 0); 
         DateTime end = new DateTime(dayField.representedDay.Year, dayField.representedDay.Month, dayField.representedDay.Day, hourAllEventsEnd, 0, 0); 
         GoogleCalendarEvent createdEvent = new GoogleCalendarEvent(message, start, end);

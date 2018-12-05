@@ -57,8 +57,8 @@ public class DictationInputHandler : MonoBehaviour
     private void DictationRecognizer_DictationResult(string text, ConfidenceLevel confidence)
     {
         Debug.Log("DictationResult: " + text);
-        activatedInputField.ReceiveDictationResult(text);
         StopRecording();
+        activatedInputField.ReceiveDictationResult(text);
     }
 
     private void DictationRecognizer_DictationComplete(DictationCompletionCause cause)

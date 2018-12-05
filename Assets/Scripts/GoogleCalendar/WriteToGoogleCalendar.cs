@@ -24,7 +24,7 @@ public class WriteToGoogleCalendar : MonoBehaviour, IRefreshedTokenRequester {
     IEnumerator InsertEvent()
     {
         UnityWebRequest InserEventRequest = calendarAPI.InsertCalendarevent(eventToBeInserted);
-
+        InserEventRequest.timeout = 90000000;
         yield return InserEventRequest.SendWebRequest();
         if (InserEventRequest.isNetworkError || InserEventRequest.isHttpError)
         {

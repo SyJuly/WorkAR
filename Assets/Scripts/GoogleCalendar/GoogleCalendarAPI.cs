@@ -11,7 +11,13 @@ public class GoogleCalendarAPI : MonoBehaviour {
     GoogleAuthentification authentificator;
 
     // Use this for initialization
-    void OnEnable () {
+    void Awake () {
+        authentificator = new GoogleAuthentification();
+        ReadGoogleCalendarCredentials();
+    }
+
+    void Start()
+    {
         authentificator = new GoogleAuthentification();
         ReadGoogleCalendarCredentials();
     }
@@ -36,7 +42,6 @@ public class GoogleCalendarAPI : MonoBehaviour {
     public UnityWebRequest InsertCalendarevent(GoogleCalendarEvent eventToInsert)
     {
         string stringEventToInsert = JsonUtility.ToJson(eventToInsert);
-
         UnityWebRequest post = new UnityWebRequest(credentials.calendar_endpoint + credentials.calendar_id + "/events?access_token=" + authentificator.gat.access_token + "&t=" + getUTCTime(), "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(stringEventToInsert);
         post.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
