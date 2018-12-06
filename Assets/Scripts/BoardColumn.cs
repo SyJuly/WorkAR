@@ -42,12 +42,13 @@ public class BoardColumn : MonoBehaviour {
         float divCounterY = divY;
         for (int n = 0; n < cards.Count; n++)
         {
-            GameObject field = Instantiate(notePrefab, transform);
-            float fieldY = gameObject.transform.localPosition.y + divCounterY - topAlign;
-            float fieldX = 0;
-            field.transform.localPosition = new Vector3(fieldX, fieldY, -0.5f);
-            field.transform.localRotation = Quaternion.identity;
-            field.transform.localScale = new Vector3(notePrefab.transform.localScale.x, notePrefab.transform.localScale.y, 0.5f);
+            GameObject note = Instantiate(notePrefab, transform);
+            note.GetComponentInChildren<Canvas>().GetComponentInChildren<TextMeshProUGUI>().text = list.cards[n].name;
+            float noteY = gameObject.transform.localPosition.y + divCounterY - topAlign;
+            float noteX = 0;
+            note.transform.localPosition = new Vector3(noteX, noteY, -0.5f);
+            note.transform.localRotation = Quaternion.identity;
+            note.transform.localScale = new Vector3(notePrefab.transform.localScale.x, notePrefab.transform.localScale.y, 0.5f);
 
             divCounterY += divY;
 
