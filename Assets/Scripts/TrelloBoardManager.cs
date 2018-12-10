@@ -55,6 +55,7 @@ public class TrelloBoardManager : MonoBehaviour
             divCounterX += divX;
 
         }
+        CleanupBoard();
     }
 
     public void UpdateTrelloBoard()
@@ -67,20 +68,48 @@ public class TrelloBoardManager : MonoBehaviour
             newListsWithCards[i] = cardByList.Value;
             i++;
         }
+        foreach (KeyValuePair<string, BoardColumn> list in createdListColumns)
+        {
+            list.Value.isUsed = false;
+        }
         currentListsWithCards = newListsWithCards;
         PlaceBoardColumns();
     }
 
     private GameObject GetBoardColumn(TrelloList list)
     {
+        BoardColumn listColumn = null;
         if (createdListColumns.ContainsKey(list.id))
         {
-            return createdListColumns[list.id].gameObject;
+            listColumn = createdListColumns[list.id];
+        } else
+        {
+            GameObject field = Instantiate(fieldPrefab, transform);
+            BoardColumn boardColumnField = field.GetComponentInChildren<BoardColumn>();
+            createdListColumns.Add(list.id, boardColumnField);
+            boardColumnField.list = list;
+            listColumn = boardColumnField;
         }
-        GameObject field = Instantiate(fieldPrefab, transform);
-        BoardColumn boardColumnField = field.GetComponentInChildren<BoardColumn>();
-        createdListColumns.Add(list.id, boardColumnField);
-        boardColumnField.list = list;
-        return field;
+        listColumn.isUsed = true;
+        return listColumn.gameObject;
+    }
+
+    List<string> keyToDestroy = new List<string>();
+
+    private void CleanupBoard()
+    {
+        keyToDestroy.Clear();
+        foreach (KeyValuePair<string, BoardColumn> list in createdListColumns)
+        {
+            if (list.Value.isUsed == false)
+            {
+                keyToDestroy.Add(list.Key);
+            }
+        }
+        foreach (string key in keyToDestroy)
+        {
+            Destroy(createdListColumns[key].gameObject);
+            createdListColumns.Remove(key);
+        }
     }
 }

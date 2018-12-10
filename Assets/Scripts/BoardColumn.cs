@@ -20,6 +20,8 @@ public class BoardColumn : MonoBehaviour {
     [SerializeField]
     int maxNumberOfNotes = 4;
 
+    public bool isUsed = false;
+
     private void Start()
     {
         bounds = noteParent.GetComponent<MeshFilter>().mesh.bounds;
