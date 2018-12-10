@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -14,17 +15,25 @@ public class TrelloAPI : MonoBehaviour {
 
     public UnityWebRequest GetBoardTitleHTTPRequest()
     {
-        return UnityWebRequest.Get(credentials.trello_endpoint + credentials.board_id + "?token=" + credentials.access_token + "&key=" + credentials.api_key +"&t=" + getUTCTime());
+        return UnityWebRequest.Get(credentials.trello_board_endpoint + credentials.board_id + "?token=" + credentials.access_token + "&key=" + credentials.api_key +"&t=" + getUTCTime());
     }
 
     public UnityWebRequest GetBoardListsHTTPRequest()
     {
-        return UnityWebRequest.Get(credentials.trello_endpoint + credentials.board_id + "/lists?token=" + credentials.access_token + "&key=" + credentials.api_key + "&t=" + getUTCTime());
+        return UnityWebRequest.Get(credentials.trello_board_endpoint + credentials.board_id + "/lists?token=" + credentials.access_token + "&key=" + credentials.api_key + "&t=" + getUTCTime());
     }
 
     public UnityWebRequest GetAllCardsHTTPRequest()
     {
-        return UnityWebRequest.Get(credentials.trello_endpoint + credentials.board_id + "/cards?token=" + credentials.access_token + "&key=" + credentials.api_key + "&t=" + getUTCTime());
+        return UnityWebRequest.Get(credentials.trello_board_endpoint + credentials.board_id + "/cards?token=" + credentials.access_token + "&key=" + credentials.api_key + "&t=" + getUTCTime());
+    }
+
+    public UnityWebRequest InsertCard(TrelloCard cardToInsert)
+    {
+        UnityWebRequest post = new UnityWebRequest(credentials.trello_card_endpoint + "?token=" + credentials.access_token + "&key=" + credentials.api_key + "&t=" + getUTCTime()
+            + "&idList=" + cardToInsert.idList
+            + "&name=" + cardToInsert.name, "POST");
+        return post;
     }
 
     void ReadTrelloCredentials()

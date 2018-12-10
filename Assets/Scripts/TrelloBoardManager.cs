@@ -23,13 +23,13 @@ public class TrelloBoardManager : MonoBehaviour
 
     TrelloList[] currentListsWithCards;
 
-    BoardColumn[] lastCreatedColumns;
+    Dictionary<string, BoardColumn> createdListColumns;
 
     private void Start()
     {
         bounds = GetComponent<MeshFilter>().mesh.bounds;
         currentListsWithCards = new TrelloList[0];
-        lastCreatedColumns = new BoardColumn[0];
+        createdListColumns = new Dictionary<string, BoardColumn>();
         trelloReader = GetComponentInParent<ReadFromTrello>();
     }
 
@@ -45,14 +45,9 @@ public class TrelloBoardManager : MonoBehaviour
         float divCounterX = divX;
         for (int n = 0; n < currentListsWithCards.Length; n++)
         {
-
-            float fieldY = 0;
-
-            GameObject field = Instantiate(fieldPrefab, transform);
-            BoardColumn boardColumnField = field.GetComponentInChildren<BoardColumn>();
-            lastCreatedColumns[n] = boardColumnField;
-            boardColumnField.list = currentListsWithCards[n];
+            GameObject field = GetBoardColumn(currentListsWithCards[n]);
             float fieldX = gameObject.transform.localPosition.x + divCounterX - leftAlign - divX / 2;
+            float fieldY = 0;
             field.transform.localPosition = new Vector3(fieldX, fieldY, -0.5f);
             field.transform.localRotation = Quaternion.identity;
             field.transform.localScale = new Vector3(fieldPrefab.transform.localScale.x, fieldPrefab.transform.localScale.y, 0.5f);
@@ -66,7 +61,6 @@ public class TrelloBoardManager : MonoBehaviour
     {
         Dictionary<string, TrelloList> cardsByList = trelloReader.cardsByList;
         TrelloList[] newListsWithCards = new TrelloList[cardsByList.Count];
-        CleanupBoardColumns(cardsByList.Count);
         int i = 0;
         foreach (KeyValuePair<string, TrelloList> cardByList in cardsByList)
         {
@@ -77,12 +71,16 @@ public class TrelloBoardManager : MonoBehaviour
         PlaceBoardColumns();
     }
 
-    private void CleanupBoardColumns(int newNumberOfBoardColumns)
+    private GameObject GetBoardColumn(TrelloList list)
     {
-        for(int i = 0; i < lastCreatedColumns.Length; i++)
+        if (createdListColumns.ContainsKey(list.id))
         {
-            Destroy(lastCreatedColumns[i].gameObject);
+            return createdListColumns[list.id].gameObject;
         }
-        lastCreatedColumns = new BoardColumn[newNumberOfBoardColumns];
+        GameObject field = Instantiate(fieldPrefab, transform);
+        BoardColumn boardColumnField = field.GetComponentInChildren<BoardColumn>();
+        createdListColumns.Add(list.id, boardColumnField);
+        boardColumnField.list = list;
+        return field;
     }
 }

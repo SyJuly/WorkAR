@@ -15,11 +15,15 @@ public class EventCreationButton : MonoBehaviour, IReactOnDictationInput
     [SerializeField]
     Sprite recording;
 
+    [SerializeField]
+    string creatingObject;
+
     TextMeshProUGUI buttonTextField;
 
     void Start() {
         buttonTextField = GetComponentInChildren<TextMeshProUGUI>();
         buttonImage = GetComponentInChildren<Image>();
+        ReactOnDictationStop();
     }
 
     public void ReactOnDictationStart()
@@ -30,7 +34,7 @@ public class EventCreationButton : MonoBehaviour, IReactOnDictationInput
 
     public void ReactOnDictationStop()
     {
-        buttonTextField.text = "Create Event";
+        buttonTextField.text = "Create " + creatingObject;
         buttonImage.sprite = creating;
     }
 }

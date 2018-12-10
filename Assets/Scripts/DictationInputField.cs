@@ -10,32 +10,16 @@ public interface IReactOnDictationInput
     void ReactOnDictationStop();
 }
 
-public class DictationInputField : MonoBehaviour, IInputClickHandler, IFocusable, IDictationInputReceiver
+public abstract class DictationInputField : MonoBehaviour, IInputClickHandler, IFocusable, IDictationInputReceiver
 {
-    WriteToGoogleCalendar googleCalendarWriter;
-
     DictationInputHandler dictationHandler;
 
-    DayField dayField;
-
-    IReactOnDictationInput button;
-
-    [SerializeField]
-    int hourAllEventsBegin = 8;
-
-    [SerializeField]
-    int hourAllEventsEnd = 18;
-
-    [SerializeField]
-    TextMeshProUGUI eventTitleTextField;
+    protected IReactOnDictationInput reactingObject;
 
     bool isFocussed = false;
 
-    void Start () {
-        dayField = GetComponentInParent<DayField>();
+    protected virtual void Start () {
         dictationHandler = DictationInputHandler.Instance.gameObject.GetComponent<DictationInputHandler>();
-        googleCalendarWriter = GetComponentInParent<WriteToGoogleCalendar>();
-        button = GetComponent<EventCreationButton>();
     }
 
     public void OnFocusEnter()
@@ -53,16 +37,12 @@ public class DictationInputField : MonoBehaviour, IInputClickHandler, IFocusable
         if (isFocussed)
         {
             dictationHandler.ActivateInputField(this);
-            button.ReactOnDictationStart();
+            if (reactingObject != null)
+            {
+                reactingObject.ReactOnDictationStart();
+            }
         }
     }
 
-    public void ReceiveDictationResult(string message)
-    {
-        button.ReactOnDictationStop();
-        DateTime start = new DateTime(dayField.representedDay.Year, dayField.representedDay.Month, dayField.representedDay.Day, hourAllEventsBegin, 0, 0); 
-        DateTime end = new DateTime(dayField.representedDay.Year, dayField.representedDay.Month, dayField.representedDay.Day, hourAllEventsEnd, 0, 0); 
-        GoogleCalendarEvent createdEvent = new GoogleCalendarEvent(message, start, end);
-        googleCalendarWriter.SendEventToCalendar(createdEvent);
-    }
+    public abstract void ReceiveDictationResult(string message);
 }

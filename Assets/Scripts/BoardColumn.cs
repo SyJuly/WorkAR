@@ -6,8 +6,7 @@ using UnityEngine;
 public class BoardColumn : MonoBehaviour {
 
     public TrelloList list;
-
-    [SerializeField]
+    
     TextMeshPro listTitleTextField;
 
     Bounds bounds;
@@ -16,17 +15,22 @@ public class BoardColumn : MonoBehaviour {
     GameObject notePrefab;
 
     [SerializeField]
+    GameObject noteParent;
+
+    [SerializeField]
     int maxNumberOfNotes = 4;
 
     private void Start()
     {
-        bounds = GetComponent<MeshFilter>().mesh.bounds;
+        bounds = noteParent.GetComponent<MeshFilter>().mesh.bounds;
+        listTitleTextField = GetComponentInChildren<TextMeshPro>();
         listTitleTextField.text = list.name;
         PlaceNotes();
     }
 
     private void PlaceNotes()
     {
+        GetComponentInChildren<NoteDictationInputField>().idList = list.id;
         List<TrelloCard> cards = list.cards;
         float x = bounds.size.x;
         float y = bounds.size.y;
@@ -38,7 +42,7 @@ public class BoardColumn : MonoBehaviour {
         float divCounterY = 0;
         for (int n = 0; n < cards.Count; n++)
         {
-            GameObject note = Instantiate(notePrefab, transform);
+            GameObject note = Instantiate(notePrefab, noteParent.transform);
             note.GetComponentInChildren<Canvas>().GetComponentInChildren<TextMeshProUGUI>().text = list.cards[n].name;
             float noteY = gameObject.transform.localPosition.y - divCounterY + topAlign;
             float noteX = 0;
