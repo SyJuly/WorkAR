@@ -87,9 +87,10 @@ public class TrelloBoardManager : MonoBehaviour
             GameObject field = Instantiate(fieldPrefab, transform);
             BoardColumn boardColumnField = field.GetComponentInChildren<BoardColumn>();
             createdListColumns.Add(list.id, boardColumnField);
-            boardColumnField.list = list;
             listColumn = boardColumnField;
         }
+        listColumn.list = list;
+        listColumn.PlaceNotes();
         listColumn.isUsed = true;
         return listColumn.gameObject;
     }

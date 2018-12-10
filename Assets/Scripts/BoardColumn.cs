@@ -30,7 +30,7 @@ public class BoardColumn : MonoBehaviour {
         PlaceNotes();
     }
 
-    private void PlaceNotes()
+    public void PlaceNotes()
     {
         GetComponentInChildren<NoteDictationInputField>().idList = list.id;
         List<TrelloCard> cards = list.cards;

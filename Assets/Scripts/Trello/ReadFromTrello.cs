@@ -14,7 +14,8 @@ public class ReadFromTrello : MonoBehaviour {
     public Dictionary<string, TrelloList> cardsByList;
     public string boardTitle = null;
 
-    //TODO:private bool[] status;
+    private bool areListsReady = false;
+    private bool areCardsReady = false;
 
     void Start()
     {
@@ -27,16 +28,19 @@ public class ReadFromTrello : MonoBehaviour {
     {
         while (true)
         {
-            StartCoroutine(GetBoardTitle());
-            StartCoroutine(GetBoardLists());
-            StartCoroutine(GetBoardCards());
+            StartCoroutine(GetBoardTitle(0));
+            StartCoroutine(GetBoardLists(1));
+            StartCoroutine(GetBoardCards(2));
             yield return new WaitForSeconds(10);
-            AssignCardsToList();
+            if (areListsReady & areCardsReady)
+            {
+                AssignCardsToList();
+            }
             manager.UpdateTrelloBoard();
         }
     }
 
-    IEnumerator GetBoardTitle()
+    IEnumerator GetBoardTitle(int statusIndex)
     {
         UnityWebRequest BoardTitleRequest = trelloAPI.GetBoardTitleHTTPRequest();
         BoardTitleRequest.chunkedTransfer = false;
@@ -54,7 +58,7 @@ public class ReadFromTrello : MonoBehaviour {
         }
     }
 
-    IEnumerator GetBoardLists()
+    IEnumerator GetBoardLists(int statusIndex)
     {
         UnityWebRequest BoardListsRequest = trelloAPI.GetBoardListsHTTPRequest();
         BoardListsRequest.chunkedTransfer = false;
@@ -70,10 +74,11 @@ public class ReadFromTrello : MonoBehaviour {
             string responseToJSON = "{\"lists\":" + BoardListsRequest.downloadHandler.text + "}";
             TrelloLists trelloListsResponse = JsonUtility.FromJson<TrelloLists>(responseToJSON);
             lists = trelloListsResponse.lists;
+            areListsReady = true;
         }
     }
 
-    IEnumerator GetBoardCards()
+    IEnumerator GetBoardCards(int statusIndex)
     {
         UnityWebRequest BoardCardsRequest = trelloAPI.GetAllCardsHTTPRequest();
         BoardCardsRequest.chunkedTransfer = false;
@@ -89,6 +94,7 @@ public class ReadFromTrello : MonoBehaviour {
             string responseToJSON = "{\"cards\":" + BoardCardsRequest.downloadHandler.text + "}";
             TrelloCards trelloCardsResponse = JsonUtility.FromJson<TrelloCards>( responseToJSON);
             allCards = trelloCardsResponse.cards;
+            areCardsReady = true;
         }
     }
 
@@ -101,12 +107,14 @@ public class ReadFromTrello : MonoBehaviour {
             currentList.cards = new List<TrelloCard>();
             orderCardsByList.Add(currentList.id, currentList);
         }
-        for (int i=0; i < allCards.Length; i++)
+        for (int i = 0; i < allCards.Length; i++)
         {
             TrelloCard currentCard = allCards[i];
             TrelloList listOfCurrentCard = orderCardsByList[currentCard.idList];
             listOfCurrentCard.cards.Add(currentCard);
         }
         cardsByList = orderCardsByList;
+        areListsReady = false;
+        areCardsReady = false;
     }
 }
