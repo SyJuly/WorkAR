@@ -46,10 +46,10 @@ public class TrelloBoardManager : MonoBehaviour
         for (int n = 0; n < currentListsWithCards.Length; n++)
         {
 
-            float fieldY = gameObject.transform.localPosition.y - borderTop;
+            float fieldY = 0;
 
             GameObject field = Instantiate(fieldPrefab, transform);
-            BoardColumn boardColumnField = field.GetComponent<BoardColumn>();
+            BoardColumn boardColumnField = field.GetComponentInChildren<BoardColumn>();
             lastCreatedColumns[n] = boardColumnField;
             boardColumnField.list = currentListsWithCards[n];
             float fieldX = gameObject.transform.localPosition.x + divCounterX - leftAlign - divX / 2;

@@ -7,6 +7,7 @@ public class BoardColumn : MonoBehaviour {
 
     public TrelloList list;
 
+    [SerializeField]
     TextMeshPro listTitleTextField;
 
     Bounds bounds;
@@ -15,14 +16,10 @@ public class BoardColumn : MonoBehaviour {
     GameObject notePrefab;
 
     [SerializeField]
-    float borderLeft = 0.05f;
-
-    [SerializeField]
-    float borderTop = 0.25f;
+    int maxNumberOfNotes = 4;
 
     private void Start()
     {
-        listTitleTextField = GetComponentInChildren<TextMeshPro>();
         bounds = GetComponent<MeshFilter>().mesh.bounds;
         listTitleTextField.text = list.name;
         PlaceNotes();
@@ -34,10 +31,9 @@ public class BoardColumn : MonoBehaviour {
         float x = bounds.size.x;
         float y = bounds.size.y;
 
-        float divX = ((x - borderLeft * 2));
-        float divY = ((y - borderTop) / 4);
-        float leftAlign = ((x - borderLeft * 2) / 2);
-        float topAlign = ((y - borderTop) / 2);
+        float divX = x * 2;
+        float divY = y / maxNumberOfNotes;
+        float topAlign = y / 2;
 
         float divCounterY = 0;
         for (int n = 0; n < cards.Count; n++)
