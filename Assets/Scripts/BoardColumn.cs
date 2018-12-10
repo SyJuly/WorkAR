@@ -35,16 +35,16 @@ public class BoardColumn : MonoBehaviour {
         float y = bounds.size.y;
 
         float divX = ((x - borderLeft * 2));
-        float divY = ((y - borderTop * 2) / cards.Count);
+        float divY = ((y - borderTop) / 4);
         float leftAlign = ((x - borderLeft * 2) / 2);
-        float topAlign = ((y - borderTop * 2) / 2);
+        float topAlign = ((y - borderTop) / 2);
 
-        float divCounterY = divY;
+        float divCounterY = 0;
         for (int n = 0; n < cards.Count; n++)
         {
             GameObject note = Instantiate(notePrefab, transform);
             note.GetComponentInChildren<Canvas>().GetComponentInChildren<TextMeshProUGUI>().text = list.cards[n].name;
-            float noteY = gameObject.transform.localPosition.y + divCounterY - topAlign;
+            float noteY = gameObject.transform.localPosition.y - divCounterY + topAlign;
             float noteX = 0;
             note.transform.localPosition = new Vector3(noteX, noteY, -0.5f);
             note.transform.localRotation = Quaternion.identity;
