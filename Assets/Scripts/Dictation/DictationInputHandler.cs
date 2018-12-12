@@ -36,6 +36,7 @@ public class DictationInputHandler : MonoBehaviour
         dictationRecognizer.DictationResult += DictationRecognizer_DictationResult;
         dictationRecognizer.DictationComplete += DictationRecognizer_DictationComplete;
         dictationRecognizer.DictationError += DictationRecognizer_DictationError;
+        dictationRecognizer.DictationHypothesis += DictationRecognizer_DictationHypothesis;
     }
 
     public void ActivateInputField(IDictationInputReceiver dictationReceiver)
@@ -51,6 +52,7 @@ public class DictationInputHandler : MonoBehaviour
         dictationRecognizer.DictationResult -= DictationRecognizer_DictationResult;
         dictationRecognizer.DictationComplete -= DictationRecognizer_DictationComplete;
         dictationRecognizer.DictationError -= DictationRecognizer_DictationError;
+        dictationRecognizer.DictationHypothesis -= DictationRecognizer_DictationHypothesis;
         dictationRecognizer.Dispose();
     }
 
@@ -59,6 +61,12 @@ public class DictationInputHandler : MonoBehaviour
         Debug.Log("DictationResult: " + text);
         StopRecording();
         activatedInputField.ReceiveDictationResult(text);
+    }
+
+    private void DictationRecognizer_DictationHypothesis(string text)
+    {
+        Debug.Log("DictationHypothesis: " + text);
+        activatedInputField.ReceiveDictationHypothesis(text);
     }
 
     private void DictationRecognizer_DictationComplete(DictationCompletionCause cause)

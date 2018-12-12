@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IDictationInputReceiver
 {
     void ReceiveDictationResult(string message);
+    void ReceiveDictationHypothesis(string message);
 }

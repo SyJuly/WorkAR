@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EventCreationButton : MonoBehaviour, IReactOnDictationInput
+public class ContentCreationButton : MonoBehaviour, IReactOnDictationInput
 {
     Image buttonImage;
 

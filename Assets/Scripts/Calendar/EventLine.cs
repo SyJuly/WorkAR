@@ -10,4 +10,7 @@ public class EventLine : MonoBehaviour {
 
     [SerializeField]
     public TextMeshProUGUI eventTimeTextField;
+
+    [SerializeField]
+    public TextMeshProUGUI moreEventsTextField;
 }
