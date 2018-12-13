@@ -19,8 +19,6 @@ public class TrelloBoardManager : MonoBehaviour
     [SerializeField]
     int numberOfColumns = 6;
 
-    ReadFromTrello trelloReader;
-
     TrelloList[] currentListsWithCards;
 
     Dictionary<string, BoardColumn> createdListColumns;
@@ -30,7 +28,6 @@ public class TrelloBoardManager : MonoBehaviour
         bounds = GetComponent<MeshFilter>().mesh.bounds;
         currentListsWithCards = new TrelloList[0];
         createdListColumns = new Dictionary<string, BoardColumn>();
-        trelloReader = GetComponentInParent<ReadFromTrello>();
     }
 
     private void PlaceBoardColumns()
@@ -58,9 +55,8 @@ public class TrelloBoardManager : MonoBehaviour
         CleanupBoard();
     }
 
-    public void UpdateTrelloBoard()
+    public void UpdateTrelloBoard(Dictionary<string, TrelloList> cardsByList)
     {
-        Dictionary<string, TrelloList> cardsByList = trelloReader.cardsByList;
         TrelloList[] newListsWithCards = new TrelloList[cardsByList.Count];
         int i = 0;
         foreach (KeyValuePair<string, TrelloList> cardByList in cardsByList)
@@ -89,8 +85,7 @@ public class TrelloBoardManager : MonoBehaviour
             createdListColumns.Add(list.id, boardColumnField);
             listColumn = boardColumnField;
         }
-        listColumn.list = list;
-        listColumn.PlaceNotes();
+        listColumn.UpdateCards(list);
         listColumn.isUsed = true;
         return listColumn.gameObject;
     }

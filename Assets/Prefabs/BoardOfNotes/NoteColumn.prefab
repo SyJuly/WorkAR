@@ -733,6 +733,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 117d7845ef1b6b949bdbb4d905a4045c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  notePrefab: {fileID: 114228323240634570, guid: 91dd91e881e7e1e49af571d1ab064cf2,
+    type: 2}
   idList: 
 --- !u!114 &114615236208153622
 MonoBehaviour:
@@ -780,6 +782,7 @@ MonoBehaviour:
   notePrefab: {fileID: 1022727295577298, guid: 91dd91e881e7e1e49af571d1ab064cf2, type: 2}
   noteParent: {fileID: 1277970482569232}
   maxNumberOfNotes: 4
+  isUsed: 0
 --- !u!114 &114637679514185644
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.Networking;
 
-public class ReadFromGoogleCalendar : MonoBehaviour, IRefreshedTokenRequester
+public class ReadFromGoogleCalendar : Reader, IRefreshedTokenRequester
 {
     GoogleCalendarAPI calendarAPI;
 

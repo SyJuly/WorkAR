@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ReadFromTrello : MonoBehaviour {
+public class ReadFromTrello : Reader {
 
     TrelloAPI trelloAPI;
 
@@ -36,7 +36,7 @@ public class ReadFromTrello : MonoBehaviour {
             {
                 AssignCardsToList();
             }
-            manager.UpdateTrelloBoard();
+            manager.UpdateTrelloBoard(cardsByList);
         }
     }
 

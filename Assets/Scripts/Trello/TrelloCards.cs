@@ -18,6 +18,7 @@ public class TrelloCard
     public string idList;
     public string name;
     public string pos;
+    public string id;
     //public string dueComplete;
 }
 
