@@ -595,18 +595,18 @@ public class Placeable : MonoBehaviour, IInputClickHandler
     /// </summary>
     public void OnInputClicked(InputClickedEventData eventData)
     {
-        if (!eventData.used && isPlacementButtonFocused)
+        if (!eventData.used)
         {
-            if (!IsPlacing)
+            if (!IsPlacing && isPlacementButtonFocused)
             {
                 OnPlacementStart();
+                eventData.Use();
             }
-            else
+            else if (IsPlacing)
             {
                 OnPlacementStop();
+                eventData.Use();
             }
-            eventData.Use();
         }
-
     }
 }
