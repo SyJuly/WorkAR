@@ -38,4 +38,6 @@ public class EventDictationInputField : DictationInputField
     {
         dayField.CreatingEvent(message, hourAllEventsBegin, hourAllEventsEnd);
     }
+
+    public override void ReceiveDictationStart(){}
 }

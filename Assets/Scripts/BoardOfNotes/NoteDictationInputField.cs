@@ -7,9 +7,11 @@ public class NoteDictationInputField : DictationInputField
     WriteToTrello trelloWriter;
 
     [SerializeField]
-    Note notePrefab;
+    InputNote inputNotePrefab;
 
     public string idList;
+
+    private InputNote inputNote;
 
     protected override void Start()
     {
@@ -27,8 +29,12 @@ public class NoteDictationInputField : DictationInputField
 
     public override void ReceiveDictationHypothesis(string message)
     {
-        //Note note = Instantiate(notePrefab, transform);
-        //note.SetToActiveView();
-        //throw new System.NotImplementedException();
+        inputNote.SendHypothesis(message);
+    }
+
+    public override void ReceiveDictationStart()
+    {
+        inputNote = Instantiate(inputNotePrefab);
+        inputNote.transform.localScale = inputNotePrefab.transform.localScale;
     }
 }

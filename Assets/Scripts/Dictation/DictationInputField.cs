@@ -47,4 +47,6 @@ public abstract class DictationInputField : MonoBehaviour, IInputClickHandler, I
     public abstract void ReceiveDictationResult(string message);
 
     public abstract void ReceiveDictationHypothesis(string message);
+
+    public abstract void ReceiveDictationStart();
 }

@@ -6,4 +6,5 @@ public interface IDictationInputReceiver
 {
     void ReceiveDictationResult(string message);
     void ReceiveDictationHypothesis(string message);
+    void ReceiveDictationStart();
 }

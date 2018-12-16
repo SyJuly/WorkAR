@@ -373,7 +373,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 61b91bfeb0b2a7147acb2973013551c3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9
+      value: 6.13
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 61b91bfeb0b2a7147acb2973013551c3, type: 3}
       propertyPath: m_LocalRotation.x
@@ -482,6 +482,7 @@ GameObject:
   - component: {fileID: 1181555790}
   - component: {fileID: 1181555789}
   - component: {fileID: 1181555791}
+  - component: {fileID: 1181555792}
   m_Layer: 0
   m_Name: Widgets
   m_TagString: Untagged
@@ -528,6 +529,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3a9aec33ad90e8489cde8446259c44d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1181555792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1181555788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f844a31ecf6993f4ea7e9df919126852, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list:
+    id: 
+    name: 
+    pos: 
+    cards: []
+  notePrefab: {fileID: 0}
+  noteParent: {fileID: 0}
+  maxNumberOfNotes: 4
+  isUsed: 0
 --- !u!1001 &1190569943
 Prefab:
   m_ObjectHideFlags: 0

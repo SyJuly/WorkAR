@@ -96,6 +96,7 @@ public class DictationInputHandler : MonoBehaviour
         {
             recordingOn = true;
             dictationRecognizer.Start();
+            activatedInputField.ReceiveDictationStart();
         }
     }
 }
