@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
-using System;
 
 public class ReadFromGoogleCalendar : Reader, IRefreshedTokenRequester
 {
@@ -40,7 +39,7 @@ public class ReadFromGoogleCalendar : Reader, IRefreshedTokenRequester
                 Debug.Log("Refreshed token");
                 calendarAPI.RefreshAccessToken(this);
             }
-            Debug.Log("An error occured receiving events: " + AlleCalendarEventsRequest.responseCode + " | " + AlleCalendarEventsRequest.error + " | " + AlleCalendarEventsRequest.downloadHandler.text);
+            Debug.Log("An error occured receiving events: " + AlleCalendarEventsRequest.responseCode);
         }
         else
         {
