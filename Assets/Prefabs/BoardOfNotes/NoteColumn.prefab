@@ -733,7 +733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 117d7845ef1b6b949bdbb4d905a4045c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notePrefab: {fileID: 114228323240634570, guid: 91dd91e881e7e1e49af571d1ab064cf2,
+  inputNotePrefab: {fileID: 114025700315627418, guid: d01859ec529eff04babe17e3e2092a4d,
     type: 2}
   idList: 
 --- !u!114 &114615236208153622

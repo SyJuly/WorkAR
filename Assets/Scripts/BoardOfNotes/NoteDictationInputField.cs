@@ -2,33 +2,64 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NoteDictationInputField : DictationInputField
+public class NoteDictationInputField : DictationInputField, IConfirmButton, ICancelButton
 {
     WriteToTrello trelloWriter;
 
     [SerializeField]
-    Note notePrefab;
+    InputNote inputNotePrefab;
 
     public string idList;
 
-    protected override void Start()
+    private InputNote inputNote;
+
+    string lastMessage;
+
+    protected override void Awake()
     {
-        base.Start();
-        trelloWriter = GetComponentInParent<WriteToTrello>();
+        base.Awake();
+        trelloWriter = WriteToTrello.Instance.gameObject.GetComponent<WriteToTrello>();
         reactingObject = GetComponent<ContentCreationButton>();
     }
 
     public override void ReceiveDictationResult(string message)
     {
-        reactingObject.ReactOnDictationStop();
-        TrelloCard createdCard = new TrelloCard(idList, message, "bottom");
-        trelloWriter.SendCardToTrello(createdCard);
+        if(reactingObject != null)
+        {
+            reactingObject.ReactOnDictationStop();
+        }
+        lastMessage = message;
     }
 
     public override void ReceiveDictationHypothesis(string message)
     {
-        //Note note = Instantiate(notePrefab, transform);
-        //note.SetToActiveView();
-        //throw new System.NotImplementedException();
+        lastMessage = message;
+        inputNote.SendHypothesis(message);
+    }
+
+    public override void ReceiveDictationStart()
+    {
+        inputNote = Instantiate(inputNotePrefab);
+        inputNote.confirmButton.receiver = this;
+        inputNote.cancelButton.receiver = this;
+    }
+    public void OnConfirm()
+    {
+        Debug.Log("confirm button pressed: CONFIRM");
+        TrelloCard createdCard = new TrelloCard(idList, lastMessage, "bottom");
+        trelloWriter.SendCardToTrello(createdCard);
+        StopInputNote();
+    }
+
+    public void OnCancel()
+    {
+        Debug.Log("cancel button pressed: CANCEL");
+        StopInputNote();
+    }
+
+    private void StopInputNote()
+    {
+        inputNote.CompleteInput();
+        inputNote = null;
     }
 }

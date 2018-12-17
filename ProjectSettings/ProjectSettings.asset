@@ -586,7 +586,7 @@ PlayerSettings:
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: WorkAR
-  metroPackageVersion: 1.0.54.0
+  metroPackageVersion: 1.0.56.0
   metroCertificatePath: Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: DefaultCompany

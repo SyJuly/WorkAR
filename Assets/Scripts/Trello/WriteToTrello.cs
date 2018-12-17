@@ -9,9 +9,28 @@ public class WriteToTrello : MonoBehaviour {
 
     TrelloCard cardToBeInserted;
 
+    /*------------------Singleton---------------------->>*/
+    private static WriteToTrello _instance;
+
+    public static WriteToTrello Instance { get { return _instance; } }
+
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
+    /*<<------------------Singleton-----------------------*/
+
     void Start()
     {
-        trelloAPI = GetComponent<TrelloAPI>();
+        trelloAPI = TrelloAPI.Instance.gameObject.GetComponent<TrelloAPI>();
     }
 
     public void SendCardToTrello(TrelloCard cardToInsert)

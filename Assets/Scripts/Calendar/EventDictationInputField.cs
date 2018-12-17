@@ -16,9 +16,9 @@ public class EventDictationInputField : DictationInputField
     [SerializeField]
     int hourAllEventsEnd = 18;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         dayField = GetComponentInParent<DayField>();
         googleCalendarWriter = GetComponentInParent<WriteToGoogleCalendar>();
         reactingObject = GetComponent<ContentCreationButton>();
@@ -38,4 +38,6 @@ public class EventDictationInputField : DictationInputField
     {
         dayField.CreatingEvent(message, hourAllEventsBegin, hourAllEventsEnd);
     }
+
+    public override void ReceiveDictationStart(){}
 }
