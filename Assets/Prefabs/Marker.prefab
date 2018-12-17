@@ -111,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputNotePrefab: {fileID: 114025700315627418, guid: d01859ec529eff04babe17e3e2092a4d,
     type: 2}
-  idList: 1
+  idList: 5c0e890a09fe743cf7df1e03
 --- !u!135 &135212241675632712
 SphereCollider:
   m_ObjectHideFlags: 1

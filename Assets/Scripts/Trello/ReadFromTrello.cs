@@ -19,7 +19,7 @@ public class ReadFromTrello : Reader {
 
     void Start()
     {
-        trelloAPI = GetComponent<TrelloAPI>();
+        trelloAPI = TrelloAPI.Instance.gameObject.GetComponent<TrelloAPI>();
         manager = GetComponentInChildren<TrelloBoardManager>();
         StartCoroutine(UpdateTrelloBoard());
     }

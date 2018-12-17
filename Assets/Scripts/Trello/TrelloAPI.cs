@@ -8,10 +8,25 @@ public class TrelloAPI : MonoBehaviour {
 
     TrelloCrendentials credentials;
 
-    void Awake()
+    /*------------------Singleton---------------------->>*/
+    private static TrelloAPI _instance;
+
+    public static TrelloAPI Instance { get { return _instance; } }
+
+
+    private void Awake()
     {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
         ReadTrelloCredentials();
     }
+    /*<<------------------Singleton-----------------------*/
 
     public UnityWebRequest GetBoardTitleHTTPRequest()
     {
