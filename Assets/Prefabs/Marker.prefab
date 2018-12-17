@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23876303139381578}
   - component: {fileID: 135212241675632712}
   - component: {fileID: 114139646770119356}
+  - component: {fileID: 114447522842606104}
   m_Layer: 0
   m_Name: Marker
   m_TagString: Untagged
@@ -97,6 +98,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   point: {x: 0, y: 0, z: 0}
+--- !u!114 &114447522842606104
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1538258710029946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 117d7845ef1b6b949bdbb4d905a4045c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputNotePrefab: {fileID: 114025700315627418, guid: d01859ec529eff04babe17e3e2092a4d,
+    type: 2}
+  idList: 1
 --- !u!135 &135212241675632712
 SphereCollider:
   m_ObjectHideFlags: 1

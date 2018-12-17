@@ -15,9 +15,9 @@ public class NoteDictationInputField : DictationInputField, IConfirmButton, ICan
 
     string lastMessage;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         trelloWriter = GetComponentInParent<WriteToTrello>();
         reactingObject = GetComponent<ContentCreationButton>();
     }
