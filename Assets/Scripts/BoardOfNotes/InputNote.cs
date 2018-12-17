@@ -8,6 +8,9 @@ public class InputNote : MonoBehaviour {
 
     TextMeshProUGUI textField;
 
+    [SerializeField]
+    int timeToLerp = 1;
+
     private void Start()
     {
         textField = GetComponentInChildren<TextMeshProUGUI>();
@@ -24,15 +27,39 @@ public class InputNote : MonoBehaviour {
         StartCoroutine(TransformToActiveView());
     }
 
+    public void CompleteInput()
+    {
+        StartCoroutine(Disappear());
+    }
+
     IEnumerator TransformToActiveView()
     {
-        Vector3 goalScale = transform.localScale;
-        float step = 0.1f;
-        while(step < 1)
+        float distance = GetComponent<Tagalong>().TagalongDistance;
+        float counter = 0;
+        transform.position = Camera.main.transform.position + Camera.main.transform.forward * distance;
+        Vector3 destinationScale = transform.localScale;
+        Vector3 originalScale = Vector3.zero;
+
+        while (counter < timeToLerp)
         {
-            transform.localScale = goalScale * step;
-            step += step;
-            yield return new WaitForSeconds(step);
+            counter += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(originalScale, destinationScale, counter / timeToLerp);
+            yield return null;
         }
+    }
+
+    IEnumerator Disappear()
+    {
+        float counter = 0;
+        Vector3 originalScale = transform.localScale;
+        Vector3 destinationScale = Vector3.zero;
+
+        while (counter < timeToLerp)
+        {
+            counter += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(originalScale, destinationScale, counter / timeToLerp);
+            yield return null;
+        }
+        Destroy(this.gameObject);
     }
 }

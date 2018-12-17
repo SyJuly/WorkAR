@@ -23,6 +23,8 @@ public class NoteDictationInputField : DictationInputField
     public override void ReceiveDictationResult(string message)
     {
         reactingObject.ReactOnDictationStop();
+        inputNote.CompleteInput();
+        inputNote = null;
         TrelloCard createdCard = new TrelloCard(idList, message, "bottom");
         trelloWriter.SendCardToTrello(createdCard);
     }
