@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NoteDictationInputField : DictationInputField
+public class NoteDictationInputField : DictationInputField, IConfirmButton, ICancelButton
 {
     WriteToTrello trelloWriter;
 
@@ -12,6 +12,8 @@ public class NoteDictationInputField : DictationInputField
     public string idList;
 
     private InputNote inputNote;
+
+    string lastMessage;
 
     protected override void Start()
     {
@@ -23,20 +25,38 @@ public class NoteDictationInputField : DictationInputField
     public override void ReceiveDictationResult(string message)
     {
         reactingObject.ReactOnDictationStop();
-        inputNote.CompleteInput();
-        inputNote = null;
-        TrelloCard createdCard = new TrelloCard(idList, message, "bottom");
-        trelloWriter.SendCardToTrello(createdCard);
+        lastMessage = message;
     }
 
     public override void ReceiveDictationHypothesis(string message)
     {
+        lastMessage = message;
         inputNote.SendHypothesis(message);
     }
 
     public override void ReceiveDictationStart()
     {
         inputNote = Instantiate(inputNotePrefab);
-        inputNote.transform.localScale = inputNotePrefab.transform.localScale;
+        inputNote.confirmButton.receiver = this;
+        inputNote.cancelButton.receiver = this;
+    }
+    public void OnConfirm()
+    {
+        Debug.Log("confirm button pressed: CONFIRM");
+        TrelloCard createdCard = new TrelloCard(idList, lastMessage, "bottom");
+        trelloWriter.SendCardToTrello(createdCard);
+        StopInputNote();
+    }
+
+    public void OnCancel()
+    {
+        Debug.Log("cancel button pressed: CANCEL");
+        StopInputNote();
+    }
+
+    private void StopInputNote()
+    {
+        inputNote.CompleteInput();
+        inputNote = null;
     }
 }

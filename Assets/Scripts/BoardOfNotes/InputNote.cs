@@ -10,10 +10,20 @@ public class InputNote : MonoBehaviour {
 
     [SerializeField]
     int timeToLerp = 1;
+    
+    public ConfirmButton confirmButton;
+    
+    public CancelButton cancelButton;
+
+    private void Awake()
+    {
+        confirmButton = GetComponentInChildren<ConfirmButton>();
+        cancelButton = GetComponentInChildren<CancelButton>();
+        textField = GetComponentInChildren<TextMeshProUGUI>();
+    }
 
     private void Start()
     {
-        textField = GetComponentInChildren<TextMeshProUGUI>();
         SetToActiveView();
     }
 
