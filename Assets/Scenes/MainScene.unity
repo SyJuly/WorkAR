@@ -466,6 +466,11 @@ Prefab:
       propertyPath: m_LocalScale.y
       value: 0.68836
       objectReference: {fileID: 0}
+    - target: {fileID: 23656208810250276, guid: e7e8ee1f1f22e4349974b623972c55d4,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 61b2578632676264c9c4e9967975a5b6, type: 2}
     m_RemovedComponents:
     - {fileID: 114203495600215300, guid: e7e8ee1f1f22e4349974b623972c55d4, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: e7e8ee1f1f22e4349974b623972c55d4, type: 2}
@@ -798,6 +803,11 @@ Prefab:
       propertyPath: m_LocalScale.y
       value: 0.58716
       objectReference: {fileID: 0}
+    - target: {fileID: 23656208810250276, guid: e7e8ee1f1f22e4349974b623972c55d4,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 61b2578632676264c9c4e9967975a5b6, type: 2}
     m_RemovedComponents:
     - {fileID: 114203495600215300, guid: e7e8ee1f1f22e4349974b623972c55d4, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: e7e8ee1f1f22e4349974b623972c55d4, type: 2}
@@ -941,6 +951,11 @@ Prefab:
       propertyPath: m_Name
       value: ScaleButton
       objectReference: {fileID: 0}
+    - target: {fileID: 23656208810250276, guid: e7e8ee1f1f22e4349974b623972c55d4,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 61b2578632676264c9c4e9967975a5b6, type: 2}
     m_RemovedComponents:
     - {fileID: 114203495600215300, guid: e7e8ee1f1f22e4349974b623972c55d4, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: e7e8ee1f1f22e4349974b623972c55d4, type: 2}
