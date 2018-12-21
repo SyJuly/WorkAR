@@ -41,7 +41,14 @@ public class WriteToTrello : MonoBehaviour {
 
     IEnumerator InsertCard()
     {
-        UnityWebRequest InsertCardRequest = trelloAPI.InsertCard(cardToBeInserted);
+        UnityWebRequest InsertCardRequest;
+        if (cardToBeInserted.attachment != null)
+        {
+            InsertCardRequest = trelloAPI.InsertCard(cardToBeInserted, cardToBeInserted.attachment);
+        } else
+        {
+            InsertCardRequest = trelloAPI.InsertCard(cardToBeInserted);
+        }
         InsertCardRequest.timeout = 90000000;
         yield return InsertCardRequest.SendWebRequest();
         if (InsertCardRequest.isNetworkError || InsertCardRequest.isHttpError)

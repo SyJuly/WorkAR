@@ -47,8 +47,21 @@ public class TrelloAPI : MonoBehaviour {
     {
         UnityWebRequest post = new UnityWebRequest(credentials.trello_card_endpoint + "?token=" + credentials.access_token + "&key=" + credentials.api_key + "&t=" + getUTCTime()
             + "&idList=" + cardToInsert.idList
-            + "&name=" + cardToInsert.name, "POST");
+            + "&name=" + cardToInsert.name,"POST");
         return post;
+    }
+
+    public UnityWebRequest InsertCard(TrelloCard cardToInsert, byte[] picture)
+    {
+        var wwwForm = new WWWForm();
+        wwwForm.AddBinaryData("fileSource", picture, "image.png");
+        wwwForm.AddField("token", credentials.access_token);
+        wwwForm.AddField("key", credentials.api_key);
+        wwwForm.AddField("t", getUTCTime());
+        wwwForm.AddField("idList", cardToInsert.idList);
+        wwwForm.AddField("name", cardToInsert.name);
+        var request = UnityWebRequest.Post(credentials.trello_card_endpoint, wwwForm);
+        return request;
     }
 
     void ReadTrelloCredentials()

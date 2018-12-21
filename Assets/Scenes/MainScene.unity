@@ -608,6 +608,7 @@ MonoBehaviour:
   move: {fileID: 927083108}
   rotate: {fileID: 2027239634}
   scale: {fileID: 284524668}
+  model: {fileID: 965387018}
 --- !u!114 &932660026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -742,6 +743,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   markerPrefab: {fileID: 114139646770119356, guid: ee9382b430305ef45b2ecebd7350eafd,
     type: 2}
+--- !u!114 &965387018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 965387011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84ea45e0a841b744f901b8cad663ae94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFocused: 0
 --- !u!1001 &1003143920
 Prefab:
   m_ObjectHideFlags: 0
@@ -1502,7 +1515,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2147067165}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eef8ae1412323a448be94a2838a15388, type: 3}
   m_Name: 

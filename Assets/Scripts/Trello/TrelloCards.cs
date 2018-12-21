@@ -15,10 +15,18 @@ public class TrelloCard
         this.name = name;
         this.pos = pos;
     }
+    public TrelloCard(string idList, string name, string pos, byte[] attachment)
+    {
+        this.idList = idList;
+        this.name = name;
+        this.pos = pos;
+        this.attachment = attachment;
+    }
     public string idList;
     public string name;
     public string pos;
     public string id;
+    public byte[] attachment;
     //public string dueComplete;
 }
 

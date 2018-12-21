@@ -586,7 +586,7 @@ PlayerSettings:
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: WorkAR
-  metroPackageVersion: 1.0.65.0
+  metroPackageVersion: 1.0.68.0
   metroCertificatePath: Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: DefaultCompany
@@ -623,7 +623,7 @@ PlayerSettings:
       Location: False
       LowLevelDevices: False
       Microphone: True
-      MusicLibrary: True
+      MusicLibrary: False
       Objects3D: False
       OfflineMapsManagement: False
       PhoneCall: False

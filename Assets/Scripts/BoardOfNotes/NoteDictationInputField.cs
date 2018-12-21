@@ -8,6 +8,8 @@ public class NoteDictationInputField : DictationInputField, IConfirmButton, ICan
 
     [SerializeField]
     InputNote inputNotePrefab;
+    
+    PhotoCaptureWithHolograms capturer;
 
     public string idList;
 
@@ -18,8 +20,12 @@ public class NoteDictationInputField : DictationInputField, IConfirmButton, ICan
     protected override void Awake()
     {
         base.Awake();
-        trelloWriter = WriteToTrello.Instance.gameObject.GetComponent<WriteToTrello>();
         reactingObject = GetComponent<ContentCreationButton>();
+    }
+
+    private void Start()
+    {
+        trelloWriter = WriteToTrello.Instance.gameObject.GetComponent<WriteToTrello>();
     }
 
     public override void ReceiveDictationResult(string message)
@@ -42,11 +48,20 @@ public class NoteDictationInputField : DictationInputField, IConfirmButton, ICan
         inputNote = Instantiate(inputNotePrefab);
         inputNote.confirmButton.receiver = this;
         inputNote.cancelButton.receiver = this;
+        capturer = inputNote.capturer;
     }
     public void OnConfirm()
     {
         Debug.Log("confirm button pressed: CONFIRM");
-        TrelloCard createdCard = new TrelloCard(idList, lastMessage, "bottom");
+        TrelloCard createdCard;
+        if (capturer.isPhotoReadyToSend)
+        {
+            createdCard = new TrelloCard(idList, lastMessage, "bottom", capturer.targetTexture.EncodeToPNG());
+            capturer.isPhotoReadyToSend = false;
+        } else
+        {
+            createdCard = new TrelloCard(idList, lastMessage, "bottom");
+        }
         trelloWriter.SendCardToTrello(createdCard);
         StopInputNote();
     }

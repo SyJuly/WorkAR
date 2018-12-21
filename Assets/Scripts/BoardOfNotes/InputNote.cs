@@ -10,16 +10,19 @@ public class InputNote : MonoBehaviour {
 
     [SerializeField]
     int timeToLerp = 1;
-    
+
     public ConfirmButton confirmButton;
     
     public CancelButton cancelButton;
+
+    public PhotoCaptureWithHolograms capturer;
 
     private void Awake()
     {
         confirmButton = GetComponentInChildren<ConfirmButton>();
         cancelButton = GetComponentInChildren<CancelButton>();
         textField = GetComponentInChildren<TextMeshProUGUI>();
+        capturer = GetComponentInChildren<PhotoCaptureWithHolograms>();
     }
 
     private void Start()

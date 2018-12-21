@@ -7,10 +7,15 @@ using HoloToolkit.Unity.InputModule;
 
 public class PhotoCaptureWithHolograms : MonoBehaviour, IInputClickHandler
 {
+    [SerializeField]
+    GameObject photoObject;
+
     PhotoCapture photoCaptureObject = null;
-    Texture2D targetTexture = null;
+    public Texture2D targetTexture = null;
 
     bool isCapturing = false;
+
+    public bool isPhotoReadyToSend = false;
 
     void StartCapturing()
     {
@@ -33,15 +38,11 @@ public class PhotoCaptureWithHolograms : MonoBehaviour, IInputClickHandler
         photoCaptureFrame.UploadImageDataToTexture(targetTexture);
 
         // Create a gameobject that we can apply our texture to
-        GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
-        Renderer quadRenderer = quad.GetComponent<Renderer>() as Renderer;
+        Renderer quadRenderer = photoObject.GetComponent<Renderer>() as Renderer;
         quadRenderer.material = new Material(Shader.Find("UI/Default"));
 
-        quad.transform.parent = this.transform;
-        quad.transform.localPosition = new Vector3(0.0f, 0.0f, 3.0f);
-
         quadRenderer.material.SetTexture("_MainTex", targetTexture);
-
+        isPhotoReadyToSend = true;
         // Deactivate our camera
         photoCaptureObject.StopPhotoModeAsync(OnStoppedPhotoMode);
         OnStoppedPhotoMode(result);
@@ -74,7 +75,7 @@ public class PhotoCaptureWithHolograms : MonoBehaviour, IInputClickHandler
         PhotoCapture.CreateAsync(false, delegate (PhotoCapture captureObject) {
             photoCaptureObject = captureObject;
             CameraParameters cameraParameters = new CameraParameters();
-            cameraParameters.hologramOpacity = 0.0f;
+            cameraParameters.hologramOpacity = 1.0f;
             cameraParameters.cameraResolutionWidth = cameraResolution.width;
             cameraParameters.cameraResolutionHeight = cameraResolution.height;
             cameraParameters.pixelFormat = CapturePixelFormat.BGRA32;
