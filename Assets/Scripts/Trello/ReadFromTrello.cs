@@ -93,9 +93,42 @@ public class ReadFromTrello : Reader {
         {
             string responseToJSON = "{\"cards\":" + BoardCardsRequest.downloadHandler.text + "}";
             TrelloCards trelloCardsResponse = JsonUtility.FromJson<TrelloCards>( responseToJSON);
-            allCards = trelloCardsResponse.cards;
+            TrelloCard[] cardsWithAttachmentData = trelloCardsResponse.cards;
+            foreach (TrelloCard card in cardsWithAttachmentData)
+            {
+                if(card.idAttachmentCover != null && card.idAttachmentCover != "")
+                {
+                    yield return StartCoroutine(GetCardAttachment(card));
+                }
+            }
+            allCards = cardsWithAttachmentData;
             areCardsReady = true;
         }
+    }
+
+    IEnumerator GetCardAttachment(TrelloCard card)
+    {
+        UnityWebRequest CardAttachmentRequest = trelloAPI.GetCardCoverAttachmentHTTPRequest(card);
+        CardAttachmentRequest.chunkedTransfer = false;
+        CardAttachmentRequest.timeout = 100000;
+
+        yield return CardAttachmentRequest.SendWebRequest();
+        if (CardAttachmentRequest.isNetworkError || CardAttachmentRequest.isHttpError)
+        {
+            Debug.Log("An error occured receiving events: " + CardAttachmentRequest.responseCode);
+        }
+        else
+        {
+            string responseToJSON = "{\"trelloAttachment\":" + CardAttachmentRequest.downloadHandler.text + "}";
+            TrelloAttachmentResponse trelloAttachmentResponse = JsonUtility.FromJson<TrelloAttachmentResponse>(responseToJSON);
+            yield return StartCoroutine(GetImage(card, trelloAttachmentResponse.trelloAttachment.previews[0].url));
+        }
+    }
+
+    IEnumerator GetImage(TrelloCard card, string url) {
+        UnityWebRequest textureRequest = UnityWebRequestTexture.GetTexture(url);
+        yield return textureRequest.SendWebRequest();
+        card.attachment = DownloadHandlerTexture.GetContent(textureRequest);
     }
 
     void AssignCardsToList()

@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class Note : MonoBehaviour {
 
+    [SerializeField]
+    public GameObject photoObject;
+
     public bool isUsed;
 }

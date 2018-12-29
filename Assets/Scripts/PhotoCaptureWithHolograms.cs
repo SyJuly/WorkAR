@@ -45,7 +45,6 @@ public class PhotoCaptureWithHolograms : MonoBehaviour, IInputClickHandler
         isPhotoReadyToSend = true;
         // Deactivate our camera
         photoCaptureObject.StopPhotoModeAsync(OnStoppedPhotoMode);
-        OnStoppedPhotoMode(result);
         StopCapturing();
     }
 
@@ -54,6 +53,7 @@ public class PhotoCaptureWithHolograms : MonoBehaviour, IInputClickHandler
         // Shutdown our photo capture resource
         photoCaptureObject.Dispose();
         photoCaptureObject = null;
+        Debug.Log("DISPOSED AND STOPPED PHOTO MODE");
     }
 
     public void OnInputClicked(InputClickedEventData eventData)
@@ -73,6 +73,7 @@ public class PhotoCaptureWithHolograms : MonoBehaviour, IInputClickHandler
         targetTexture = new Texture2D(cameraResolution.width, cameraResolution.height);
         // Create a PhotoCapture object
         PhotoCapture.CreateAsync(false, delegate (PhotoCapture captureObject) {
+            Debug.Log("CREATE AND BEFORE START PHOTO MODE");
             photoCaptureObject = captureObject;
             CameraParameters cameraParameters = new CameraParameters();
             cameraParameters.hologramOpacity = 1.0f;

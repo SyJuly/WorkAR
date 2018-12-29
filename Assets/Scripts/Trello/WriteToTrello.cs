@@ -44,7 +44,7 @@ public class WriteToTrello : MonoBehaviour {
         UnityWebRequest InsertCardRequest;
         if (cardToBeInserted.attachment != null)
         {
-            InsertCardRequest = trelloAPI.InsertCard(cardToBeInserted, cardToBeInserted.attachment);
+            InsertCardRequest = trelloAPI.InsertCard(cardToBeInserted, cardToBeInserted.attachment.EncodeToPNG());
         } else
         {
             InsertCardRequest = trelloAPI.InsertCard(cardToBeInserted);

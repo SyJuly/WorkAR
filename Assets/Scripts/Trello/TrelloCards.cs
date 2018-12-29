@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 [Serializable]
 public struct TrelloCards
@@ -15,7 +16,7 @@ public class TrelloCard
         this.name = name;
         this.pos = pos;
     }
-    public TrelloCard(string idList, string name, string pos, byte[] attachment)
+    public TrelloCard(string idList, string name, string pos, Texture2D attachment)
     {
         this.idList = idList;
         this.name = name;
@@ -26,7 +27,7 @@ public class TrelloCard
     public string name;
     public string pos;
     public string id;
-    public byte[] attachment;
-    //public string dueComplete;
+    public string idAttachmentCover;
+    public Texture2D attachment;
 }
 

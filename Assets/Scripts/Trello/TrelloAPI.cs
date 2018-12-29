@@ -40,7 +40,12 @@ public class TrelloAPI : MonoBehaviour {
 
     public UnityWebRequest GetAllCardsHTTPRequest()
     {
-        return UnityWebRequest.Get(credentials.trello_board_endpoint + credentials.board_id + "/cards?token=" + credentials.access_token + "&key=" + credentials.api_key + "&t=" + getUTCTime());
+        return UnityWebRequest.Get(credentials.trello_board_endpoint + credentials.board_id + "/cards?attachment_fields=all&token=" + credentials.access_token + "&key=" + credentials.api_key + "&t=" + getUTCTime());
+    }
+
+    public UnityWebRequest GetCardCoverAttachmentHTTPRequest(TrelloCard card)
+    {
+        return UnityWebRequest.Get(credentials.trello_card_endpoint + "/" + card.id + "/attachments/" + card.idAttachmentCover + "?token=" + credentials.access_token + "&key=" + credentials.api_key + "&t=" + getUTCTime());
     }
 
     public UnityWebRequest InsertCard(TrelloCard cardToInsert)

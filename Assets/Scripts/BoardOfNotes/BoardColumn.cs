@@ -50,6 +50,13 @@ public class BoardColumn : MonoBehaviour {
         {
             GameObject note = GetCardNote(currentCards[n]);
             note.GetComponentInChildren<Canvas>().GetComponentInChildren<TextMeshProUGUI>().text = currentCards[n].name;
+
+            if(currentCards[n].attachment != null)
+            {
+                Renderer quadRenderer = note.GetComponent<Note>().photoObject.GetComponent<Renderer>() as Renderer;
+                quadRenderer.material = new Material(Shader.Find("UI/Default"));
+                quadRenderer.material.SetTexture("_MainTex", currentCards[n].attachment);
+            }
             float noteY = gameObject.transform.localPosition.y - divCounterY + topAlign - divY / 2;
             float noteX = 0;
             note.transform.localPosition = new Vector3(noteX, noteY, -0.5f);

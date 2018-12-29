@@ -56,7 +56,7 @@ public class NoteDictationInputField : DictationInputField, IConfirmButton, ICan
         TrelloCard createdCard;
         if (capturer.isPhotoReadyToSend)
         {
-            createdCard = new TrelloCard(idList, lastMessage, "bottom", capturer.targetTexture.EncodeToPNG());
+            createdCard = new TrelloCard(idList, lastMessage, "bottom", capturer.targetTexture);
             capturer.isPhotoReadyToSend = false;
         } else
         {
