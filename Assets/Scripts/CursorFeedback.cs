@@ -1,4 +1,5 @@
-﻿using HoloToolkit.Unity.InputModule.Utilities.Interactions;
+﻿using HoloToolkit.Unity.InputModule;
+using HoloToolkit.Unity.InputModule.Utilities.Interactions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class CursorFeedback : MonoBehaviour {
 
     [SerializeField]
     GameObject rotateFeedback;
+
+    private HoloToolkit.Unity.InputModule.Cursor cursor;
 
     private GameObject activeFeedback;
 
@@ -38,6 +41,13 @@ public class CursorFeedback : MonoBehaviour {
     private void Start()
     {
         activeFeedback = scaleFeedback;
+        cursor = InputManager.Instance.gameObject.GetComponent<SimpleSinglePointerSelector>().Cursor;
+    }
+
+    private void Update()
+    {
+        transform.position = cursor.transform.position;
+        transform.rotation = cursor.transform.rotation;
     }
 
     public void ActivateManipulationModeFeedback(ManipulationMode mode)
