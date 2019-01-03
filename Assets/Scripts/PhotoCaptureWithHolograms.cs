@@ -11,16 +11,23 @@ public class PhotoCaptureWithHolograms : MonoBehaviour, IInputClickHandler
     GameObject photoObject;
 
     PhotoCapture photoCaptureObject = null;
+    InputNote inputNote = null;
     public Texture2D targetTexture = null;
 
     bool isCapturing = false;
 
     public bool isPhotoReadyToSend = false;
 
+    private void Start()
+    {
+        inputNote = GetComponentInParent<InputNote>();
+    }
+
     void StartCapturing()
     {
         isCapturing = true;
         InputManager.Instance.AddGlobalListener(gameObject);
+        inputNote.StartCapturingMode();
     }
 
     void StopCapturing()
@@ -30,6 +37,7 @@ public class PhotoCaptureWithHolograms : MonoBehaviour, IInputClickHandler
         {
             InputManager.Instance.RemoveGlobalListener(gameObject);
         }
+        inputNote.StopCapturingMode();
     }
 
     void OnCapturedPhotoToMemory(PhotoCapture.PhotoCaptureResult result, PhotoCaptureFrame photoCaptureFrame)

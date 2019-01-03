@@ -17,11 +17,14 @@ public class InputNote : MonoBehaviour {
 
     public PhotoCaptureWithHolograms capturer;
 
+    public Tagalong tagalong;
+
     private void Awake()
     {
         confirmButton = GetComponentInChildren<ConfirmButton>();
         cancelButton = GetComponentInChildren<CancelButton>();
         textField = GetComponentInChildren<TextMeshProUGUI>();
+        tagalong = GetComponent<Tagalong>();
         capturer = GetComponentInChildren<PhotoCaptureWithHolograms>();
     }
 
@@ -74,5 +77,15 @@ public class InputNote : MonoBehaviour {
             yield return null;
         }
         Destroy(this.gameObject);
+    }
+
+    public void StartCapturingMode()
+    {
+        tagalong.enabled = false;
+    }
+
+    public void StopCapturingMode()
+    {
+        tagalong.enabled = true;
     }
 }

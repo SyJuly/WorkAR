@@ -1297,9 +1297,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToLerp: 2
-  confirmButton: {fileID: 0}
-  cancelButton: {fileID: 0}
-  capturer: {fileID: 0}
+  confirmButton: {fileID: 482}
+  cancelButton: {fileID: 479}
+  capturer: {fileID: 464}
 --- !u!114 &520
 MonoBehaviour:
   m_ObjectHideFlags: 0
