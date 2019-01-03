@@ -72,7 +72,7 @@ public class PhotoCaptureWithHolograms : MonoBehaviour, IInputClickHandler
         Resolution cameraResolution = PhotoCapture.SupportedResolutions.OrderByDescending((res) => res.width * res.height).First();
         targetTexture = new Texture2D(cameraResolution.width, cameraResolution.height);
         // Create a PhotoCapture object
-        PhotoCapture.CreateAsync(false, delegate (PhotoCapture captureObject) {
+        PhotoCapture.CreateAsync(true, delegate (PhotoCapture captureObject) {
             Debug.Log("CREATE AND BEFORE START PHOTO MODE");
             photoCaptureObject = captureObject;
             CameraParameters cameraParameters = new CameraParameters();

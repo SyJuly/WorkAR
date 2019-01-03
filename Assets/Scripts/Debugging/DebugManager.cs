@@ -94,7 +94,7 @@ public class DebugManager : MonoBehaviour {
 
         for(int i = 0; i < outputArray.Count; i++)
         {
-            finalOutput += outputArray[i] + "\n";
+            finalOutput = outputArray[i] + "\n" + finalOutput;
         }
 
         return finalOutput;
