@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using HoloToolkit.Unity.InputModule.Utilities.Interactions;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -8,6 +11,10 @@ public class ReadFromTrello : Reader {
     TrelloAPI trelloAPI;
 
     TrelloBoardManager manager;
+
+    //TODO remove
+    [SerializeField]
+    InteractionModel targetModelObject;
 
     private TrelloCard[] allCards = null;
     private TrelloList[] lists = null;
@@ -21,11 +28,13 @@ public class ReadFromTrello : Reader {
     {
         trelloAPI = TrelloAPI.Instance.gameObject.GetComponent<TrelloAPI>();
         manager = GetComponentInChildren<TrelloBoardManager>();
+        targetModelObject = Object.FindObjectOfType<InteractionModel>();
         StartCoroutine(UpdateTrelloBoard());
     }
 
     IEnumerator UpdateTrelloBoard()
     {
+        Get3DModell();
         while (true)
         {
             StartCoroutine(GetBoardTitle(0));
@@ -39,6 +48,104 @@ public class ReadFromTrello : Reader {
             manager.UpdateTrelloBoard(cardsByList);
         }
     }
+
+    void Get3DModell()
+    {
+        StartCoroutine(GetModellCard());
+    }
+
+    IEnumerator GetModellCard()
+    {
+        UnityWebRequest ModellCardRequest = trelloAPI.GetModellCardHTTPRequest();
+        ModellCardRequest.chunkedTransfer = false;
+        ModellCardRequest.timeout = 100000;
+
+        yield return ModellCardRequest.SendWebRequest();
+        if (ModellCardRequest.isNetworkError || ModellCardRequest.isHttpError)
+        {
+            Debug.Log("An error occured receiving modell card: " + ModellCardRequest.responseCode);
+        }
+        else
+        {
+            string responseToJSON = "{\"card\":" + ModellCardRequest.downloadHandler.text + "}";
+            TrelloCard card= JsonUtility.FromJson<TrelloCard>(responseToJSON);
+            yield return StartCoroutine(GetModellLinkAttachment(card));
+        }
+    }
+
+    IEnumerator GetModellLinkAttachment(TrelloCard card)
+    {
+        UnityWebRequest ModellLinkAttachmentRequest = trelloAPI.GetLinkAttachmentHTTPRequest();
+        ModellLinkAttachmentRequest.chunkedTransfer = false;
+        ModellLinkAttachmentRequest.timeout = 100000;
+
+        yield return ModellLinkAttachmentRequest.SendWebRequest();
+        if (ModellLinkAttachmentRequest.isNetworkError || ModellLinkAttachmentRequest.isHttpError)
+        {
+            Debug.Log("An error occured receiving modell attachment link: " + ModellLinkAttachmentRequest.responseCode);
+        }
+        else
+        {
+            string responseToJSON = "{\"trelloAttachments\":" + ModellLinkAttachmentRequest.downloadHandler.text + "}";
+            TrelloCardAttachmentsResponse attachments = JsonUtility.FromJson<TrelloCardAttachmentsResponse>(responseToJSON);
+            Debug.Log("attachment link? " + attachments.trelloAttachments[0].url);
+            yield return StartCoroutine(GetModell(attachments.trelloAttachments[0].url));
+        }
+    }
+
+    IEnumerator GetModell(string url)
+    {
+        UnityWebRequest ModellRequest = UnityWebRequest.Get(url);
+        ModellRequest.chunkedTransfer = false;
+        ModellRequest.timeout = 100000;
+
+        yield return ModellRequest.SendWebRequest();
+        if (ModellRequest.isNetworkError || ModellRequest.isHttpError)
+        {
+            Debug.Log("An error occured receiving modell attachment link: " + ModellRequest.responseCode);
+        }
+        else
+        {
+            byte[] modell = ModellRequest.downloadHandler.data;
+            ImportObj(modell);
+        }
+    }
+
+    void ImportObj(byte[] modell)
+    {
+        string path = Application.persistentDataPath + "/modell.obj";
+
+        //Write some text to the test.txt file
+
+        File.WriteAllBytes(path, modell);
+
+        byte[] b = File.ReadAllBytes(path);
+
+        Mesh objMesh = new ObjImporter().ImportFile(Application.persistentDataPath + "/modell.obj");
+        Vector3[] vertices = objMesh.vertices;
+
+        targetModelObject.GetComponent<MeshFilter>().mesh = objMesh;
+        targetModelObject.GetComponent<MeshCollider>().enabled = true;
+        //targetModelObject.GetComponent<MeshCollider>().mesh = objMesh;
+    }
+
+    static Action<GameObject> objectLoadedCallback;
+    static ObjectImporter objectLoadedImporter;
+
+
+    public void LoadObjectFromFile(ObjectImporter importer, Transform parent, Action<GameObject> callback)
+    {
+        string path = LoadFile("Load 3D-Model file", "3D-Model", "obj");
+        if (path == "") return;
+
+        objectLoadedCallback = callback;
+        objectLoadedImporter = importer;
+        objectLoadedImporter.ImportedModel += OnImportFinished;
+        objectLoadedImporter.ImportFile(path, parent, new ImportOptions());
+        objectLoadedImporter.GetComponent<ObjectImporterLoadingIcon>().StartLoadingIcon();
+    }
+
+
 
     IEnumerator GetBoardTitle(int statusIndex)
     {

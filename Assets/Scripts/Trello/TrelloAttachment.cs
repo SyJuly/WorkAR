@@ -7,8 +7,15 @@ public struct TrelloAttachmentResponse
 }
 
 [Serializable]
+public struct TrelloCardAttachmentsResponse
+{
+    public TrelloAttachment[] trelloAttachments;
+}
+
+[Serializable]
 public class TrelloAttachment
 {
+    public string url;
     public TrelloAttachmentPreview[] previews;
 }
 
