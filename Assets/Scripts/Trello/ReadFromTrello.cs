@@ -1,4 +1,6 @@
-﻿using HoloToolkit.Unity.InputModule.Utilities.Interactions;
+﻿using AsImpL;
+using HoloToolkit.Unity.InputModule.Utilities.Interactions;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -6,7 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ReadFromTrello : Reader {
+public class ReadFromTrello : ObjectImporter {
 
     TrelloAPI trelloAPI;
 
@@ -28,7 +30,7 @@ public class ReadFromTrello : Reader {
     {
         trelloAPI = TrelloAPI.Instance.gameObject.GetComponent<TrelloAPI>();
         manager = GetComponentInChildren<TrelloBoardManager>();
-        targetModelObject = Object.FindObjectOfType<InteractionModel>();
+        targetModelObject = UnityEngine.Object.FindObjectOfType<InteractionModel>();
         StartCoroutine(UpdateTrelloBoard());
     }
 
@@ -89,10 +91,12 @@ public class ReadFromTrello : Reader {
             string responseToJSON = "{\"trelloAttachments\":" + ModellLinkAttachmentRequest.downloadHandler.text + "}";
             TrelloCardAttachmentsResponse attachments = JsonUtility.FromJson<TrelloCardAttachmentsResponse>(responseToJSON);
             Debug.Log("attachment link? " + attachments.trelloAttachments[0].url);
-            yield return StartCoroutine(GetModell(attachments.trelloAttachments[0].url));
+            string url = attachments.trelloAttachments[0].url;
+            yield return StartCoroutine(ImportObjFromUrl(url));
         }
     }
-
+    
+    
     IEnumerator GetModell(string url)
     {
         UnityWebRequest ModellRequest = UnityWebRequest.Get(url);
@@ -113,7 +117,7 @@ public class ReadFromTrello : Reader {
 
     void ImportObj(byte[] modell)
     {
-        string path = Application.persistentDataPath + "/modell.obj";
+        string path = Application.persistentDataPath + "\\modell.obj";
 
         //Write some text to the test.txt file
 
@@ -121,28 +125,22 @@ public class ReadFromTrello : Reader {
 
         byte[] b = File.ReadAllBytes(path);
 
-        Mesh objMesh = new ObjImporter().ImportFile(Application.persistentDataPath + "/modell.obj");
-        Vector3[] vertices = objMesh.vertices;
-
-        targetModelObject.GetComponent<MeshFilter>().mesh = objMesh;
-        targetModelObject.GetComponent<MeshCollider>().enabled = true;
-        //targetModelObject.GetComponent<MeshCollider>().mesh = objMesh;
+        ImportObjFromUrl(Application.persistentDataPath + "\\modell.obj");
     }
 
     static Action<GameObject> objectLoadedCallback;
     static ObjectImporter objectLoadedImporter;
 
-
-    public void LoadObjectFromFile(ObjectImporter importer, Transform parent, Action<GameObject> callback)
+    IEnumerator ImportObjFromUrl(string url)
     {
-        string path = LoadFile("Load 3D-Model file", "3D-Model", "obj");
-        if (path == "") return;
-
-        objectLoadedCallback = callback;
-        objectLoadedImporter = importer;
-        objectLoadedImporter.ImportedModel += OnImportFinished;
-        objectLoadedImporter.ImportFile(path, parent, new ImportOptions());
-        objectLoadedImporter.GetComponent<ObjectImporterLoadingIcon>().StartLoadingIcon();
+        ObjectImporter objectLoadedImporter = this;
+        ImportOptions options = new ImportOptions();
+        options.reuseLoaded = true;
+        options.inheritLayer = false;
+        options.modelScaling = 100f;
+        Debug.Log("start import model async");
+        objectLoadedImporter.ImportModelAsync("model", url, targetModelObject.transform, options);
+        yield return null;
     }
 
 
