@@ -8,15 +8,11 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ReadFromTrello : ObjectImporter {
+public class ReadFromTrello : Reader {
 
     TrelloAPI trelloAPI;
 
     TrelloBoardManager manager;
-
-    //TODO remove
-    [SerializeField]
-    InteractionModel targetModelObject;
 
     private TrelloCard[] allCards = null;
     private TrelloList[] lists = null;
@@ -30,13 +26,11 @@ public class ReadFromTrello : ObjectImporter {
     {
         trelloAPI = TrelloAPI.Instance.gameObject.GetComponent<TrelloAPI>();
         manager = GetComponentInChildren<TrelloBoardManager>();
-        targetModelObject = UnityEngine.Object.FindObjectOfType<InteractionModel>();
         StartCoroutine(UpdateTrelloBoard());
     }
 
     IEnumerator UpdateTrelloBoard()
     {
-        Get3DModell();
         while (true)
         {
             StartCoroutine(GetBoardTitle(0));
@@ -50,100 +44,6 @@ public class ReadFromTrello : ObjectImporter {
             manager.UpdateTrelloBoard(cardsByList);
         }
     }
-
-    void Get3DModell()
-    {
-        StartCoroutine(GetModellCard());
-    }
-
-    IEnumerator GetModellCard()
-    {
-        UnityWebRequest ModellCardRequest = trelloAPI.GetModellCardHTTPRequest();
-        ModellCardRequest.chunkedTransfer = false;
-        ModellCardRequest.timeout = 100000;
-
-        yield return ModellCardRequest.SendWebRequest();
-        if (ModellCardRequest.isNetworkError || ModellCardRequest.isHttpError)
-        {
-            Debug.Log("An error occured receiving modell card: " + ModellCardRequest.responseCode);
-        }
-        else
-        {
-            string responseToJSON = "{\"card\":" + ModellCardRequest.downloadHandler.text + "}";
-            TrelloCard card= JsonUtility.FromJson<TrelloCard>(responseToJSON);
-            yield return StartCoroutine(GetModellLinkAttachment(card));
-        }
-    }
-
-    IEnumerator GetModellLinkAttachment(TrelloCard card)
-    {
-        UnityWebRequest ModellLinkAttachmentRequest = trelloAPI.GetLinkAttachmentHTTPRequest();
-        ModellLinkAttachmentRequest.chunkedTransfer = false;
-        ModellLinkAttachmentRequest.timeout = 100000;
-
-        yield return ModellLinkAttachmentRequest.SendWebRequest();
-        if (ModellLinkAttachmentRequest.isNetworkError || ModellLinkAttachmentRequest.isHttpError)
-        {
-            Debug.Log("An error occured receiving modell attachment link: " + ModellLinkAttachmentRequest.responseCode);
-        }
-        else
-        {
-            string responseToJSON = "{\"trelloAttachments\":" + ModellLinkAttachmentRequest.downloadHandler.text + "}";
-            TrelloCardAttachmentsResponse attachments = JsonUtility.FromJson<TrelloCardAttachmentsResponse>(responseToJSON);
-            Debug.Log("attachment link? " + attachments.trelloAttachments[0].url);
-            string url = attachments.trelloAttachments[0].url;
-            yield return StartCoroutine(ImportObjFromUrl(url));
-        }
-    }
-    
-    
-    IEnumerator GetModell(string url)
-    {
-        UnityWebRequest ModellRequest = UnityWebRequest.Get(url);
-        ModellRequest.chunkedTransfer = false;
-        ModellRequest.timeout = 100000;
-
-        yield return ModellRequest.SendWebRequest();
-        if (ModellRequest.isNetworkError || ModellRequest.isHttpError)
-        {
-            Debug.Log("An error occured receiving modell attachment link: " + ModellRequest.responseCode);
-        }
-        else
-        {
-            byte[] modell = ModellRequest.downloadHandler.data;
-            ImportObj(modell);
-        }
-    }
-
-    void ImportObj(byte[] modell)
-    {
-        string path = Application.persistentDataPath + "\\modell.obj";
-
-        //Write some text to the test.txt file
-
-        File.WriteAllBytes(path, modell);
-
-        byte[] b = File.ReadAllBytes(path);
-
-        ImportObjFromUrl(Application.persistentDataPath + "\\modell.obj");
-    }
-
-    static Action<GameObject> objectLoadedCallback;
-    static ObjectImporter objectLoadedImporter;
-
-    IEnumerator ImportObjFromUrl(string url)
-    {
-        ObjectImporter objectLoadedImporter = this;
-        ImportOptions options = new ImportOptions();
-        options.reuseLoaded = true;
-        options.inheritLayer = false;
-        options.modelScaling = 100f;
-        Debug.Log("start import model async");
-        objectLoadedImporter.ImportModelAsync("model", url, targetModelObject.transform, options);
-        yield return null;
-    }
-
-
 
     IEnumerator GetBoardTitle(int statusIndex)
     {
