@@ -60,17 +60,17 @@ public class WidgetPositioner : Singleton<WidgetPositioner>
     /// <param name="surfaceType">Type of objects and planes that we are trying to match-up.</param>
     private void CreateWidgets(List<GameObject> widgets, List<GameObject> surfaces, PlacementSurfaces surfaceType)
     {
-        List<GameObject> widgetsGOs = new List<GameObject>();
+        /*List<GameObject> widgetsGOs = new List<GameObject>();
         foreach (GameObject widget in widgets)
         {
             GameObject widgetGO = Instantiate(widget);
             widgetsGOs.Add(widgetGO);
-        }
-        InstantiateWidgetsWithCalculatedPlacement(widgetsGOs, surfaces, surfaceType);
+        }*/
+        InstantiateWidgetsWithCalculatedPlacement(/*widgetsGOs*/ widgets, surfaces, surfaceType);
     }
 
 
-    private void InstantiateWidgetsWithCalculatedPlacement(List<GameObject> widgetsGOs, List<GameObject> surfaces, PlacementSurfaces surfaceType)
+    private void InstantiateWidgetsWithCalculatedPlacement(List<GameObject> /*widgetsGOs*/ widgets, List<GameObject> surfaces, PlacementSurfaces surfaceType)
     {
         List<int> UsedPlanes = new List<int>();
 
@@ -90,7 +90,7 @@ public class WidgetPositioner : Singleton<WidgetPositioner>
             return Vector3.Distance(leftSpot, headPosition).CompareTo(Vector3.Distance(rightSpot, headPosition));
         });
 
-        List<GameObject> widgetsToPlace = new List<GameObject>();
+        /*List<GameObject> widgetsToPlace = new List<GameObject>();
 
         foreach (GameObject existingWidget in widgetsGOs)
         {
@@ -101,10 +101,10 @@ public class WidgetPositioner : Singleton<WidgetPositioner>
             {
                 existingWidget.transform.parent = transform;
             }
-        }
+        }*/
 
 
-        foreach (GameObject item in widgetsToPlace)
+        foreach (GameObject item in /*widgetsToPlace*/ widgets)
         {
             int index = -1;
             Collider collider = item.GetComponent<Collider>();
@@ -148,9 +148,12 @@ public class WidgetPositioner : Singleton<WidgetPositioner>
             }
 
             //Vector3 finalPosition = AdjustPositionWithSpatialMap(position, surfaceType);
-            item.transform.position = position;
+            /*item.transform.position = position;
             item.transform.rotation = rotation;
-            item.transform.parent = transform;
+            item.transform.parent = transform;*/
+            GameObject widget = Instantiate(item, position, rotation) as GameObject;
+            widget.transform.parent = gameObject.transform;
+
         }
     }
 

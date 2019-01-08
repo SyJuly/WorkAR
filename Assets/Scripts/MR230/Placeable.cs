@@ -300,9 +300,9 @@ public class Placeable : MonoBehaviour, IInputClickHandler
     /// </summary>
     public void OnPlacementStart()
     {
-        if (GetComponent<UnityEngine.XR.WSA.WorldAnchor>()) {
+        /*if (GetComponent<UnityEngine.XR.WSA.WorldAnchor>()) {
             WorldAnchorManager.Instance.RemoveAnchor(gameObject);
-        }
+        }*/
         // If we are managing the collider, enable it. 
         if (managingBoxCollider)
         {
@@ -361,7 +361,7 @@ public class Placeable : MonoBehaviour, IInputClickHandler
 
         // Exit placement mode.
         IsPlacing = false;
-        WorldAnchorManager.Instance.AttachAnchor(gameObject);
+        //WorldAnchorManager.Instance.AttachAnchor(gameObject);
     }
 
     /// <summary>
