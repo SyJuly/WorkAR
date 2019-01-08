@@ -49,7 +49,7 @@ public class InteractionPanel : MonoBehaviour, IInteractionReceiver
             cursorfeedback.ActivateManipulationModeFeedback(ManipulationMode.None);
             isShowingFeedback = false;
         }
-        transform.position = new Vector3(model.transform.position.x, model.transform.position.y, model.transform.position.z + 2);
+        transform.position = new Vector3(model.transform.position.x, model.transform.position.y + 1, model.transform.position.z);
     }
 
     public void TypeGotActivated(ManipulationMode mode)

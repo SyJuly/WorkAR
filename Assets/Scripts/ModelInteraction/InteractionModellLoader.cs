@@ -6,7 +6,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class InteractionModellLoader : ObjectImporter, IInputClickHandler
+public class InteractionModellLoader : ObjectImporter, IInputClickHandler, IFocusable
 {
 
     TrelloAPI trelloAPI;
@@ -20,6 +20,8 @@ public class InteractionModellLoader : ObjectImporter, IInputClickHandler
 
     private bool isFocused;
 
+    private bool isImporting;
+
     void Start()
     {
         trelloAPI = TrelloAPI.Instance.gameObject.GetComponent<TrelloAPI>();
@@ -28,6 +30,7 @@ public class InteractionModellLoader : ObjectImporter, IInputClickHandler
 
     void Get3DModell()
     {
+        isImporting = true;
         StartCoroutine(GetModellCard());
     }
 
@@ -68,6 +71,7 @@ public class InteractionModellLoader : ObjectImporter, IInputClickHandler
             Debug.Log("attachment link? " + attachments.trelloAttachments[0].url);
             string url = attachments.trelloAttachments[0].url;
             yield return StartCoroutine(ImportObjFromUrl(url));
+            
         }
     }
 
@@ -81,8 +85,17 @@ public class InteractionModellLoader : ObjectImporter, IInputClickHandler
         options.localPosition = Vector3.zero;
         Debug.Log("start import model async");
         objectLoadedImporter.ImportModelAsync("model", url, interactionModelParent.transform, options);
-        TranslateModelInFrontOfWidget();
         yield return null;
+    }
+
+    protected override void OnImportingComplete()
+    {
+        if (isImporting)
+        {
+            ActivateSingleCollider(interactionModelParent.gameObject);
+            TranslateModelInFrontOfWidget();
+            isImporting = false;
+        }
     }
 
     void TranslateModelInFrontOfWidget()
@@ -90,9 +103,9 @@ public class InteractionModellLoader : ObjectImporter, IInputClickHandler
         interactionModelParent.transform.Translate(1,1,1, Camera.main.transform);
     }
 
-    void ActivateSingleCollider()
+    void ActivateSingleCollider(GameObject gameObject)
     {
-        MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>();
+        MeshFilter[] meshFilters = gameObject.GetComponentsInChildren<MeshFilter>();
         CombineInstance[] combine = new CombineInstance[meshFilters.Length];
 
         int i = 0;
@@ -108,10 +121,18 @@ public class InteractionModellLoader : ObjectImporter, IInputClickHandler
 
             i++;
         }
-        MeshFilter filter = transform.GetComponent<MeshFilter>();
+        MeshFilter filter = gameObject.GetComponent<MeshFilter>();
+        if(filter == null)
+        {
+            filter = gameObject.AddComponent<MeshFilter>();
+        }
         filter.mesh = new Mesh();
         filter.mesh.CombineMeshes(combine);
-        MeshCollider collider = transform.GetComponent<MeshCollider>();
+        MeshCollider collider = gameObject.GetComponent<MeshCollider>();
+        if (collider == null)
+        {
+            gameObject.AddComponent<MeshCollider>();
+        }
         collider.enabled = true;
         collider.sharedMesh = filter.mesh;
 
@@ -119,7 +140,7 @@ public class InteractionModellLoader : ObjectImporter, IInputClickHandler
 
     public void OnInputClicked(InputClickedEventData eventData)
     {
-        if (!eventData.used && !placable.isPlacementButtonFocused && !placable.IsPlacing)
+        if (!eventData.used && isFocused && !placable.IsPlacing)
         {
             eventData.Use();
             Debug.Log("on input clicked");
@@ -127,5 +148,15 @@ public class InteractionModellLoader : ObjectImporter, IInputClickHandler
             interactionModelParent = model.GetComponentInChildren<InteractionModel>();
             Get3DModell();
         }
+    }
+
+    public void OnFocusEnter()
+    {
+        isFocused = true;
+    }
+
+    public void OnFocusExit()
+    {
+        isFocused = false;
     }
 }

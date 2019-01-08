@@ -296,7 +296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   importAssets: 0
   importAssetPath: _ImportedOBJ
-  interactionModelPrefab: {fileID: 7101990172366899988, guid: 1de69caf9d338c74291c9be22b5ebfbb,
+  interactionModelPrefab: {fileID: 662683120242204023, guid: bf4477653cae3bd4bb155f68a5957914,
     type: 3}
 --- !u!65 &7918682206407926601
 BoxCollider:
