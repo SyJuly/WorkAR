@@ -571,7 +571,7 @@ public class Placeable : MonoBehaviour, IInputClickHandler
     /* Change event handling: This code differs from the Tutorial from https://docs.microsoft.com/en-us/windows/mixed-reality/holograms-230*/
 
 
-    bool isPlacementButtonFocused = false;
+    public bool isPlacementButtonFocused = false;
 
     void Start()
     {
@@ -604,13 +604,13 @@ public class Placeable : MonoBehaviour, IInputClickHandler
         {
             if (!IsPlacing && isPlacementButtonFocused)
             {
-                OnPlacementStart();
                 eventData.Use();
+                OnPlacementStart();
             }
             else if (IsPlacing)
             {
-                OnPlacementStop();
                 eventData.Use();
+                OnPlacementStop();
             }
         }
     }

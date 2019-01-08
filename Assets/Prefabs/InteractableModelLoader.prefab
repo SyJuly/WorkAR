@@ -1,7 +1,7 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!64 &3985754212786282816
-MeshCollider:
+--- !u!136 &9159858525034367671
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -10,10 +10,10 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Radius: 0.50095975
+  m_Height: 2.5950434
+  m_Direction: 1
+  m_Center: {x: -0.0009764069, y: 0.22289245, z: 0.00000013922178}
 --- !u!1 &6104152904166994068
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,8 +309,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.45203862, y: 0.3517621, z: 0.09509194}
-  m_Center: {x: 0.04554887, y: -0.0021566004, z: -0.04360619}
+  m_Size: {x: 0.53704655, y: 0.3517621, z: 0.09509194}
+  m_Center: {x: 0.003044844, y: -0.0021566004, z: -0.04360619}
 --- !u!114 &3651069649818941350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,6 +333,7 @@ MonoBehaviour:
     type: 2}
   PlacementSurface: 2
   ChildrenToHide: []
+  isPlacementButtonFocused: 0
 --- !u!1001 &4918892101734009651
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -346,7 +347,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4974013700805934, guid: ff117a1ec0941bb4eaabf98ac5e979c1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.25
+      value: -0.241
       objectReference: {fileID: 0}
     - target: {fileID: 4974013700805934, guid: ff117a1ec0941bb4eaabf98ac5e979c1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -354,7 +355,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4974013700805934, guid: ff117a1ec0941bb4eaabf98ac5e979c1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.048
+      value: -0.104
       objectReference: {fileID: 0}
     - target: {fileID: 4974013700805934, guid: ff117a1ec0941bb4eaabf98ac5e979c1, type: 3}
       propertyPath: m_LocalRotation.x
@@ -394,7 +395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4974013700805934, guid: ff117a1ec0941bb4eaabf98ac5e979c1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.056262866
+      value: 0.095871925
       objectReference: {fileID: 0}
     - target: {fileID: 4974013700805934, guid: ff117a1ec0941bb4eaabf98ac5e979c1, type: 3}
       propertyPath: m_LocalScale.z

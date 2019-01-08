@@ -16,9 +16,14 @@ public class InteractionModellLoader : ObjectImporter, IInputClickHandler
 
     InteractionModel interactionModelParent;
 
+    Placeable placable;
+
+    private bool isFocused;
+
     void Start()
     {
         trelloAPI = TrelloAPI.Instance.gameObject.GetComponent<TrelloAPI>();
+        placable = GetComponent<Placeable>();
     }
 
     void Get3DModell()
@@ -82,7 +87,7 @@ public class InteractionModellLoader : ObjectImporter, IInputClickHandler
 
     void TranslateModelInFrontOfWidget()
     {
-        transform.Translate(1,1,1, Camera.main.transform);
+        interactionModelParent.transform.Translate(1,1,1, Camera.main.transform);
     }
 
     void ActivateSingleCollider()
@@ -114,8 +119,9 @@ public class InteractionModellLoader : ObjectImporter, IInputClickHandler
 
     public void OnInputClicked(InputClickedEventData eventData)
     {
-        if (!eventData.used)
+        if (!eventData.used && !placable.isPlacementButtonFocused && !placable.IsPlacing)
         {
+            eventData.Use();
             Debug.Log("on input clicked");
             GameObject model = Instantiate(interactionModelPrefab);
             interactionModelParent = model.GetComponentInChildren<InteractionModel>();
