@@ -2,6 +2,7 @@
 using UnityEngine;
 using HoloToolkit.Unity;
 using HoloToolkit.Unity.SpatialMapping;
+using UnityEngine.XR.WSA;
 
 /// <summary>
 /// Called by PlaySpaceManager after planes have been generated from the Spatial Mapping Mesh.
@@ -59,6 +60,18 @@ public class WidgetPositioner : Singleton<WidgetPositioner>
     /// <param name="surfaceType">Type of objects and planes that we are trying to match-up.</param>
     private void CreateWidgets(List<GameObject> widgets, List<GameObject> surfaces, PlacementSurfaces surfaceType)
     {
+        List<GameObject> widgetsGOs = new List<GameObject>();
+        foreach (GameObject widget in widgets)
+        {
+            GameObject widgetGO = Instantiate(widget);
+            widgetsGOs.Add(widgetGO);
+        }
+        InstantiateWidgetsWithCalculatedPlacement(widgetsGOs, surfaces, surfaceType);
+    }
+
+
+    private void InstantiateWidgetsWithCalculatedPlacement(List<GameObject> widgetsGOs, List<GameObject> surfaces, PlacementSurfaces surfaceType)
+    {
         List<int> UsedPlanes = new List<int>();
 
         // Sort the planes by distance to user.
@@ -77,7 +90,21 @@ public class WidgetPositioner : Singleton<WidgetPositioner>
             return Vector3.Distance(leftSpot, headPosition).CompareTo(Vector3.Distance(rightSpot, headPosition));
         });
 
-        foreach (GameObject item in widgets)
+        List<GameObject> widgetsToPlace = new List<GameObject>();
+
+        foreach (GameObject existingWidget in widgetsGOs)
+        {
+            if (existingWidget.GetComponent<WorldAnchor>() != null)
+            {
+                widgetsToPlace.Add(existingWidget);
+            } else
+            {
+                existingWidget.transform.parent = transform;
+            }
+        }
+
+
+        foreach (GameObject item in widgetsToPlace)
         {
             int index = -1;
             Collider collider = item.GetComponent<Collider>();
@@ -121,8 +148,9 @@ public class WidgetPositioner : Singleton<WidgetPositioner>
             }
 
             //Vector3 finalPosition = AdjustPositionWithSpatialMap(position, surfaceType);
-            GameObject widget = Instantiate(item, position, rotation) as GameObject;
-            widget.transform.parent = gameObject.transform;
+            item.transform.position = position;
+            item.transform.rotation = rotation;
+            item.transform.parent = transform;
         }
     }
 

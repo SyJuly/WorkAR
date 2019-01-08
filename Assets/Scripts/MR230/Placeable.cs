@@ -4,6 +4,7 @@ using HoloToolkit.Unity.SpatialMapping;
 using UnityEngine.EventSystems;
 using HoloToolkit.Unity.InputModule;
 using TMPro;
+using HoloToolkit.Unity;
 
 /// <summary>
 /// Enumeration containing the surfaces on which a GameObject
@@ -299,6 +300,9 @@ public class Placeable : MonoBehaviour, IInputClickHandler
     /// </summary>
     public void OnPlacementStart()
     {
+        if (GetComponent<UnityEngine.XR.WSA.WorldAnchor>()) {
+            WorldAnchorManager.Instance.RemoveAnchor(gameObject);
+        }
         // If we are managing the collider, enable it. 
         if (managingBoxCollider)
         {
@@ -357,6 +361,7 @@ public class Placeable : MonoBehaviour, IInputClickHandler
 
         // Exit placement mode.
         IsPlacing = false;
+        WorldAnchorManager.Instance.AttachAnchor(gameObject);
     }
 
     /// <summary>

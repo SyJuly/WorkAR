@@ -161,7 +161,7 @@ MonoBehaviour:
     type: 3}
   MinArea: 0.025
   drawPlanesMask: 0
-  destroyPlanesMask: 16
+  destroyPlanesMask: 0
 --- !u!4 &89781458
 Transform:
   m_ObjectHideFlags: 0
@@ -540,6 +540,7 @@ GameObject:
   - component: {fileID: 1181555789}
   - component: {fileID: 1181555792}
   - component: {fileID: 1181555791}
+  - component: {fileID: 1181555793}
   m_Layer: 0
   m_Name: Widgets
   m_TagString: Untagged
@@ -602,6 +603,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59a9f9b98bb781946a25623d42ff5680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1181555793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181555788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f122ca4ae6b527e4798205becf9a0550, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnchorDebugText: {fileID: 0}
+  ShowDetailedLogs: 0
+  PersistentAnchors: 1
 --- !u!1001 &1190569943
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -779,7 +795,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1773759291
 MonoBehaviour:
   m_ObjectHideFlags: 0

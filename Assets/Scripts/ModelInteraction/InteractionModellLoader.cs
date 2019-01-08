@@ -114,9 +114,12 @@ public class InteractionModellLoader : ObjectImporter, IInputClickHandler
 
     public void OnInputClicked(InputClickedEventData eventData)
     {
-        Debug.Log("on input clicked");
-        GameObject model = Instantiate(interactionModelPrefab);
-        interactionModelParent = model.GetComponentInChildren<InteractionModel>();
-        Get3DModell();
+        if (!eventData.used)
+        {
+            Debug.Log("on input clicked");
+            GameObject model = Instantiate(interactionModelPrefab);
+            interactionModelParent = model.GetComponentInChildren<InteractionModel>();
+            Get3DModell();
+        }
     }
 }

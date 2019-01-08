@@ -19,7 +19,6 @@ public class ReadFromGoogleCalendar : Reader, IRefreshedTokenRequester
     {
         while(true)
         {
-            StartCoroutine(Test());
             StartCoroutine(GetCalendarEvents());
             yield return new WaitForSeconds(10);
         }
@@ -27,7 +26,6 @@ public class ReadFromGoogleCalendar : Reader, IRefreshedTokenRequester
 
     IEnumerator GetCalendarEvents()
     {
-        Debug.Log("Try get new calendar events");
         UnityWebRequest AlleCalendarEventsRequest = calendarAPI.GetCalendarEventsHTTPRequest();
         //AlleCalendarEventsRequest.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
         AlleCalendarEventsRequest.chunkedTransfer = false;
