@@ -15,6 +15,9 @@ public class CursorFeedback : MonoBehaviour {
     [SerializeField]
     GameObject rotateFeedback;
 
+    [SerializeField]
+    GameObject cameraFeedback;
+
     private HoloToolkit.Unity.InputModule.Cursor cursor;
 
     private GameObject activeFeedback;
@@ -58,6 +61,11 @@ public class CursorFeedback : MonoBehaviour {
             case ManipulationMode.Move: ActivateFeedback(moveFeedback); break;
             default: ActivateFeedback(null); break;
         }
+    }
+
+    public void ToggleCameraModeFeedback(bool isCameraOn)
+    {
+        ActivateFeedback(isCameraOn ? cameraFeedback : null);
     }
 
     private void ActivateFeedback(GameObject feedbackGO)

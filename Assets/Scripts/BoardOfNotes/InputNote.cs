@@ -81,11 +81,13 @@ public class InputNote : MonoBehaviour {
 
     public void StartCapturingMode()
     {
+        CursorFeedback.Instance.ToggleCameraModeFeedback(true);
         tagalong.enabled = false;
     }
 
     public void StopCapturingMode()
     {
+        CursorFeedback.Instance.ToggleCameraModeFeedback(false);
         tagalong.enabled = true;
     }
 }
