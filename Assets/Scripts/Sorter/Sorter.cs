@@ -81,9 +81,10 @@ public class Sorter : MonoBehaviour
     public void ClickedNote(NoteSortModifier noteSortModifier)
     {
         string previousListId = cardIdWithListId[noteSortModifier.note.cardId];
-        if(previousListId != activeColumnId)
+        bool listOfCardWasAlreadyChanged = changedCardIdWithListId.ContainsKey(noteSortModifier.note.cardId);
+        if (previousListId != activeColumnId || listOfCardWasAlreadyChanged)
         {
-            if (changedCardIdWithListId.ContainsKey(noteSortModifier.note.cardId))
+            if (listOfCardWasAlreadyChanged)
             {
                 changedCardIdWithListId.Remove(noteSortModifier.note.cardId);
             }
