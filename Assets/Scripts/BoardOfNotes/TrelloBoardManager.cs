@@ -23,6 +23,8 @@ public class TrelloBoardManager : MonoBehaviour
 
     Dictionary<string, BoardColumn> createdListColumns;
 
+    public bool isResorting = false;
+
     private void Start()
     {
         bounds = GetComponent<MeshFilter>().mesh.bounds;
@@ -57,19 +59,22 @@ public class TrelloBoardManager : MonoBehaviour
 
     public void UpdateTrelloBoard(Dictionary<string, TrelloList> cardsByList)
     {
-        TrelloList[] newListsWithCards = new TrelloList[cardsByList.Count];
-        int i = 0;
-        foreach (KeyValuePair<string, TrelloList> cardByList in cardsByList)
+        if (!isResorting)
         {
-            newListsWithCards[i] = cardByList.Value;
-            i++;
+            TrelloList[] newListsWithCards = new TrelloList[cardsByList.Count];
+            int i = 0;
+            foreach (KeyValuePair<string, TrelloList> cardByList in cardsByList)
+            {
+                newListsWithCards[i] = cardByList.Value;
+                i++;
+            }
+            foreach (KeyValuePair<string, BoardColumn> list in createdListColumns)
+            {
+                list.Value.isUsed = false;
+            }
+            currentListsWithCards = newListsWithCards;
+            PlaceBoardColumns();
         }
-        foreach (KeyValuePair<string, BoardColumn> list in createdListColumns)
-        {
-            list.Value.isUsed = false;
-        }
-        currentListsWithCards = newListsWithCards;
-        PlaceBoardColumns();
     }
 
     private GameObject GetBoardColumn(TrelloList list)

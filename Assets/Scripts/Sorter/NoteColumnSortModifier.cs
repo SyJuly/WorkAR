@@ -22,7 +22,6 @@ public class NoteColumnSortModifier : MonoBehaviour
 
     public void ActivateSortMode()
     {
-        boardColumn.enabled = false;
         boardColumn.dictationNoteColumn.SetActive(false);
         previousPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
         previousScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
@@ -33,7 +32,6 @@ public class NoteColumnSortModifier : MonoBehaviour
 
     public void DeactivateSortMode()
     {
-        boardColumn.enabled = true;
         boardColumn.dictationNoteColumn.SetActive(true);
         transform.localPosition = previousPosition;
         transform.localScale = previousScale;

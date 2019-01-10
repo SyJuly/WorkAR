@@ -5,21 +5,10 @@ using UnityEngine;
 
 public class SortButton : MonoBehaviour, IInputClickHandler
 {
+    [SerializeField]
     Sorter sorter;
 
     bool isSortActivated;
-
-    bool isFocused;
-
-    public void OnFocusEnter()
-    {
-        isFocused = true;
-    }
-
-    public void OnFocusExit()
-    {
-        isFocused = false;
-    }
 
     public void OnInputClicked(InputClickedEventData eventData)
     {
@@ -31,10 +20,5 @@ public class SortButton : MonoBehaviour, IInputClickHandler
             sorter.DeactivateSort();
         }
         
-    }
-    
-    void Start()
-    {
-        sorter = GetComponentInParent<Sorter>();
     }
 }

@@ -8,4 +8,6 @@ public class Note : MonoBehaviour {
     public GameObject photoObject;
 
     public bool isUsed;
+
+    public string cardId;
 }
