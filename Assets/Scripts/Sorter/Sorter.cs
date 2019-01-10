@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Sorter : MonoBehaviour
@@ -10,6 +11,7 @@ public class Sorter : MonoBehaviour
     private NoteColumnSortModifier[] sortModifier;
     private Renderer[] noteColumnsRenderer;
     private Dictionary<string, string> cardIdWithListId;
+    private Dictionary<string, string> changedCardIdWithListId;
     private string[] listIdsOfColumns;
 
     private Material defaultMaterial;
@@ -29,9 +31,11 @@ public class Sorter : MonoBehaviour
         noteColumnsRenderer = new Renderer[sortModifier.Length];
         listIdsOfColumns = new string[sortModifier.Length];
         cardIdWithListId = new Dictionary<string, string>();
+        changedCardIdWithListId = new Dictionary<string, string>();
         for (int i = 0; i < sortModifier.Length; i++)
         {
             NoteColumnSortModifier columnSortModifier = sortModifier[i];
+            columnSortModifier.sorter = this;
             noteColumnsRenderer[i] = columnSortModifier.GetComponent<Renderer>();
         }
         if (noteColumnsRenderer.Length > 0)
@@ -80,22 +84,18 @@ public class Sorter : MonoBehaviour
         string previousListId = cardIdWithListId[noteSortModifier.note.cardId];
         if(previousListId != activeColumnId)
         {
-            cardIdWithListId.Remove(noteSortModifier.note.cardId);
-            cardIdWithListId.Add(noteSortModifier.note.cardId, activeColumnId);
-            int index = GetColumnIndex(activeColumnId);
+            if (changedCardIdWithListId.ContainsKey(noteSortModifier.note.cardId))
+            {
+                changedCardIdWithListId.Remove(noteSortModifier.note.cardId);
+            }
+            changedCardIdWithListId.Add(noteSortModifier.note.cardId, activeColumnId);
+            int index = ArrayUtility.IndexOf(listIdsOfColumns, activeColumnId);
             noteSortModifier.SetColumnColor(sortMaterials[index]);
         }
     }
 
-    private int GetColumnIndex(string listId)
-    {
-        for (int i = 0; i < listIdsOfColumns.Length; i++)
-        {
-            if (listIdsOfColumns[i] == listId)
-            {
-                return i;
-            }
-        }
-        return -1;
+    public void ClickedList(NoteColumnSortModifier noteColumnSortModifier) {
+        int index = ArrayUtility.IndexOf(sortModifier, noteColumnSortModifier);
+        activeColumnId = listIdsOfColumns[index];
     }
 }

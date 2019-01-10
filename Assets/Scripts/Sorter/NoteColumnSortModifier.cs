@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using HoloToolkit.Unity.InputModule;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NoteColumnSortModifier : MonoBehaviour
+public class NoteColumnSortModifier : MonoBehaviour, IInputClickHandler
 {
     [SerializeField]
     float positionY = 0.42f;
@@ -14,6 +15,8 @@ public class NoteColumnSortModifier : MonoBehaviour
 
     private Vector3 previousPosition;
     private Vector3 previousScale;
+
+    public Sorter sorter;
 
     private void Start()
     {
@@ -37,4 +40,8 @@ public class NoteColumnSortModifier : MonoBehaviour
         transform.localScale = previousScale;
     }
 
+    public void OnInputClicked(InputClickedEventData eventData)
+    {
+        sorter.ClickedList(this);
+    }
 }
