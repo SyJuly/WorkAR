@@ -21,6 +21,9 @@ public class BoardColumn : MonoBehaviour {
     GameObject column;
 
     [SerializeField]
+    public GameObject dictationNoteColumn;
+
+    [SerializeField]
     int maxNumberOfNotes = 4;
 
     public bool isUsed = false;
