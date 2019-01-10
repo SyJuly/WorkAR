@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class Sorter : MonoBehaviour
@@ -89,13 +88,13 @@ public class Sorter : MonoBehaviour
                 changedCardIdWithListId.Remove(noteSortModifier.note.cardId);
             }
             changedCardIdWithListId.Add(noteSortModifier.note.cardId, activeColumnId);
-            int index = ArrayUtility.IndexOf(listIdsOfColumns, activeColumnId);
+            int index = System.Array.IndexOf(listIdsOfColumns, activeColumnId);
             noteSortModifier.SetColumnColor(sortMaterials[index]);
         }
     }
 
     public void ClickedList(NoteColumnSortModifier noteColumnSortModifier) {
-        int index = ArrayUtility.IndexOf(sortModifier, noteColumnSortModifier);
+        int index = System.Array.IndexOf(sortModifier, noteColumnSortModifier);
         activeColumnId = listIdsOfColumns[index];
     }
 }
