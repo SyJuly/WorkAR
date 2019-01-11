@@ -15,9 +15,11 @@ public class SortButton : MonoBehaviour, IInputClickHandler
         if (!isSortActivated)
         {
             sorter.ActivateSort();
+            isSortActivated = true;
         } else
         {
             sorter.DeactivateSort();
+            isSortActivated = false;
         }
         
     }

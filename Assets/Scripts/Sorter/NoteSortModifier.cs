@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class NoteSortModifier : MonoBehaviour, IInputClickHandler
 {
-    Renderer renderer;
+    public Renderer meshRenderer;
 
     public Sorter sorter;
 
@@ -13,13 +13,8 @@ public class NoteSortModifier : MonoBehaviour, IInputClickHandler
 
     void Start()
     {
-        renderer = GetComponent<Renderer>();
+        meshRenderer = GetComponent<Renderer>();
         note = GetComponent<Note>();
-    }
-
-    public void SetColumnColor(Material material)
-    {
-        renderer.material = material;
     }
 
     public void OnInputClicked(InputClickedEventData eventData)

@@ -11,7 +11,9 @@ public class NoteColumnSortModifier : MonoBehaviour, IInputClickHandler
     [SerializeField]
     float scaleY = 0.16f;
 
-    private BoardColumn boardColumn;
+    public Renderer meshRenderer;
+
+    public BoardColumn boardColumn;
 
     private Vector3 previousPosition;
     private Vector3 previousScale;
@@ -21,6 +23,7 @@ public class NoteColumnSortModifier : MonoBehaviour, IInputClickHandler
     private void Start()
     {
         boardColumn = GetComponentInParent<BoardColumn>();
+        meshRenderer = GetComponent<Renderer>();
     }
 
     public void ActivateSortMode()

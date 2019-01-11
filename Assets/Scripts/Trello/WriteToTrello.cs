@@ -39,6 +39,11 @@ public class WriteToTrello : MonoBehaviour {
         StartCoroutine(InsertCard());
     }
 
+    public void SendReorderedCardToTrello(string cardId, string listId)
+    {
+        StartCoroutine(ReorderCard(cardId, listId));
+    }
+
     IEnumerator InsertCard()
     {
         UnityWebRequest InsertCardRequest;
@@ -58,6 +63,22 @@ public class WriteToTrello : MonoBehaviour {
         else
         {
             cardToBeInserted = null;
+        }
+        
+    }
+
+    IEnumerator ReorderCard(string cardId, string listId)
+    {
+        UnityWebRequest ReorderCardRequest= trelloAPI.GetAssignCardToListHTTPRequest(cardId, listId);
+        ReorderCardRequest.timeout = 90000000;
+        yield return ReorderCardRequest.SendWebRequest();
+        if (ReorderCardRequest.isNetworkError || ReorderCardRequest.isHttpError)
+        {
+            Debug.Log("Error occured reordering new Trello card: " + ReorderCardRequest.responseCode);
+        }
+        else
+        {
+            Debug.Log("Reordered card.");
         }
     }
 }

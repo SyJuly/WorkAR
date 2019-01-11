@@ -7,39 +7,40 @@ public class Sorter : MonoBehaviour
     [SerializeField]
     Material[] sortMaterials;
 
-    private NoteColumnSortModifier[] sortModifier;
-    private Renderer[] noteColumnsRenderer;
+    private NoteColumnSortModifier[] listSortModifiers;
+    private List<NoteSortModifier> noteSortModifiers;
     private Dictionary<string, string> cardIdWithListId;
     private Dictionary<string, string> changedCardIdWithListId;
     private string[] listIdsOfColumns;
 
-    private Material defaultMaterial;
+    private Material defaultColumnMaterial;
+    private Material defaultCellMaterial;
     private TrelloBoardManager trelloBoardManager;
+    private WriteToTrello writer;
 
     private string activeColumnId;
 
     private void Start()
     {
         trelloBoardManager = GetComponent<TrelloBoardManager>();
+        writer = WriteToTrello.Instance;
     }
 
     void SetUpSorter()
     {
-        
-        sortModifier = GetComponentsInChildren<NoteColumnSortModifier>();
-        noteColumnsRenderer = new Renderer[sortModifier.Length];
-        listIdsOfColumns = new string[sortModifier.Length];
+
+        listSortModifiers = GetComponentsInChildren<NoteColumnSortModifier>();
+        noteSortModifiers = new List<NoteSortModifier>();
+        listIdsOfColumns = new string[listSortModifiers.Length];
         cardIdWithListId = new Dictionary<string, string>();
         changedCardIdWithListId = new Dictionary<string, string>();
-        for (int i = 0; i < sortModifier.Length; i++)
+        for (int i = 0; i < listSortModifiers.Length; i++)
         {
-            NoteColumnSortModifier columnSortModifier = sortModifier[i];
-            columnSortModifier.sorter = this;
-            noteColumnsRenderer[i] = columnSortModifier.GetComponent<Renderer>();
+            listSortModifiers[i].sorter = this;
         }
-        if (noteColumnsRenderer.Length > 0)
+        if (listSortModifiers.Length > 0)
         {
-            defaultMaterial = noteColumnsRenderer[0].material;
+            defaultColumnMaterial = listSortModifiers[0].meshRenderer.material;
         }
     }
     
@@ -47,21 +48,27 @@ public class Sorter : MonoBehaviour
     {
         trelloBoardManager.isResorting = true;
         SetUpSorter();
-        for (int i = 0; i < sortModifier.Length; i++)
+        for (int i = 0; i < listSortModifiers.Length; i++)
         {
-            sortModifier[i].ActivateSortMode();
-            noteColumnsRenderer[i].material = sortMaterials[i];
-            NoteColumnSortModifier columnSortModifier = sortModifier[i];
-            BoardColumn boardColumn = columnSortModifier.GetComponentInParent<BoardColumn>();
+            listSortModifiers[i].ActivateSortMode();
+            listSortModifiers[i].meshRenderer.material = sortMaterials[i];
+            NoteColumnSortModifier columnSortModifier = listSortModifiers[i];
+            BoardColumn boardColumn = columnSortModifier.boardColumn;
+            boardColumn.dictationNoteColumn.SetActive(false);
             string listId = boardColumn.list.id;
             listIdsOfColumns[i] = listId;
-            NoteSortModifier[] notes = boardColumn.GetComponentsInChildren<NoteSortModifier>();
-            for (int j = 0; j < notes.Length; j++)
+            NoteSortModifier[] noteSortModifiersOfList = boardColumn.GetComponentsInChildren<NoteSortModifier>();
+            for (int j = 0; j < noteSortModifiersOfList.Length; j++)
             {
-                NoteSortModifier noteSortModifier = notes[j];
+                NoteSortModifier noteSortModifier = noteSortModifiersOfList[j];
+                if (defaultCellMaterial == null)
+                {
+                    defaultCellMaterial = noteSortModifier.meshRenderer.material;
+                }
+                noteSortModifiers.Add(noteSortModifier);
                 noteSortModifier.sorter = this;
                 cardIdWithListId.Add(noteSortModifier.note.cardId, listId);
-                noteSortModifier.SetColumnColor(sortMaterials[i]);
+                noteSortModifier.meshRenderer.material = sortMaterials[i];
             }
             
         }
@@ -71,10 +78,20 @@ public class Sorter : MonoBehaviour
     public void DeactivateSort()
     {
         trelloBoardManager.isResorting = false;
-        for (int i = 0; i < sortModifier.Length; i++)
+        for (int i = 0; i < listSortModifiers.Length; i++)
         {
-            sortModifier[i].DeactivateSortMode();
-            noteColumnsRenderer[i].material = defaultMaterial;
+            NoteColumnSortModifier noteColumnSortModifier = listSortModifiers[i];
+            noteColumnSortModifier.DeactivateSortMode();
+            noteColumnSortModifier.meshRenderer.material = defaultColumnMaterial;
+            noteColumnSortModifier.boardColumn.dictationNoteColumn.SetActive(true);
+        }
+        foreach (NoteSortModifier card in noteSortModifiers)
+        {
+            card.meshRenderer.material = defaultCellMaterial;
+        }
+        foreach (KeyValuePair<string, string> changedCardPair in changedCardIdWithListId)
+        {
+            writer.SendReorderedCardToTrello(changedCardPair.Key, changedCardPair.Value);
         }
     }
 
@@ -90,12 +107,12 @@ public class Sorter : MonoBehaviour
             }
             changedCardIdWithListId.Add(noteSortModifier.note.cardId, activeColumnId);
             int index = System.Array.IndexOf(listIdsOfColumns, activeColumnId);
-            noteSortModifier.SetColumnColor(sortMaterials[index]);
+            noteSortModifier.meshRenderer.material = sortMaterials[index];
         }
     }
 
     public void ClickedList(NoteColumnSortModifier noteColumnSortModifier) {
-        int index = System.Array.IndexOf(sortModifier, noteColumnSortModifier);
+        int index = System.Array.IndexOf(listSortModifiers, noteColumnSortModifier);
         activeColumnId = listIdsOfColumns[index];
     }
 }

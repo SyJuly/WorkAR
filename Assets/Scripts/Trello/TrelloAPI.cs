@@ -48,6 +48,11 @@ public class TrelloAPI : MonoBehaviour {
         return UnityWebRequest.Get(credentials.trello_card_endpoint + "/" + card.id + "/attachments/" + card.idAttachmentCover + "?token=" + credentials.access_token + "&key=" + credentials.api_key + "&t=" + getUTCTime());
     }
 
+    public UnityWebRequest GetAssignCardToListHTTPRequest(string cardId, string listId)
+    {
+        return UnityWebRequest.Put(credentials.trello_card_endpoint + "/" + cardId + "?idList=" + listId +"&token=" + credentials.access_token + "&key=" + credentials.api_key + "&t=" + getUTCTime(), System.Text.Encoding.UTF8.GetBytes("a"));
+    }
+
     public UnityWebRequest GetModellCardHTTPRequest()
     {
         Debug.Log("MODELL CARD:" + credentials.trello_list_endpoint + "/" + credentials.modell_list_id + "/cards?token=" + credentials.access_token + "&key=" + credentials.api_key + "&t=" + getUTCTime());
