@@ -18,9 +18,14 @@ public class CursorFeedback : MonoBehaviour {
     [SerializeField]
     GameObject cameraFeedback;
 
+    [SerializeField]
+    GameObject sortColorFeedback;
+
     private HoloToolkit.Unity.InputModule.Cursor cursor;
 
     private GameObject activeFeedback;
+
+    private Renderer sortColorRenderer;
 
     /*------------------Singleton---------------------->>*/
     private static CursorFeedback _instance;
@@ -45,6 +50,7 @@ public class CursorFeedback : MonoBehaviour {
     {
         activeFeedback = scaleFeedback;
         cursor = InputManager.Instance.gameObject.GetComponent<SimpleSinglePointerSelector>().Cursor;
+        sortColorRenderer = sortColorFeedback.GetComponent<Renderer>();
     }
 
     private void Update()
@@ -66,6 +72,18 @@ public class CursorFeedback : MonoBehaviour {
     public void ToggleCameraModeFeedback(bool isCameraOn)
     {
         ActivateFeedback(isCameraOn ? cameraFeedback : null);
+    }
+
+    public void ToggleSortModeFeedback(Material sortColor)
+    {
+        if (sortColor != null)
+        {
+            ActivateFeedback(sortColorFeedback);
+            sortColorRenderer.material = sortColor;
+        } else
+        {
+            ActivateFeedback(null);
+        }
     }
 
     private void ActivateFeedback(GameObject feedbackGO)

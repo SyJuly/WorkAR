@@ -72,7 +72,7 @@ public class Sorter : MonoBehaviour
             }
             
         }
-        activeColumnId = listIdsOfColumns[0];
+        SetActiveColumn(0);
     }
 
     public void DeactivateSort()
@@ -113,6 +113,12 @@ public class Sorter : MonoBehaviour
 
     public void ClickedList(NoteColumnSortModifier noteColumnSortModifier) {
         int index = System.Array.IndexOf(listSortModifiers, noteColumnSortModifier);
+        SetActiveColumn(index);
+    }
+
+    private void SetActiveColumn(int index)
+    {
         activeColumnId = listIdsOfColumns[index];
+        CursorFeedback.Instance.ToggleSortModeFeedback(sortMaterials[index]);
     }
 }
