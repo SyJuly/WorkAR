@@ -6,8 +6,26 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class InteractionModellLoader : ObjectImporter, IInputClickHandler, IFocusable
+public class InteractionModellLoader : ObjectImporter
 {
+    /*------------------Singleton---------------------->>*/
+    private static InteractionModellLoader _instance;
+
+    public static InteractionModellLoader Instance { get { return _instance; } }
+
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
+    /*<<------------------Singleton-----------------------*/
 
     TrelloAPI trelloAPI;
 
@@ -16,19 +34,15 @@ public class InteractionModellLoader : ObjectImporter, IInputClickHandler, IFocu
 
     InteractionModel interactionModelParent;
 
-    Placeable placable;
-
-    private bool isFocused;
-
     private bool isImporting;
+
 
     void Start()
     {
         trelloAPI = TrelloAPI.Instance.gameObject.GetComponent<TrelloAPI>();
-        placable = GetComponent<Placeable>();
     }
 
-    void Get3DModell()
+    void Load3DModell()
     {
         isImporting = true;
         StartCoroutine(GetModellCard());
@@ -138,25 +152,15 @@ public class InteractionModellLoader : ObjectImporter, IInputClickHandler, IFocu
 
     }
 
-    public void OnInputClicked(InputClickedEventData eventData)
+    public void Get3DModell()
     {
-        if (!eventData.used && isFocused && !placable.IsPlacing)
-        {
-            eventData.Use();
-            Debug.Log("on input clicked");
-            GameObject model = Instantiate(interactionModelPrefab);
-            interactionModelParent = model.GetComponentInChildren<InteractionModel>();
-            Get3DModell();
-        }
+        Initialise3DModell();
+        Load3DModell();
     }
 
-    public void OnFocusEnter()
+    public void Initialise3DModell()
     {
-        isFocused = true;
-    }
-
-    public void OnFocusExit()
-    {
-        isFocused = false;
+        GameObject model = Instantiate(interactionModelPrefab);
+        interactionModelParent = model.GetComponentInChildren<InteractionModel>();
     }
 }

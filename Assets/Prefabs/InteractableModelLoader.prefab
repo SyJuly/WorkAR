@@ -257,6 +257,7 @@ GameObject:
   - component: {fileID: 6104152905698041845}
   - component: {fileID: 7918682206407926601}
   - component: {fileID: 3651069649818941350}
+  - component: {fileID: 7256762730113561080}
   m_Layer: 0
   m_Name: InteractableModelLoader
   m_TagString: Untagged
@@ -334,6 +335,19 @@ MonoBehaviour:
   PlacementSurface: 2
   ChildrenToHide: []
   isPlacementButtonFocused: 0
+--- !u!114 &7256762730113561080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6104152905698041843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30ee9beef925bc5409fc0fff424f4e4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionModelPrefab: {fileID: 0}
 --- !u!1001 &4918892101734009651
 PrefabInstance:
   m_ObjectHideFlags: 0

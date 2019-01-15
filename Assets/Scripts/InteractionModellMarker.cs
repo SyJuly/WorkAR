@@ -18,7 +18,10 @@ public class InteractionModellMarker : MonoBehaviour, ITrackableEventHandler
 
     public void OnTrackableStateChanged(TrackableBehaviour.Status previousStatus, TrackableBehaviour.Status newStatus)
     {
-        Debug.Log("YEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEES");
+        if (newStatus == TrackableBehaviour.Status.TRACKED)
+        {
+            InteractionModellLoader.Instance.Get3DModell();
+        }
     }
 
 }
