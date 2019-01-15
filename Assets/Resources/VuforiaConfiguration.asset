@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: VuforiaConfiguration
   m_EditorClassIdentifier: 
   vuforia:
-    vuforiaLicenseKey: 
+    vuforiaLicenseKey: Aa5AuGL/////AAABmSh5HJDk2UbrovGVCbkAcxoKqncHnSBI0f39e9j2iuVRzlfoxF+EoPwfLw9AUs4uc/VXfLM4U9snyXYtKrZmdkgKjS3ERck9VhS4HlTWnjNqTiFYn/pQE3DAp1YvHlPp4hSDY5tOwVdHlXVViEeci5fw0REidk6vD2FhGRO6WJ02Ge5OPWN0VxIT+GzWK8/rsrwGjUf2Ek9e78gLxSPXtKp/lQ1ycGMPz6nlKaYrsdssiB2iVy7pLoxlf2MJTOWMFVY0m0u5YpyRoC5QNteP7Pp+lrGlCgd1rQ5Xaa0Ed3Rp6H56PPAK0MkTkuHIUODeZODYtQcvNltEbJUBTdV2NEiOvNiD/1BrMIn6zGu0StaH
     ufoLicenseKey: QWRjcStqei8vLy8vQUFBQUtMYUhPY0ttSjBBRmsxSy80VkVPUmQ1a2RUVm1TZWNlVnllb3h5VVNqcUh6eFVTK3FrYUw2Z1RrV0VtQzA2TmdoZFNuL0FiV1VkSWx6OXk4cVFQd3BPazdZRjlrcnBHeC9HczhpSlAyL2tjMzF6cyt2ZUdzUlpDdTExMVMxZndvZFJGNzJGZUxLLy9sOVdua2hBSnRhVE9zK3lTdnc1N3BWM0FSMW9MczhzUi9HLzVLbTk1ZmZiQXlhUlNTR1QwbW9KMmF6S09rUm5vOVcwY3g4ZXc5ZXhMaTBiOU9TVHA4NFNubFdKWDd0dE5Xc0VLNEM5ekNKRnpva3JVS1luN3R3S2VObDRrOGJPRHdRSEM4YXJIUmVEbU5ZUE1Na2hWenJYQ1V6QTBNS3NyaSs3NUxMcnhPTC9DKzE3TTVLSjZQNTArWnpWM0pJV1M4b2JKNGV2VU1uclR1bHkvQUdUT3ZBZjBiSGRIZVl3NHY=
     delayedInitialization: 0
     cameraDeviceModeSetting: -1
@@ -22,14 +22,14 @@ MonoBehaviour:
     useDelayedLoadingObjectTargets: 0
     cameraDirection: 0
     mirrorVideoBackground: 0
-    version: 7.5.26
-    eulaAcceptedVersions: '{"Values":["7.1","7.5"]}'
+    version: 8.0.10
+    eulaAcceptedVersions: '{"Values":["7.1","7.5","8.0"]}'
   digitalEyewear:
     cameraOffset: 0.06
     distortionRenderingLayer: 31
-    eyewearType: 0
+    eyewearType: 1
     stereoFramework: 0
-    seeThroughConfiguration: 0
+    seeThroughConfiguration: 1
     viewerName: 
     viewerManufacturer: 
     useCustomViewer: 0
@@ -48,8 +48,9 @@ MonoBehaviour:
   videoBackground:
     clippingMode: 0
     numDivisions: 2
-    videoBackgroundShader: {fileID: 0}
-    matteShader: {fileID: 0}
+    videoBackgroundShader: {fileID: 4800000, guid: f40623b353e2f1943b1b3ba42975db7a,
+      type: 3}
+    matteShader: {fileID: 4800000, guid: 66d0d78a3000021448b598bb54a3bfdf, type: 3}
     videoBackgroundEnabled: 1
   deviceTracker:
     autoInitTracker: 0
@@ -59,7 +60,6 @@ MonoBehaviour:
     modelCorrectionMode: 0
     modelTransformEnabled: 0
     modelTransform: {x: 0, y: 0.1, z: -0.1}
-    fusionMode: 7
   smartTerrain:
     autoInitTracker: 0
     autoStartTracker: 0
