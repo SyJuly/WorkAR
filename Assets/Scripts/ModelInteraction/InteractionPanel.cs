@@ -21,6 +21,9 @@ public class InteractionPanel : MonoBehaviour, IInteractionReceiver
     [SerializeField]
     InteractionModel model;
 
+    [SerializeField]
+    float distanceToModel = 1f;
+
     CursorFeedback cursorfeedback;
 
     ManipulationMode activeInteractionType = ManipulationMode.Scale;
@@ -49,7 +52,7 @@ public class InteractionPanel : MonoBehaviour, IInteractionReceiver
             cursorfeedback.ActivateManipulationModeFeedback(ManipulationMode.None);
             isShowingFeedback = false;
         }
-        transform.position = new Vector3(model.transform.position.x, model.transform.position.y + 1, model.transform.position.z);
+        transform.position = new Vector3(model.transform.position.x, model.transform.position.y + distanceToModel, model.transform.position.z);
     }
 
     public void TypeGotActivated(ManipulationMode mode)

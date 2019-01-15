@@ -32,6 +32,9 @@ public class InteractionModellLoader : ObjectImporter
     [SerializeField]
     GameObject interactionModelPrefab;
 
+    [SerializeField]
+    float modelScaling = 1f;
+
     InteractionModel interactionModelParent;
 
     private bool isImporting;
@@ -95,7 +98,7 @@ public class InteractionModellLoader : ObjectImporter
         ImportOptions options = new ImportOptions();
         options.reuseLoaded = true;
         options.inheritLayer = false;
-        options.modelScaling = 0.3f;
+        options.modelScaling = modelScaling;
         options.localPosition = Vector3.zero;
         Debug.Log("start import model async");
         objectLoadedImporter.ImportModelAsync("model", url, interactionModelParent.transform, options);

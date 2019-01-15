@@ -58,11 +58,7 @@ namespace HoloToolkit.Unity.InputModule.Utilities.Interactions
         public AxisConstraint RotationConstraint
         {
             get { return rotationConstraint; }
-            set
-            {
-                rotationConstraint = value;
-                rotateLogic = new TwoHandRotateLogic(rotationConstraint);
-            }
+            set { rotationConstraint = value; }
         }
 
         [SerializeField]
@@ -95,6 +91,12 @@ namespace HoloToolkit.Unity.InputModule.Utilities.Interactions
         /// Maps input id -> input source. Then obtain position of input source using currentInputSource.TryGetGripPosition(currentInputSourceId, out inputPosition);
         /// </summary>
         private readonly Dictionary<uint, IInputSource> handsPressedInputSourceMap = new Dictionary<uint, IInputSource>();
+
+        /// <summary>
+        /// To know whether this GameObject is added to the InputManager or not
+        /// when One Hand Movement is disabled and thus avoid any unwanted behavior.
+        /// </summary>
+        private bool addedToInputManager = false;
 
         /// <summary>
         /// Property that turns on and off the Visibility of the BoundingBox cloned from the BoundingBoxPrefab reference.
@@ -194,6 +196,7 @@ namespace HoloToolkit.Unity.InputModule.Utilities.Interactions
         public void OnInputDown(InputEventData eventData)
         {
             // Add to hand map
+            //Debug.Log("\n\n--> Adding " + eventData.SourceId.ToString() + " to: " + this.gameObject.name + "\n\n");
             handsPressedLocationsMap[eventData.SourceId] = GetInputPosition(eventData);
             handsPressedInputSourceMap[eventData.SourceId] = eventData.InputSource;
             UpdateStateMachine();
@@ -205,9 +208,11 @@ namespace HoloToolkit.Unity.InputModule.Utilities.Interactions
         /// </summary>
         public void OnInputUp(InputEventData eventData)
         {
+            //Debug.Log("\n\n--> Removing OnInputUp from: " + this.gameObject.name + " with id: " + eventData.SourceId.ToString() + "\n\n");
             RemoveSourceIdFromHandMap(eventData.SourceId);
             UpdateStateMachine();
             eventData.Use();
+            CheckIfInputHanderShouldBeRemoved();
         }
 
         /// <summary>
@@ -220,9 +225,11 @@ namespace HoloToolkit.Unity.InputModule.Utilities.Interactions
         /// </summary>
         public void OnSourceLost(SourceStateEventData eventData)
         {
+            //Debug.Log("\n\n--> Removing OnSourceLost from: " + this.gameObject.name + " with id: " + eventData.SourceId.ToString() + "\n\n");
             RemoveSourceIdFromHandMap(eventData.SourceId);
             UpdateStateMachine();
             eventData.Use();
+            CheckIfInputHanderShouldBeRemoved();
         }
 
         /// <summary>
@@ -232,6 +239,8 @@ namespace HoloToolkit.Unity.InputModule.Utilities.Interactions
         {
             var handsPressedCount = handsPressedLocationsMap.Count;
             ManipulationMode newState = currentState;
+
+            //Debug.Log("\n\n---> Hands presssed count: " + handsPressedCount.ToString());
 
             switch (currentState)
             {
@@ -315,6 +324,7 @@ namespace HoloToolkit.Unity.InputModule.Utilities.Interactions
                 switch (newState)
                 {
                     case ManipulationMode.None:
+                        CheckIfInputHandlerIsRequired();
                         break;
                     case ManipulationMode.Move:
                         OnOneHandMoveUpdated();
@@ -408,7 +418,10 @@ namespace HoloToolkit.Unity.InputModule.Utilities.Interactions
 
         private void OnManipulationStarted()
         {
-            InputManager.Instance.PushModalInputHandler(gameObject);
+            if (enableOneHandMovement)
+            {
+                InputManager.Instance.PushModalInputHandler(gameObject);
+            }
 
             // Show Bounding Box visual on manipulation interaction
             ShowBoundingBox = true;
@@ -416,10 +429,40 @@ namespace HoloToolkit.Unity.InputModule.Utilities.Interactions
 
         private void OnManipulationEnded()
         {
-            InputManager.Instance.PopModalInputHandler();
+            if (enableOneHandMovement)
+            {
+                InputManager.Instance.PopModalInputHandler();
+            }
 
             // Hide Bounding Box visual on release
             ShowBoundingBox = false;
+        }
+
+        /// <summary>
+        /// Adds an InputHandler when One Hand Movement is disabled.
+        /// </summary>
+        private void CheckIfInputHandlerIsRequired()
+        {
+            if (!enableOneHandMovement && !addedToInputManager)
+            {
+                InputManager.Instance.PushModalInputHandler(gameObject);
+                addedToInputManager = true;
+            }
+        }
+
+        /// <summary>
+        /// Used to remove an InputHandler when One hand Movement is disabled.
+        /// </summary>
+        private void CheckIfInputHanderShouldBeRemoved()
+        {
+            if (!enableOneHandMovement &&
+                addedToInputManager == true &&
+                handsPressedLocationsMap.Count == 0)
+            {
+                //Debug.Log("Cleanup done");
+                InputManager.Instance.PopModalInputHandler();
+                addedToInputManager = false;
+            }
         }
     }
 }

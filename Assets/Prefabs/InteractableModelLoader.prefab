@@ -299,6 +299,7 @@ MonoBehaviour:
   importAssetPath: _ImportedOBJ
   interactionModelPrefab: {fileID: 662683120242204023, guid: bf4477653cae3bd4bb155f68a5957914,
     type: 3}
+  modelScaling: 0.2
 --- !u!65 &7918682206407926601
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -347,7 +348,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30ee9beef925bc5409fc0fff424f4e4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionModelPrefab: {fileID: 0}
 --- !u!1001 &4918892101734009651
 PrefabInstance:
   m_ObjectHideFlags: 0
