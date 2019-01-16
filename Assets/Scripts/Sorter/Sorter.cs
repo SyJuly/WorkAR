@@ -36,6 +36,7 @@ public class Sorter : MonoBehaviour
         changedCardIdWithListId = new Dictionary<string, string>();
         for (int i = 0; i < listSortModifiers.Length; i++)
         {
+            listSortModifiers[i].enabled = true;
             listSortModifiers[i].sorter = this;
         }
         if (listSortModifiers.Length > 0)
@@ -46,7 +47,7 @@ public class Sorter : MonoBehaviour
     
     public void ActivateSort()
     {
-        trelloBoardManager.isResorting = true;
+        trelloBoardManager.ActivateResort();
         SetUpSorter();
         for (int i = 0; i < listSortModifiers.Length; i++)
         {
@@ -61,6 +62,7 @@ public class Sorter : MonoBehaviour
             for (int j = 0; j < noteSortModifiersOfList.Length; j++)
             {
                 NoteSortModifier noteSortModifier = noteSortModifiersOfList[j];
+                noteSortModifier.enabled = true;
                 if (defaultCellMaterial == null)
                 {
                     defaultCellMaterial = noteSortModifier.meshRenderer.material;
@@ -77,22 +79,25 @@ public class Sorter : MonoBehaviour
 
     public void DeactivateSort()
     {
-        trelloBoardManager.isResorting = false;
+        trelloBoardManager.DeactivateResort();
         for (int i = 0; i < listSortModifiers.Length; i++)
         {
             NoteColumnSortModifier noteColumnSortModifier = listSortModifiers[i];
             noteColumnSortModifier.DeactivateSortMode();
             noteColumnSortModifier.meshRenderer.material = defaultColumnMaterial;
             noteColumnSortModifier.boardColumn.dictationNoteColumn.SetActive(true);
+            noteColumnSortModifier.enabled = false;
         }
         foreach (NoteSortModifier card in noteSortModifiers)
         {
             card.meshRenderer.material = defaultCellMaterial;
+            card.enabled = false;
         }
         foreach (KeyValuePair<string, string> changedCardPair in changedCardIdWithListId)
         {
             writer.SendReorderedCardToTrello(changedCardPair.Key, changedCardPair.Value);
         }
+        CursorFeedback.Instance.ToggleSortModeFeedback(null);
     }
 
     public void ClickedNote(NoteSortModifier noteSortModifier)

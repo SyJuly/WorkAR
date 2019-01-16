@@ -55,7 +55,7 @@ public class BoardColumn : MonoBehaviour {
         for (int n = 0; n < currentCards.Length; n++)
         {
             GameObject note = GetCardNote(currentCards[n]);
-            note.GetComponentInChildren<Canvas>().GetComponentInChildren<TextMeshProUGUI>().text = currentCards[n].name;
+            note.GetComponentInChildren<TextMeshProUGUI>().text = currentCards[n].name;
             note.GetComponent<Note>().cardId = currentCards[n].id;
 
             if(currentCards[n].attachment != null)

@@ -11,7 +11,7 @@ public class NoteSortModifier : MonoBehaviour, IInputClickHandler
 
     public Note note;
 
-    void Start()
+    void Awake()
     {
         meshRenderer = GetComponent<Renderer>();
         note = GetComponent<Note>();

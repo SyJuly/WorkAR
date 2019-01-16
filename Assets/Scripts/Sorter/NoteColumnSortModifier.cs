@@ -20,7 +20,7 @@ public class NoteColumnSortModifier : MonoBehaviour, IInputClickHandler
 
     public Sorter sorter;
 
-    private void Start()
+    private void Awake()
     {
         boardColumn = GetComponentInParent<BoardColumn>();
         meshRenderer = GetComponent<Renderer>();

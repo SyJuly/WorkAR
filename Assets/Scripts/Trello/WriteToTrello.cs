@@ -44,6 +44,11 @@ public class WriteToTrello : MonoBehaviour {
         StartCoroutine(ReorderCard(cardId, listId));
     }
 
+    public void SendDeleteCardToTrello(string cardId)
+    {
+        StartCoroutine(DeleteCard(cardId));
+    }
+
     IEnumerator InsertCard()
     {
         UnityWebRequest InsertCardRequest;
@@ -79,6 +84,21 @@ public class WriteToTrello : MonoBehaviour {
         else
         {
             Debug.Log("Reordered card.");
+        }
+    }
+
+    IEnumerator DeleteCard(string cardId)
+    {
+        UnityWebRequest ArchiveCardRequest = trelloAPI.GetArchiveCardtHTTPRequest(cardId);
+        ArchiveCardRequest.timeout = 90000000;
+        yield return ArchiveCardRequest.SendWebRequest();
+        if (ArchiveCardRequest.isNetworkError || ArchiveCardRequest.isHttpError)
+        {
+            Debug.Log("Error occured archiving Trello card: " + ArchiveCardRequest.responseCode);
+        }
+        else
+        {
+            Debug.Log("Archived card.");
         }
     }
 }

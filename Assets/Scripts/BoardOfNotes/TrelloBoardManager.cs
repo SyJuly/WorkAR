@@ -23,13 +23,24 @@ public class TrelloBoardManager : MonoBehaviour
 
     Dictionary<string, BoardColumn> createdListColumns;
 
-    public bool isResorting = false;
+    private bool isResorting = false;
 
     private void Start()
     {
         bounds = GetComponent<MeshFilter>().mesh.bounds;
         currentListsWithCards = new TrelloList[0];
         createdListColumns = new Dictionary<string, BoardColumn>();
+    }
+
+    public void ActivateResort()
+    {
+        isResorting = true;
+    }
+
+    public void DeactivateResort()
+    {
+        isResorting = false;
+        UpdateTrelloBoard(new Dictionary<string, TrelloList>());
     }
 
     private void PlaceBoardColumns()
