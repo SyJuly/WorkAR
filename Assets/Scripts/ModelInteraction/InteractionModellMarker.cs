@@ -7,9 +7,12 @@ public class InteractionModellMarker : MonoBehaviour, ITrackableEventHandler
 {
     private TrackableBehaviour mTrackableBehaviour;
 
+    private InteractionModelLoader modelLoader;
+
     void Start()
     {
         mTrackableBehaviour = GetComponent<TrackableBehaviour>();
+        modelLoader = GetComponentInParent<InteractionModelLoader>();
         if (mTrackableBehaviour)
         {
             mTrackableBehaviour.RegisterTrackableEventHandler(this);
@@ -20,7 +23,7 @@ public class InteractionModellMarker : MonoBehaviour, ITrackableEventHandler
     {
         if (newStatus == TrackableBehaviour.Status.TRACKED)
         {
-            InteractionModellLoader.Instance.Get3DModell();
+            modelLoader.Get3DModel();
         }
     }
 

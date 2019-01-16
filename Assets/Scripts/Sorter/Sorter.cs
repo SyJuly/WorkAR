@@ -16,14 +16,12 @@ public class Sorter : MonoBehaviour
     private Material defaultColumnMaterial;
     private Material defaultCellMaterial;
     private TrelloBoardManager trelloBoardManager;
-    private WriteToTrello writer;
 
     private string activeColumnId;
 
     private void Start()
     {
         trelloBoardManager = GetComponent<TrelloBoardManager>();
-        writer = WriteToTrello.Instance;
     }
 
     void SetUpSorter()
@@ -95,7 +93,7 @@ public class Sorter : MonoBehaviour
         }
         foreach (KeyValuePair<string, string> changedCardPair in changedCardIdWithListId)
         {
-            writer.SendReorderedCardToTrello(changedCardPair.Key, changedCardPair.Value);
+            WebManager.Instance.Trello.Writer.SendReorderedCardToTrello(changedCardPair.Key, changedCardPair.Value);
         }
         CursorFeedback.Instance.ToggleSortModeFeedback(null);
     }

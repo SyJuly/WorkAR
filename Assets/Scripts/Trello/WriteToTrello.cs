@@ -3,50 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class WriteToTrello : MonoBehaviour {
+public class WriteToTrello {
 
     TrelloAPI trelloAPI;
 
     TrelloCard cardToBeInserted;
 
-    /*------------------Singleton---------------------->>*/
-    private static WriteToTrello _instance;
 
-    public static WriteToTrello Instance { get { return _instance; } }
-
-
-    private void Awake()
+    public WriteToTrello(TrelloAPI api)
     {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
-    }
-    /*<<------------------Singleton-----------------------*/
-
-    void Start()
-    {
-        trelloAPI = TrelloAPI.Instance.gameObject.GetComponent<TrelloAPI>();
+        trelloAPI = api;
     }
 
     public void SendCardToTrello(TrelloCard cardToInsert)
     {
         cardToBeInserted = cardToInsert;
-        StartCoroutine(InsertCard());
+        Utility.Instance.StartCoroutine(InsertCard());
     }
 
     public void SendReorderedCardToTrello(string cardId, string listId)
     {
-        StartCoroutine(ReorderCard(cardId, listId));
+        Utility.Instance.StartCoroutine(ReorderCard(cardId, listId));
     }
 
     public void SendDeleteCardToTrello(string cardId)
     {
-        StartCoroutine(DeleteCard(cardId));
+        Utility.Instance.StartCoroutine(DeleteCard(cardId));
     }
 
     IEnumerator InsertCard()

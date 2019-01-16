@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class NoteDictationInputField : DictationInputField, IConfirmButton, ICancelButton
 {
-    WriteToTrello trelloWriter;
 
     [SerializeField]
     InputNote inputNotePrefab;
@@ -21,11 +20,6 @@ public class NoteDictationInputField : DictationInputField, IConfirmButton, ICan
     {
         base.Awake();
         reactingObject = GetComponent<ContentCreationButton>();
-    }
-
-    private void Start()
-    {
-        trelloWriter = WriteToTrello.Instance.gameObject.GetComponent<WriteToTrello>();
     }
 
     public override void ReceiveDictationResult(string message)
@@ -62,7 +56,7 @@ public class NoteDictationInputField : DictationInputField, IConfirmButton, ICan
         {
             createdCard = new TrelloCard(idList, lastMessage, "bottom");
         }
-        trelloWriter.SendCardToTrello(createdCard);
+        WebManager.Instance.Trello.Writer.SendCardToTrello(createdCard);
         StopInputNote();
     }
 

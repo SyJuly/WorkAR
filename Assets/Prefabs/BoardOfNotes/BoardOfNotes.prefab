@@ -171,8 +171,6 @@ GameObject:
   - component: {fileID: 4760292084805610}
   - component: {fileID: 114768664504845614}
   - component: {fileID: 65541880447312460}
-  - component: {fileID: 114987986368064908}
-  - component: {fileID: 114020865418626770}
   m_Layer: 0
   m_Name: BoardOfNotes
   m_TagString: Untagged
@@ -234,31 +232,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.5958638, y: 1.9696511, z: 0.2677825}
   m_Center: {x: 0.0032556602, y: -0.020065436, z: -0.0032353092}
---- !u!114 &114987986368064908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1537716647268818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d126738d7917aae4da0b7b2ceeebdc2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boardTitle: 
---- !u!114 &114020865418626770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1537716647268818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e3b37a182e7e9a4f9e42f25f0828d56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1603827895782768
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,7 +455,6 @@ MonoBehaviour:
   borderLeft: 0
   borderTop: 0
   numberOfColumns: 5
-  isResorting: 0
 --- !u!114 &7838371123954356195
 MonoBehaviour:
   m_ObjectHideFlags: 0

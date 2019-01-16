@@ -11,6 +11,9 @@ public class NoteColumnSortModifier : MonoBehaviour, IInputClickHandler
     [SerializeField]
     float scaleY = 0.16f;
 
+    [SerializeField]
+    GameObject buttonIndicator;
+
     public Renderer meshRenderer;
 
     public BoardColumn boardColumn;
@@ -24,6 +27,16 @@ public class NoteColumnSortModifier : MonoBehaviour, IInputClickHandler
     {
         boardColumn = GetComponentInParent<BoardColumn>();
         meshRenderer = GetComponent<Renderer>();
+    }
+
+    void OnEnable()
+    {
+        buttonIndicator.SetActive(true);
+    }
+
+    void OnDisable()
+    {
+        buttonIndicator.SetActive(false);
     }
 
     public void ActivateSortMode()

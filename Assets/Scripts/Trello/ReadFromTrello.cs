@@ -8,11 +8,9 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ReadFromTrello : Reader {
+public class ReadFromTrello {
 
     TrelloAPI trelloAPI;
-
-    TrelloBoardManager manager;
 
     private TrelloCard[] allCards = null;
     private TrelloList[] lists = null;
@@ -22,26 +20,31 @@ public class ReadFromTrello : Reader {
     private bool areListsReady = false;
     private bool areCardsReady = false;
 
-    void Start()
+    public ReadFromTrello(TrelloAPI api)
     {
-        trelloAPI = TrelloAPI.Instance.gameObject.GetComponent<TrelloAPI>();
-        manager = GetComponentInChildren<TrelloBoardManager>();
-        StartCoroutine(UpdateTrelloBoard());
+        trelloAPI = api;
+        Utility.Instance.StartCoroutine(UpdateTrelloBoard());
+    }
+
+
+    private void GetTrelloBoardElements()
+    {
+        Utility.Instance.StartCoroutine(GetBoardTitle(0));
+        Utility.Instance.StartCoroutine(GetBoardLists(1));
+        Utility.Instance.StartCoroutine(GetBoardCards(2));
     }
 
     IEnumerator UpdateTrelloBoard()
     {
         while (true)
         {
-            StartCoroutine(GetBoardTitle(0));
-            StartCoroutine(GetBoardLists(1));
-            StartCoroutine(GetBoardCards(2));
+            GetTrelloBoardElements();
             yield return new WaitForSeconds(10);
             if (areListsReady & areCardsReady)
             {
                 AssignCardsToList();
             }
-            manager.UpdateTrelloBoard(cardsByList);
+            //manager.UpdateTrelloBoard(cardsByList);
         }
     }
 
@@ -103,7 +106,7 @@ public class ReadFromTrello : Reader {
             {
                 if(card.idAttachmentCover != null && card.idAttachmentCover != "")
                 {
-                    yield return StartCoroutine(GetCardAttachment(card));
+                    yield return Utility.Instance.StartCoroutine(GetCardAttachment(card));
                 }
             }
             allCards = cardsWithAttachmentData;
@@ -126,7 +129,7 @@ public class ReadFromTrello : Reader {
         {
             string responseToJSON = "{\"trelloAttachment\":" + CardAttachmentRequest.downloadHandler.text + "}";
             TrelloAttachmentResponse trelloAttachmentResponse = JsonUtility.FromJson<TrelloAttachmentResponse>(responseToJSON);
-            yield return StartCoroutine(GetImage(card, trelloAttachmentResponse.trelloAttachment.previews[0].url));
+            yield return Utility.Instance.StartCoroutine(GetImage(card, trelloAttachmentResponse.trelloAttachment.previews[0].url));
         }
     }
 

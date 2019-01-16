@@ -15,7 +15,7 @@ public class Note : MonoBehaviour, ICancelButton {
 
     public void OnCancel()
     {
-        WriteToTrello.Instance.SendDeleteCardToTrello(cardId);
+        WebManager.Instance.Trello.Writer.SendDeleteCardToTrello(cardId);
         DeactivateNote();
     }
 

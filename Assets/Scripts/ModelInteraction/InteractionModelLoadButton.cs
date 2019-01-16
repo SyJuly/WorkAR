@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class InteractionModelLoadButton : MonoBehaviour, IInputClickHandler, IFocusable
 {
-    Placeable placable;
+    private Placeable placable;
+
+    private InteractionModelLoader modelLoader;
 
     private bool isFocused;
 
@@ -14,6 +16,7 @@ public class InteractionModelLoadButton : MonoBehaviour, IInputClickHandler, IFo
     void Start()
     {
         placable = GetComponent<Placeable>();
+        modelLoader = GetComponent<InteractionModelLoader>();
     }
 
     public void OnInputClicked(InputClickedEventData eventData)
@@ -21,7 +24,7 @@ public class InteractionModelLoadButton : MonoBehaviour, IInputClickHandler, IFo
         if (!eventData.used && isFocused && !placable.IsPlacing)
         {
             eventData.Use();
-            InteractionModellLoader.Instance.Get3DModell();
+            modelLoader.Get3DModel();
         }
     }
 
