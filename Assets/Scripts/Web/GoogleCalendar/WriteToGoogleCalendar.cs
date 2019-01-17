@@ -4,21 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class WriteToGoogleCalendar : MonoBehaviour, IRefreshedTokenRequester {
+public class WriteToGoogleCalendar : IRefreshedTokenRequester {
 
     GoogleCalendarAPI calendarAPI;
 
     GoogleCalendarEvent eventToBeInserted;
 
-    void Start()
+    public WriteToGoogleCalendar(GoogleCalendarAPI api)
     {
-        calendarAPI = GetComponent<GoogleCalendarAPI>();
+        calendarAPI = api;
     }
 
     public void SendEventToCalendar(GoogleCalendarEvent eventToInsert)
     {
         eventToBeInserted = eventToInsert;
-        StartCoroutine(InsertEvent());
+        Utility.Instance.StartCoroutine(InsertEvent());
     }
 
     IEnumerator InsertEvent()
@@ -44,7 +44,7 @@ public class WriteToGoogleCalendar : MonoBehaviour, IRefreshedTokenRequester {
     {
         if(eventToBeInserted != null)
         {
-            StartCoroutine(InsertEvent());
+            Utility.Instance.StartCoroutine(InsertEvent());
         }
     }
 }

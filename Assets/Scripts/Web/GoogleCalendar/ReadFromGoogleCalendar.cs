@@ -3,31 +3,25 @@ using System.Collections;
 using UnityEngine.Networking;
 using System.Net.Http;
 
-public class ReadFromGoogleCalendar : Reader, IRefreshedTokenRequester
+public class ReadFromGoogleCalendar : IRefreshedTokenRequester
 {
     GoogleCalendarAPI calendarAPI;
 
-    public GoogleCalendarEvent[] events = null;
+    System.Action<GoogleCalendarEvent[]> eventsUpdater;
 
-    void Start()
+    public ReadFromGoogleCalendar(GoogleCalendarAPI api)
     {
-        calendarAPI = GetComponent<GoogleCalendarAPI>();
-        StartCoroutine(UpdateCalendar());
+        calendarAPI = api;
     }
 
-    IEnumerator UpdateCalendar()
+    public void SetEventsUpdater(System.Action<GoogleCalendarEvent[]> eventsUpdater)
     {
-        while(true)
-        {
-            StartCoroutine(GetCalendarEvents());
-            yield return new WaitForSeconds(10);
-        }
+        this.eventsUpdater = eventsUpdater;
     }
 
-    IEnumerator GetCalendarEvents()
+    public IEnumerator GetCalendarEvents()
     {
         UnityWebRequest AlleCalendarEventsRequest = calendarAPI.GetCalendarEventsHTTPRequest();
-        //AlleCalendarEventsRequest.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
         AlleCalendarEventsRequest.chunkedTransfer = false;
         AlleCalendarEventsRequest.timeout = 100000;
 
@@ -45,14 +39,13 @@ public class ReadFromGoogleCalendar : Reader, IRefreshedTokenRequester
         else
         {
             GoogleCalendarEventsResponse eventsResponse = JsonUtility.FromJson<GoogleCalendarEventsResponse>(AlleCalendarEventsRequest.downloadHandler.text);
-            events = eventsResponse.items;
+            eventsUpdater?.Invoke(eventsResponse.items);
         }
     }
 
     IEnumerator Test()
     {
         UnityWebRequest AlleCalendarEventsRequest = UnityWebRequest.Get("https://www.google.com");
-        //AlleCalendarEventsRequest.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
         AlleCalendarEventsRequest.chunkedTransfer = false;
         AlleCalendarEventsRequest.timeout = 100000;
 
@@ -69,6 +62,6 @@ public class ReadFromGoogleCalendar : Reader, IRefreshedTokenRequester
 
     public void AfterRefreshedToken()
     {
-        StartCoroutine(GetCalendarEvents());
+        Utility.Instance.StartCoroutine(GetCalendarEvents());
     }
 }

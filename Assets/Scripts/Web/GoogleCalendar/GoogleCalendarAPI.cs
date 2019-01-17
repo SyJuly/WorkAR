@@ -4,20 +4,13 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class GoogleCalendarAPI : MonoBehaviour {
+public class GoogleCalendarAPI {
 
     GoogleCrendentials credentials;
     
     GoogleAuthentification authentificator;
 
-    // Use this for initialization
-    void Awake () {
-        authentificator = new GoogleAuthentification();
-        ReadGoogleCalendarCredentials();
-    }
-
-    void Start()
-    {
+    public GoogleCalendarAPI() {
         authentificator = new GoogleAuthentification();
         ReadGoogleCalendarCredentials();
     }
@@ -31,7 +24,7 @@ public class GoogleCalendarAPI : MonoBehaviour {
         parameters.Add(new MultipartFormDataSection("client_id", credentials.client_id));
         parameters.Add(new MultipartFormDataSection("t", getUTCTime()));
 
-        StartCoroutine(authentificator.GetNewAccessToken(UnityWebRequest.Post(credentials.token_uri, parameters), requester));
+        Utility.Instance.StartCoroutine(authentificator.GetNewAccessToken(UnityWebRequest.Post(credentials.token_uri, parameters), requester));
     }
 
     public UnityWebRequest GetCalendarEventsHTTPRequest()

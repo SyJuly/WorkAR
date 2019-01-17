@@ -464,6 +464,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 338057474}
+  - component: {fileID: 338057475}
+  - component: {fileID: 338057476}
   m_Layer: 0
   m_Name: WebManager
   m_TagString: Untagged
@@ -485,6 +487,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &338057475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338057473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49a9341a26a7a114b9d959b1bd8b1255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &338057476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338057473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1432e23231630440a12e3c5e51efdbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &511479689 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1882275052314398, guid: 9515f683940989e448449da116c78fc9,
@@ -738,6 +764,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3a9aec33ad90e8489cde8446259c44d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  credentials:
+    client_id: 
+    auth_uri: 
+    token_uri: 
+    client_secret: 
+    redirect_uri: 
+    calendar_events_code: 
+    calendar_endpoint: 
+    calendar_id: 
 --- !u!114 &1181555792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -750,17 +795,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59a9f9b98bb781946a25623d42ff5680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  credentials:
-    access_token: 
-    api_key: 
-    board_id: 
-    trello_board_endpoint: 
-    trello_card_endpoint: 
-    trello_list_endpoint: 
-    modell_board_id: 
-    modell_list_id: 
 --- !u!114 &1181555793
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,8 +14,8 @@ public class ReadFromTrello {
 
     private TrelloCard[] allCards = null;
     private TrelloList[] lists = null;
-    public Dictionary<string, TrelloList> cardsByList;
-    public string boardTitle = null;
+    public Dictionary<string, TrelloList> cardsByList { get; private set; }
+    public string boardTitle { get; private set; }
 
     private bool areListsReady = false;
     private bool areCardsReady = false;
@@ -23,9 +23,7 @@ public class ReadFromTrello {
     public ReadFromTrello(TrelloAPI api)
     {
         trelloAPI = api;
-        Utility.Instance.StartCoroutine(UpdateTrelloBoard());
     }
-
 
     private void GetTrelloBoardElements()
     {
@@ -34,18 +32,14 @@ public class ReadFromTrello {
         Utility.Instance.StartCoroutine(GetBoardCards(2));
     }
 
-    IEnumerator UpdateTrelloBoard()
+    public IEnumerator GetTrelloBoardData()
     {
-        while (true)
+        GetTrelloBoardElements();
+        while (!(areListsReady & areCardsReady))
         {
-            GetTrelloBoardElements();
-            yield return new WaitForSeconds(10);
-            if (areListsReady & areCardsReady)
-            {
-                AssignCardsToList();
-            }
-            //manager.UpdateTrelloBoard(cardsByList);
+            yield return new WaitForSeconds(1);
         }
+        AssignCardsToList();
     }
 
     IEnumerator GetBoardTitle(int statusIndex)

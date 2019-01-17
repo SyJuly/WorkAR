@@ -30,6 +30,16 @@ public class TrelloBoardManager : MonoBehaviour
         bounds = GetComponent<MeshFilter>().mesh.bounds;
         currentListsWithCards = new TrelloList[0];
         createdListColumns = new Dictionary<string, BoardColumn>();
+        StartCoroutine(UpdateTrelloBoard());
+    }
+
+    IEnumerator UpdateTrelloBoard()
+    {
+        while (this.isActiveAndEnabled)
+        {
+            yield return StartCoroutine(WebManager.Instance.Trello.Reader.GetTrelloBoardData());
+            UpdateTrelloBoard(WebManager.Instance.Trello.Reader.cardsByList);
+        }
     }
 
     public void ActivateResort()
@@ -41,6 +51,7 @@ public class TrelloBoardManager : MonoBehaviour
     {
         isResorting = false;
         UpdateTrelloBoard(new Dictionary<string, TrelloList>());
+        WebManager.Instance.Trello.Reader.GetTrelloBoardData();
     }
 
     private void PlaceBoardColumns()

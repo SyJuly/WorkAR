@@ -851,9 +851,7 @@ GameObject:
   - component: {fileID: 4799726044293540}
   - component: {fileID: 65770269399401784}
   - component: {fileID: 114703321355138880}
-  - component: {fileID: 114416427767232096}
-  - component: {fileID: 114930271980612400}
-  - component: {fileID: 114710028965343588}
+  - component: {fileID: 6506038475152747507}
   m_Layer: 0
   m_Name: Calendar
   m_TagString: Untagged
@@ -914,7 +912,7 @@ MonoBehaviour:
   PlacementSurface: 2
   ChildrenToHide: []
   isPlacementButtonFocused: 0
---- !u!114 &114416427767232096
+--- !u!114 &6506038475152747507
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -923,34 +921,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1745466852325500}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 907f5fba90ba5cd4db62a580d0bb0dd5, type: 3}
+  m_Script: {fileID: 11500000, guid: d484dc0763f0ed3498c3aeedc754a15d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   events: []
---- !u!114 &114930271980612400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745466852325500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3a9aec33ad90e8489cde8446259c44d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114710028965343588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745466852325500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7efad6bbec6ed12418a6405027ae83d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &3213671734934763552
 PrefabInstance:
   m_ObjectHideFlags: 0

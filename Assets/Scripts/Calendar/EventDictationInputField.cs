@@ -20,7 +20,7 @@ public class EventDictationInputField : DictationInputField
     {
         base.Awake();
         dayField = GetComponentInParent<DayField>();
-        googleCalendarWriter = GetComponentInParent<WriteToGoogleCalendar>();
+        googleCalendarWriter = WebManager.Instance.Google.Writer;
         reactingObject = GetComponent<ContentCreationButton>();
     }
 

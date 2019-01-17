@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class WebManager : MonoBehaviour
 {
-    public Trello Trello { get; } = new Trello();
-    public Google Google { get; } = new Google();
+    public Trello Trello { get; private set; }
+    public Google Google { get; private set; }
 
     /*------------------Singleton---------------------->>*/
     private static WebManager _instance;
@@ -23,6 +23,8 @@ public class WebManager : MonoBehaviour
         {
             _instance = this;
         }
+        Trello = new Trello();
+        Google = new Google();
     }
     /*<<------------------Singleton-----------------------*/
 

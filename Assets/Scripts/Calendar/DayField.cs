@@ -9,7 +9,7 @@ public class DayField : MonoBehaviour
 {
     public DateTime representedDay;
 
-    ReadFromGoogleCalendar googleCalendarReader;
+    Calendar calendar;
 
     [SerializeField]
     TextMeshProUGUI dayNumberTextField;
@@ -21,38 +21,38 @@ public class DayField : MonoBehaviour
     int numberOfEventsShowing = 0;
 
     void Start () {
-        googleCalendarReader = GetComponentInParent<ReadFromGoogleCalendar>();
+        calendar = GetComponentInParent<Calendar>();
         eventLine = GetComponentInChildren<EventLine>();
         eventLine.gameObject.SetActive(false);
-    }
-	
-	void Update () {
         dayNumberTextField.text = representedDay.Day.ToString();
         StartCoroutine(UpdateEvent());
     }
 
    IEnumerator UpdateEvent()
     {
-        if (googleCalendarReader.events != null)
+        while (gameObject.activeSelf)
         {
-            foreach(GoogleCalendarEvent calendarEvent in googleCalendarReader.events)
+            if (calendar.events != null)
             {
-                DateTime startTime = DateTime.ParseExact(calendarEvent.start.dateTime, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture);
-                if (startTime.Year == representedDay.Year
-                    && startTime.Month == representedDay.Month
-                    && startTime.Day == representedDay.Day
-                    && numberOfEventsShowing < 1
-                    && !isCreating)
+                foreach (GoogleCalendarEvent calendarEvent in calendar.events)
                 {
-                    eventLine.gameObject.SetActive(true);
-                    numberOfEventsShowing++;
-                    eventLine.eventTitleTextField.text = calendarEvent.summary;
-                    DateTime endTime = DateTime.ParseExact(calendarEvent.end.dateTime, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture);
-                    eventLine.eventTimeTextField.text = startTime.ToString("HH:mm") + "\n" + endTime.ToString("HH:mm");
+                    DateTime startTime = DateTime.ParseExact(calendarEvent.start.dateTime, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture);
+                    if (startTime.Year == representedDay.Year
+                        && startTime.Month == representedDay.Month
+                        && startTime.Day == representedDay.Day
+                        && numberOfEventsShowing < 1
+                        && !isCreating)
+                    {
+                        eventLine.gameObject.SetActive(true);
+                        numberOfEventsShowing++;
+                        eventLine.eventTitleTextField.text = calendarEvent.summary;
+                        DateTime endTime = DateTime.ParseExact(calendarEvent.end.dateTime, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture);
+                        eventLine.eventTimeTextField.text = startTime.ToString("HH:mm") + "\n" + endTime.ToString("HH:mm");
+                    }
                 }
             }
+            yield return new WaitForSeconds(3);
         }
-        yield return new WaitForSeconds(1);
     }
 
     public void CreatingEvent(string message, int hourAllEventsBegin, int hourAllEventsEnd)
