@@ -8,6 +8,12 @@ public class InteractionModelLoader : ObjectImporter
     GameObject interactionModelPrefab;
 
     [SerializeField]
+    GameObject notLoadingCube;
+
+    [SerializeField]
+    GameObject loadingCube;
+
+    [SerializeField]
     float modelScaling = 1f;
 
     InteractionModel interactionModelParent;
@@ -34,6 +40,7 @@ public class InteractionModelLoader : ObjectImporter
             ActivateSingleCollider(interactionModelParent.gameObject);
             TranslateModelInFrontOfWidget();
             isImporting = false;
+            ShowNotLoading();
         }
     }
 
@@ -92,6 +99,7 @@ public class InteractionModelLoader : ObjectImporter
 
     public void Get3DModel()
     {
+        ShowLoading();
         Initialise3DModel();
         Import3DModel();
     }
@@ -100,5 +108,18 @@ public class InteractionModelLoader : ObjectImporter
     {
         GameObject model = Instantiate(interactionModelPrefab);
         interactionModelParent = model.GetComponentInChildren<InteractionModel>();
+    }
+
+    private void ShowLoading()
+    {
+        notLoadingCube.SetActive(false);
+        loadingCube.SetActive(true);
+        
+    }
+
+    private void ShowNotLoading()
+    {
+        loadingCube.SetActive(false);
+        notLoadingCube.SetActive(true);
     }
 }
