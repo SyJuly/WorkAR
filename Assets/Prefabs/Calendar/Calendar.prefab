@@ -425,7 +425,6 @@ GameObject:
   - component: {fileID: 4625992731509116}
   - component: {fileID: 33257460050349096}
   - component: {fileID: 23722380087107962}
-  - component: {fileID: 65939747283725842}
   - component: {fileID: 114146411789937572}
   m_Layer: 0
   m_Name: MonthCalendar
@@ -494,19 +493,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &65939747283725842
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1402498743423776}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114146411789937572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -536,7 +522,6 @@ GameObject:
   - component: {fileID: 4161207627253674}
   - component: {fileID: 33695445433646942}
   - component: {fileID: 23345703752581616}
-  - component: {fileID: 65504058303826304}
   - component: {fileID: 114968897517605146}
   m_Layer: 0
   m_Name: DayCalendar
@@ -606,19 +591,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &65504058303826304
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1421510324072084}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114968897517605146
 MonoBehaviour:
   m_ObjectHideFlags: 0

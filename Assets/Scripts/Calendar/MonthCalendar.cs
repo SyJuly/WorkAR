@@ -68,11 +68,9 @@ public class MonthCalendar : MonoBehaviour {
             {
 
                 GameObject dayField = (n==0) ? GetNewWeekDayField(i) : GetNewDayField();
-                dayField.transform.parent = gameObject.transform;
                 float fieldX = gameObject.transform.localPosition.x + divCounterX - leftAlign - divX / 2;
                 dayField.transform.localPosition = new Vector3(fieldX, fieldY, - 0.5f);
                 dayField.transform.localRotation = Quaternion.identity;
-                dayField.transform.localScale = new Vector3(dayPrefab.transform.localScale.x, dayPrefab.transform.localScale.y, 0.5f);
                 
                 divCounterX += divX;
                 
@@ -101,15 +99,18 @@ public class MonthCalendar : MonoBehaviour {
 
     private GameObject GetNewWeekDayField(int i)
     {
-        GameObject weekDayFieldGO = Instantiate(weekDayPrefab);
+        GameObject weekDayFieldGO = Instantiate(weekDayPrefab, gameObject.transform);
         WeekDayField weekDayField = weekDayFieldGO.GetComponent<WeekDayField>();
         weekDayField.enabled = true;
         weekDayField.dayOfWeek = i;
+        weekDayField.transform.localScale = new Vector3(weekDayPrefab.transform.localScale.x, weekDayPrefab.transform.localScale.y, 0.5f);
         return weekDayFieldGO;
     }
 
     private GameObject GetNewDayField()
     {
-        return Instantiate(dayPrefab);
+        GameObject dayFieldGO = Instantiate(dayPrefab, gameObject.transform);
+        dayFieldGO.transform.localScale = new Vector3(dayPrefab.transform.localScale.x, dayPrefab.transform.localScale.y, 0.5f);
+        return dayFieldGO;
     }
 }
