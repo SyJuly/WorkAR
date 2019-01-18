@@ -27,6 +27,8 @@ public class CursorFeedback : MonoBehaviour {
 
     private Renderer sortColorRenderer;
 
+    private bool cameraFeedbackActivated = false;
+
     /*------------------Singleton---------------------->>*/
     private static CursorFeedback _instance;
 
@@ -65,24 +67,33 @@ public class CursorFeedback : MonoBehaviour {
             case ManipulationMode.Scale: ActivateFeedback(scaleFeedback); break;
             case ManipulationMode.Rotate: ActivateFeedback(rotateFeedback); break;
             case ManipulationMode.Move: ActivateFeedback(moveFeedback); break;
-            default: ActivateFeedback(null); break;
+            default: ChangeFeedback(null); break;
         }
     }
 
-    public void ToggleCameraModeFeedback(bool isCameraOn)
+    public void ToggleCameraModeFeedback(bool cameraOn)
     {
-        ActivateFeedback(isCameraOn ? cameraFeedback : null);
+        if (cameraOn)
+        {
+            ChangeFeedback(cameraFeedback);
+            cameraFeedbackActivated = true;
+        } else if(!cameraOn)
+        {
+            cameraFeedbackActivated = false;
+            ChangeFeedback(null);
+        }
+        
     }
 
     public void ToggleSortModeFeedback(Material sortColor)
     {
         if (sortColor != null)
         {
-            ActivateFeedback(sortColorFeedback);
+            ChangeFeedback(sortColorFeedback);
             sortColorRenderer.material = sortColor;
         } else
         {
-            ActivateFeedback(null);
+            ChangeFeedback(null);
         }
     }
 
@@ -93,6 +104,14 @@ public class CursorFeedback : MonoBehaviour {
         {
             feedbackGO.SetActive(true);
             activeFeedback = feedbackGO;
+        }
+    }
+
+    private void ChangeFeedback(GameObject feedbackGO)
+    {
+        if (!cameraFeedbackActivated)
+        {
+            ActivateFeedback(feedbackGO);
         }
     }
 }

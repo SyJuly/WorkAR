@@ -8,12 +8,27 @@ public interface ICancelButton
     void OnCancel();
 }
 
-public class CancelButton : MonoBehaviour, IInputClickHandler
+public class CancelButton : MonoBehaviour, IInputClickHandler, IFocusable
 {
     public ICancelButton receiver;
 
+    private bool isFocussed = false;
+
+    public void OnFocusEnter()
+    {
+        isFocussed = true;
+    }
+
+    public void OnFocusExit()
+    {
+        isFocussed = false;
+    }
+
     public void OnInputClicked(InputClickedEventData eventData)
     {
-        receiver.OnCancel();
+        if (isFocussed)
+        {
+            receiver.OnCancel();
+        }
     }
 }

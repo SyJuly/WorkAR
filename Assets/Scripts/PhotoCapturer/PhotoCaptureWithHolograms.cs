@@ -4,6 +4,7 @@ using UnityEngine.XR.WSA.WebCam;
 using UnityEngine.XR.WSA.Input;
 using UnityEngine.EventSystems;
 using HoloToolkit.Unity.InputModule;
+using Vuforia;
 
 public class PhotoCaptureWithHolograms : MonoBehaviour, IInputClickHandler
 {
@@ -25,6 +26,7 @@ public class PhotoCaptureWithHolograms : MonoBehaviour, IInputClickHandler
 
     void StartCapturing()
     {
+        VuforiaBehaviour.Instance.enabled = false;
         isCapturing = true;
         InputManager.Instance.AddGlobalListener(gameObject);
         inputNote.StartCapturingMode();
@@ -32,6 +34,7 @@ public class PhotoCaptureWithHolograms : MonoBehaviour, IInputClickHandler
 
     void StopCapturing()
     {
+        VuforiaBehaviour.Instance.enabled = true;
         isCapturing = false;
         if (InputManager.Instance != null)
         {

@@ -12,7 +12,7 @@ public class NoteDictationInputField : DictationInputField, IConfirmButton, ICan
 
     public string idList;
 
-    private InputNote inputNote;
+    public InputNote inputNote;
 
     string lastMessage;
 

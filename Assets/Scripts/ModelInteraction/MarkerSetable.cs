@@ -8,7 +8,12 @@ public class MarkerSetable : MonoBehaviour, IFocusable, IInputClickHandler {
     [SerializeField]
     Marker markerPrefab;
 
+    [SerializeField]
+    float minTimeDiffToSetMarkerInSec = 1f;
+
     private bool markerIsSettable = false;
+
+    private float lastTimeSetMarker;
 
     public void OnFocusEnter()
     {
@@ -22,8 +27,9 @@ public class MarkerSetable : MonoBehaviour, IFocusable, IInputClickHandler {
 
     public void OnInputClicked(InputClickedEventData eventData)
     {
-        if (markerIsSettable)
+        if (markerIsSettable && Time.time - lastTimeSetMarker > minTimeDiffToSetMarkerInSec)
         {
+            lastTimeSetMarker = Time.time;
             RaycastHit[] hits = Physics.RaycastAll(Camera.main.transform.position, Camera.main.transform.forward);
             int hitIndex = GetHitIndexOnInteractableModel(hits);
             if(hitIndex >= 0) {
