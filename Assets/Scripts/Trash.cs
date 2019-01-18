@@ -20,6 +20,7 @@ public class Trash : MonoBehaviour
             Debug.Log("destroyed: " + model.gameObject);
             Destroy(model.transform.parent.gameObject);
             Destroy(GameObject.FindObjectOfType<BoundingBox>().gameObject);
+            CursorFeedback.Instance.ActivateManipulationModeFeedback(HoloToolkit.Unity.InputModule.Utilities.Interactions.ManipulationMode.None);
         }
         
     }

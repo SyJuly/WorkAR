@@ -64,9 +64,9 @@ public class CursorFeedback : MonoBehaviour {
     public void ActivateManipulationModeFeedback(ManipulationMode mode)
     {
         switch (mode){
-            case ManipulationMode.Scale: ActivateFeedback(scaleFeedback); break;
-            case ManipulationMode.Rotate: ActivateFeedback(rotateFeedback); break;
-            case ManipulationMode.Move: ActivateFeedback(moveFeedback); break;
+            case ManipulationMode.Scale: ChangeFeedback(scaleFeedback); break;
+            case ManipulationMode.Rotate: ChangeFeedback(rotateFeedback); break;
+            case ManipulationMode.Move: ChangeFeedback(moveFeedback); break;
             default: ChangeFeedback(null); break;
         }
     }

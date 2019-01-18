@@ -40,15 +40,9 @@ public class InteractionModelLoader : ObjectImporter
         if (isImporting)
         {
             ActivateSingleCollider(interactionModelParent.gameObject);
-            //TranslateModelInFrontOfWidget();
             isImporting = false;
             ShowNotLoading();
         }
-    }
-
-    private void TranslateModelInFrontOfWidget()
-    {
-        interactionModelParent.transform.Translate(1,1,1, Camera.main.transform);
     }
 
     private void ActivateSingleCollider(GameObject gameObject)
@@ -99,14 +93,16 @@ public class InteractionModelLoader : ObjectImporter
         yield return null;
     }
 
-    public void Get3DModel()
+    public bool Get3DModel()
     {
-        if (tempModel == null)
+        if (tempModel != null)
         {
-            ShowLoading();
-            Initialise3DModel();
-            Import3DModel();
+            return false;
         }
+        ShowLoading();
+        Initialise3DModel();
+        Import3DModel();
+        return true;
     }
 
     private void Initialise3DModel()

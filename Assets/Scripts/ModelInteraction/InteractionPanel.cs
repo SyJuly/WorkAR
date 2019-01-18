@@ -52,7 +52,7 @@ public class InteractionPanel : MonoBehaviour, IInteractionReceiver
             cursorfeedback.ActivateManipulationModeFeedback(ManipulationMode.None);
             isShowingFeedback = false;
         }
-        transform.position = new Vector3(model.transform.position.x, model.transform.position.y + distanceToModel, model.transform.position.z);
+        transform.position = new Vector3(model.transform.position.x, model.transform.position.y + distanceToModel * model.transform.localScale.y * 0.1f, model.transform.position.z);
     }
 
     public void TypeGotActivated(ManipulationMode mode)

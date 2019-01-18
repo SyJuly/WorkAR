@@ -10,6 +10,8 @@ public class InteractionModelLoadButton : MonoBehaviour, IInputClickHandler, IFo
 
     private InteractionModelLoader modelLoader;
 
+    private InteractionModellMarker marker;
+
     private bool isFocused;
 
     private bool isImporting;
@@ -18,7 +20,7 @@ public class InteractionModelLoadButton : MonoBehaviour, IInputClickHandler, IFo
     {
         placable = GetComponent<Placeable>();
         modelLoader = GetComponent<InteractionModelLoader>();
-        InteractionModellMarker marker = GameObject.FindObjectOfType<InteractionModellMarker>();
+        marker = GameObject.FindObjectOfType<InteractionModellMarker>();
         marker.ModelLoader = modelLoader;
     }
 
