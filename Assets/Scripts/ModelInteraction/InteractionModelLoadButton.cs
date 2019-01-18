@@ -18,6 +18,8 @@ public class InteractionModelLoadButton : MonoBehaviour, IInputClickHandler, IFo
     {
         placable = GetComponent<Placeable>();
         modelLoader = GetComponent<InteractionModelLoader>();
+        InteractionModellMarker marker = GameObject.FindObjectOfType<InteractionModellMarker>();
+        marker.ModelLoader = modelLoader;
     }
 
     public void OnInputClicked(InputClickedEventData eventData)

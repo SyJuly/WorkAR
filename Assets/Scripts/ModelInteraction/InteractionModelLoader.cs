@@ -22,6 +22,8 @@ public class InteractionModelLoader : ObjectImporter
 
     private string url;
 
+    private GameObject tempModel;
+
     private void Import3DModel()
     {
         isImporting = true;
@@ -38,7 +40,7 @@ public class InteractionModelLoader : ObjectImporter
         if (isImporting)
         {
             ActivateSingleCollider(interactionModelParent.gameObject);
-            TranslateModelInFrontOfWidget();
+            //TranslateModelInFrontOfWidget();
             isImporting = false;
             ShowNotLoading();
         }
@@ -99,15 +101,18 @@ public class InteractionModelLoader : ObjectImporter
 
     public void Get3DModel()
     {
-        ShowLoading();
-        Initialise3DModel();
-        Import3DModel();
+        if (tempModel == null)
+        {
+            ShowLoading();
+            Initialise3DModel();
+            Import3DModel();
+        }
     }
 
     private void Initialise3DModel()
     {
-        GameObject model = Instantiate(interactionModelPrefab);
-        interactionModelParent = model.GetComponentInChildren<InteractionModel>();
+        tempModel = Instantiate(interactionModelPrefab);
+        interactionModelParent = tempModel.GetComponentInChildren<InteractionModel>();
     }
 
     private void ShowLoading()

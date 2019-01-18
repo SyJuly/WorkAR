@@ -50,8 +50,8 @@ public class TrelloBoardManager : MonoBehaviour
     public void DeactivateResort()
     {
         isResorting = false;
-        UpdateTrelloBoard(new Dictionary<string, TrelloList>());
         WebManager.Instance.Trello.Reader.GetTrelloBoardData();
+        UpdateTrelloBoard(new Dictionary<string, TrelloList>());
     }
 
     private void PlaceBoardColumns()
