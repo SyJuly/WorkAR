@@ -678,7 +678,7 @@ MonoBehaviour:
   rotate: {fileID: 1336113161541361822}
   scale: {fileID: 394729641334281363}
   model: {fileID: 8797214579980702746}
-  distanceToModel: 1.6
+  distanceToModel: 4
 --- !u!1 &5329152100974158321
 GameObject:
   m_ObjectHideFlags: 0

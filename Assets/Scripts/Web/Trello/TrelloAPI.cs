@@ -49,9 +49,8 @@ public class TrelloAPI {
         return UnityWebRequest.Get(credentials.trello_list_endpoint + "/" + credentials.modell_list_id + "/cards?token=" + credentials.access_token + "&key=" + credentials.api_key + "&t=" + getUTCTime());
     }
 
-    public UnityWebRequest GetLinkAttachmentHTTPRequest(/*string cardId*/)
+    public UnityWebRequest GetLinkAttachmentHTTPRequest(string cardId)
     {
-        string cardId = "5c2f370aac29ec2b28a11a84";
         Debug.Log("LINK ATTACHMENT:" + credentials.trello_card_endpoint + "/" + cardId + "/attachments?pos=0&token=" + credentials.access_token + "&key=" + credentials.api_key + "&t=" + getUTCTime());
         return UnityWebRequest.Get(credentials.trello_card_endpoint + "/" + cardId + "/attachments?pos=0&token=" + credentials.access_token + "&key=" + credentials.api_key + "&t=" + getUTCTime());
     }

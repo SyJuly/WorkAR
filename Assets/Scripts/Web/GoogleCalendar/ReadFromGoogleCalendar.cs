@@ -5,9 +5,9 @@ using System.Net.Http;
 
 public class ReadFromGoogleCalendar : IRefreshedTokenRequester
 {
-    GoogleCalendarAPI calendarAPI;
+    private GoogleCalendarAPI calendarAPI;
 
-    System.Action<GoogleCalendarEvent[]> eventsUpdater;
+    private System.Action<GoogleCalendarEvent[]> eventsUpdater;
 
     public ReadFromGoogleCalendar(GoogleCalendarAPI api)
     {

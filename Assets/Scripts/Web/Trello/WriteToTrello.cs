@@ -5,9 +5,9 @@ using UnityEngine.Networking;
 
 public class WriteToTrello {
 
-    TrelloAPI trelloAPI;
+    private TrelloAPI trelloAPI;
 
-    TrelloCard cardToBeInserted;
+    private TrelloCard cardToBeInserted;
 
 
     public WriteToTrello(TrelloAPI api)

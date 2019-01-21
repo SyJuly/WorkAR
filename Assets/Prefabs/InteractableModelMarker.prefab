@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 7791019739306309092}
   - component: {fileID: 7791019739306309093}
   m_Layer: 0
-  m_Name: ImageTarget
+  m_Name: InteractableModelMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

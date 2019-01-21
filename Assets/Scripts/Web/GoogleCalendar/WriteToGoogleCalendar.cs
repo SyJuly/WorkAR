@@ -6,9 +6,9 @@ using UnityEngine.Networking;
 
 public class WriteToGoogleCalendar : IRefreshedTokenRequester {
 
-    GoogleCalendarAPI calendarAPI;
+    private GoogleCalendarAPI calendarAPI;
 
-    GoogleCalendarEvent eventToBeInserted;
+    private GoogleCalendarEvent eventToBeInserted;
 
     public WriteToGoogleCalendar(GoogleCalendarAPI api)
     {

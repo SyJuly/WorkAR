@@ -43,7 +43,7 @@ public class GoogleCalendarAPI {
         return post;
     }
 
-    void ReadGoogleCalendarCredentials()
+    private void ReadGoogleCalendarCredentials()
     {
         TextAsset txtAsset = (TextAsset)Resources.Load("Credentials/credentials_googlecalendar_workAR", typeof(TextAsset));
         credentials = JsonUtility.FromJson<GoogleCrendentials>(txtAsset.text);

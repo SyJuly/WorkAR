@@ -117,7 +117,7 @@ public class ReadFromTrello {
         yield return CardAttachmentRequest.SendWebRequest();
         if (CardAttachmentRequest.isNetworkError || CardAttachmentRequest.isHttpError)
         {
-            Debug.Log("An error occured receiving events: " + CardAttachmentRequest.responseCode);
+            Debug.Log("An error occured receiving card attachment: " + CardAttachmentRequest.responseCode);
         }
         else
         {
@@ -133,7 +133,7 @@ public class ReadFromTrello {
         card.attachment = DownloadHandlerTexture.GetContent(textureRequest);
     }
 
-    void AssignCardsToList()
+    private void AssignCardsToList()
     {
         Dictionary<string, TrelloList> orderCardsByList = new Dictionary<string, TrelloList>();
         for (int i = 0; i < lists.Length; i++)

@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class LoadModelFromTrello
 {
-    TrelloAPI trelloAPI;
+    private TrelloAPI trelloAPI;
 
     public LoadModelFromTrello(TrelloAPI api)
     {
@@ -31,15 +31,16 @@ public class LoadModelFromTrello
         }
         else
         {
-            string responseToJSON = "{\"card\":" + ModellCardRequest.downloadHandler.text + "}";
-            TrelloCard card = JsonUtility.FromJson<TrelloCard>(responseToJSON);
+            string responseToJSON = "{\"cards\":" + ModellCardRequest.downloadHandler.text + "}";
+            TrelloCards trelloCardsResponse = JsonUtility.FromJson<TrelloCards>(responseToJSON);
+            TrelloCard card = trelloCardsResponse.cards[0];
             yield return Utility.Instance.StartCoroutine(GetModellLinkAttachment(card, urlAction));
         }
     }
 
     IEnumerator GetModellLinkAttachment(TrelloCard card, System.Action<string> urlAction)
     {
-        UnityWebRequest ModellLinkAttachmentRequest = trelloAPI.GetLinkAttachmentHTTPRequest();
+        UnityWebRequest ModellLinkAttachmentRequest = trelloAPI.GetLinkAttachmentHTTPRequest(card.id);
         ModellLinkAttachmentRequest.chunkedTransfer = false;
         ModellLinkAttachmentRequest.timeout = 100000;
 

@@ -9,6 +9,9 @@ public class InteractionModellMarker : MonoBehaviour, ITrackableEventHandler
 
     public InteractionModelLoader ModelLoader { get; set; }
 
+    [SerializeField]
+    GameObject loadingobject;
+
     void Awake()
     {
         mTrackableBehaviour = GetComponent<TrackableBehaviour>();
@@ -22,7 +25,11 @@ public class InteractionModellMarker : MonoBehaviour, ITrackableEventHandler
     {
         if (ModelLoader && newStatus == TrackableBehaviour.Status.TRACKED)
         {
+            loadingobject.SetActive(true);
             bool validRequest = ModelLoader.Get3DModel();
+        } else
+        {
+            loadingobject.SetActive(false);
         }
     }
 
