@@ -787,7 +787,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   markerPrefab: {fileID: 114139646770119356, guid: ee9382b430305ef45b2ecebd7350eafd,
     type: 3}
-  minTimeDiffToSetMarkerInSec: 1
+  minTimeDiffToSetMarkerInSec: 1.5
 --- !u!114 &2782390784400476832
 MonoBehaviour:
   m_ObjectHideFlags: 0

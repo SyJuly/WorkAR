@@ -1,14 +1,14 @@
-﻿using System.Collections;
+﻿using HoloToolkit.Unity.InputModule;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class NoteDictationInputField : DictationInputField, IConfirmButton, ICancelButton
 {
+    public PhotoCaptureWithHolograms capturer;
 
     [SerializeField]
-    InputNote inputNotePrefab;
-    
-    PhotoCaptureWithHolograms capturer;
+    GameObject dictationButton;
 
     public string idList;
 
@@ -16,10 +16,13 @@ public class NoteDictationInputField : DictationInputField, IConfirmButton, ICan
 
     string lastMessage;
 
+    public OpenInputNote opener;
+
     protected override void Awake()
     {
         base.Awake();
         reactingObject = GetComponent<ContentCreationButton>();
+        inputNote = GetComponentInParent<InputNote>();
     }
 
     public override void ReceiveDictationResult(string message)
@@ -39,11 +42,9 @@ public class NoteDictationInputField : DictationInputField, IConfirmButton, ICan
 
     public override void ReceiveDictationStart()
     {
-        inputNote = Instantiate(inputNotePrefab);
-        inputNote.confirmButton.receiver = this;
-        inputNote.cancelButton.receiver = this;
-        capturer = inputNote.capturer;
+        dictationButton.SetActive(false);
     }
+
     public void OnConfirm()
     {
         Debug.Log("confirm button pressed: CONFIRM");
@@ -57,18 +58,11 @@ public class NoteDictationInputField : DictationInputField, IConfirmButton, ICan
             createdCard = new TrelloCard(idList, lastMessage, "bottom");
         }
         WebManager.Instance.Trello.Writer.SendCardToTrello(createdCard);
-        StopInputNote();
+        opener.StopInputNote();
     }
 
     public void OnCancel()
     {
-        Debug.Log("cancel button pressed: CANCEL");
-        StopInputNote();
-    }
-
-    private void StopInputNote()
-    {
-        inputNote.CompleteInput();
-        inputNote = null;
+        opener.StopInputNote();
     }
 }
