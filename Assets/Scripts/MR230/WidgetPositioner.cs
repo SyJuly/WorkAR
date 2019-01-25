@@ -13,9 +13,7 @@ public class WidgetPositioner : Singleton<WidgetPositioner>
 {
     [Tooltip("A collection of Placeable space object prefabs to generate in the world.")]
     public List<GameObject> widgetPrefabs;
-
-    int test = 0;
-
+    
     /// <summary>
     /// Generates a collection of Placeable objects in the world and sets them on planes that match their affinity.
     /// </summary>
@@ -23,8 +21,6 @@ public class WidgetPositioner : Singleton<WidgetPositioner>
     /// <param name="verticalSurfaces">Vertical surface planes (walls).</param>
     public void GenerateItemsInWorld(List<GameObject> horizontalSurfaces, List<GameObject> verticalSurfaces)
     {
-        Debug.Log("GenerateItemsInWorld: " + test);
-        test++;
         List<GameObject> horizontalObjects = new List<GameObject>();
         List<GameObject> verticalObjects = new List<GameObject>();
 
@@ -60,17 +56,11 @@ public class WidgetPositioner : Singleton<WidgetPositioner>
     /// <param name="surfaceType">Type of objects and planes that we are trying to match-up.</param>
     private void CreateWidgets(List<GameObject> widgets, List<GameObject> surfaces, PlacementSurfaces surfaceType)
     {
-        /*List<GameObject> widgetsGOs = new List<GameObject>();
-        foreach (GameObject widget in widgets)
-        {
-            GameObject widgetGO = Instantiate(widget);
-            widgetsGOs.Add(widgetGO);
-        }*/
-        InstantiateWidgetsWithCalculatedPlacement(/*widgetsGOs*/ widgets, surfaces, surfaceType);
+        InstantiateWidgetsWithCalculatedPlacement(widgets, surfaces, surfaceType);
     }
 
 
-    private void InstantiateWidgetsWithCalculatedPlacement(List<GameObject> /*widgetsGOs*/ widgets, List<GameObject> surfaces, PlacementSurfaces surfaceType)
+    private void InstantiateWidgetsWithCalculatedPlacement(List<GameObject> widgets, List<GameObject> surfaces, PlacementSurfaces surfaceType)
     {
         List<int> UsedPlanes = new List<int>();
 
@@ -90,21 +80,7 @@ public class WidgetPositioner : Singleton<WidgetPositioner>
             return Vector3.Distance(leftSpot, headPosition).CompareTo(Vector3.Distance(rightSpot, headPosition));
         });
 
-        /*List<GameObject> widgetsToPlace = new List<GameObject>();
-
-        foreach (GameObject existingWidget in widgetsGOs)
-        {
-            if (existingWidget.GetComponent<WorldAnchor>() != null)
-            {
-                widgetsToPlace.Add(existingWidget);
-            } else
-            {
-                existingWidget.transform.parent = transform;
-            }
-        }*/
-
-
-        foreach (GameObject item in /*widgetsToPlace*/ widgets)
+        foreach (GameObject item in widgets)
         {
             int index = -1;
             Collider collider = item.GetComponent<Collider>();
@@ -146,11 +122,6 @@ public class WidgetPositioner : Singleton<WidgetPositioner>
                     rotation.z = 0f;
                 }
             }
-
-            //Vector3 finalPosition = AdjustPositionWithSpatialMap(position, surfaceType);
-            /*item.transform.position = position;
-            item.transform.rotation = rotation;
-            item.transform.parent = transform;*/
             GameObject widget = Instantiate(item, position, rotation) as GameObject;
             widget.transform.parent = gameObject.transform;
 
