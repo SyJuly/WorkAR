@@ -7,15 +7,15 @@ public class Marker : MonoBehaviour
 {
     public Vector3 point;
 
-    NoteDictationInputField noteInputField;
+    OpenInputNote opener;
 
     private void Awake()
     {
-        noteInputField = GetComponent<NoteDictationInputField>();
+        opener = GetComponent<OpenInputNote>();
     }
 
     private void Start()
     {
-        noteInputField.OnInputClicked(new InputClickedEventData(UnityEngine.EventSystems.EventSystem.current));
+        opener.OnInputClicked(new InputClickedEventData(UnityEngine.EventSystems.EventSystem.current));
     }
 }
