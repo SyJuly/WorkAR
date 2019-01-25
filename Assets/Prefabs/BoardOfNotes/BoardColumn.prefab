@@ -63,9 +63,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4635481662294014}
   - component: {fileID: 114101299557830984}
-  - component: {fileID: 114534442146141062}
+  - component: {fileID: 2452363530453579367}
   m_Layer: 0
-  m_Name: DictationInputButton
+  m_Name: NoteCreationButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,7 +102,7 @@ MonoBehaviour:
   creating: {fileID: 21300000, guid: 9dbe4081b1e075e4aa4161f6de7ab4e9, type: 3}
   recording: {fileID: 21300000, guid: 41a0574062832024c859724315c88059, type: 3}
   creatingObject: Note
---- !u!114 &114534442146141062
+--- !u!114 &2452363530453579367
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,12 +111,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1301829486424848}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 117d7845ef1b6b949bdbb4d905a4045c, type: 3}
+  m_Script: {fileID: 11500000, guid: c2d016af87ac7ed448d7626f99ddaa19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputNotePrefab: {fileID: 427, guid: d01859ec529eff04babe17e3e2092a4d, type: 3}
-  idList: 
-  inputNote: {fileID: 0}
+  inputNotePrefab: {fileID: 168, guid: d01859ec529eff04babe17e3e2092a4d, type: 3}
+  minTimeDiffToSetMarkerInSec: 1
+  idList: 5c0e890a09fe743cf7df1e03
 --- !u!1 &1558380592070330
 GameObject:
   m_ObjectHideFlags: 0
@@ -678,6 +678,7 @@ GameObject:
   - component: {fileID: 4626398742467718}
   - component: {fileID: 33273624588663380}
   - component: {fileID: 2428899654689653679}
+  - component: {fileID: 2031823402734391792}
   m_Layer: 0
   m_Name: BoardColumn
   m_TagString: Untagged
@@ -734,6 +735,24 @@ MonoBehaviour:
   dictationNoteColumn: {fileID: 1742922455120668}
   maxNumberOfNotes: 4
   isUsed: 0
+--- !u!114 &2031823402734391792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768700717988778}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29ae58de01dabee4ba3e9a70a078636f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positionY: 0.42
+  scaleY: 0.16
+  buttonIndicator: {fileID: 6787461081363634025}
+  meshRenderer: {fileID: 7784204287051122781}
+  boardColumn: {fileID: 0}
+  sorter: {fileID: 0}
 --- !u!1 &1860434632539646
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,9 +953,8 @@ GameObject:
   - component: {fileID: 57653046678281324}
   - component: {fileID: 7784204287051122781}
   - component: {fileID: 1905824382845873971}
-  - component: {fileID: 1166533402375990764}
   m_Layer: 0
-  m_Name: NoteColumn
+  m_Name: BoardColumnCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1015,24 +1033,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1166533402375990764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 602335696865271304}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29ae58de01dabee4ba3e9a70a078636f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  positionY: 0.42
-  scaleY: 0.16
-  buttonIndicator: {fileID: 6787461081363634025}
-  meshRenderer: {fileID: 0}
-  boardColumn: {fileID: 0}
-  sorter: {fileID: 0}
 --- !u!1 &6787461081363634025
 GameObject:
   m_ObjectHideFlags: 0
@@ -1059,9 +1059,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6787461081363634025}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.002, z: 0.063}
-  m_LocalScale: {x: 1.1911157, y: 1.2202631, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.0019999996, z: 0.06299998}
+  m_LocalScale: {x: 1.1911157, y: 1.220263, z: 1}
   m_Children: []
   m_Father: {fileID: 568439425599078348}
   m_RootOrder: 0

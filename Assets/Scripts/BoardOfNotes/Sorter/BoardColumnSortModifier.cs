@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NoteColumnSortModifier : MonoBehaviour, IInputClickHandler
+public class BoardColumnSortModifier : MonoBehaviour, IInputClickHandler
 {
     [SerializeField]
     float positionY = 0.42f;
@@ -14,19 +14,21 @@ public class NoteColumnSortModifier : MonoBehaviour, IInputClickHandler
     [SerializeField]
     GameObject buttonIndicator;
 
+    [SerializeField]
     public Renderer meshRenderer;
 
     public BoardColumn boardColumn;
 
     private Vector3 previousPosition;
     private Vector3 previousScale;
+    private Transform boardColumnCube;
 
     public Sorter sorter;
 
     private void Awake()
     {
-        boardColumn = GetComponentInParent<BoardColumn>();
-        meshRenderer = GetComponent<Renderer>();
+        boardColumn = GetComponent<BoardColumn>();
+        boardColumnCube = meshRenderer.transform;
     }
 
     void OnEnable()
@@ -42,18 +44,18 @@ public class NoteColumnSortModifier : MonoBehaviour, IInputClickHandler
     public void ActivateSortMode()
     {
         boardColumn.dictationNoteColumn.SetActive(false);
-        previousPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
-        previousScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        previousPosition = new Vector3(boardColumnCube.localPosition.x, boardColumnCube.localPosition.y, boardColumnCube.localPosition.z);
+        previousScale = new Vector3(boardColumnCube.localScale.x, boardColumnCube.localScale.y, boardColumnCube.localScale.z);
 
-        transform.localPosition = new Vector3(transform.localPosition.x, positionY, transform.localPosition.z); 
-        transform.localScale = new Vector3(transform.localScale.x, scaleY, transform.localScale.z);
+        boardColumnCube.localPosition = new Vector3(boardColumnCube.localPosition.x, positionY, boardColumnCube.localPosition.z);
+        boardColumnCube.localScale = new Vector3(boardColumnCube.localScale.x, scaleY, boardColumnCube.localScale.z);
     }
 
     public void DeactivateSortMode()
     {
         boardColumn.dictationNoteColumn.SetActive(true);
-        transform.localPosition = previousPosition;
-        transform.localScale = previousScale;
+        boardColumnCube.localPosition = previousPosition;
+        boardColumnCube.localScale = previousScale;
     }
 
     public void OnInputClicked(InputClickedEventData eventData)

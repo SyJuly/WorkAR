@@ -7,7 +7,7 @@ public class Sorter : MonoBehaviour
     [SerializeField]
     Material[] sortMaterials;
 
-    private NoteColumnSortModifier[] listSortModifiers;
+    private BoardColumnSortModifier[] listSortModifiers;
     private List<NoteSortModifier> noteSortModifiers;
     private Dictionary<string, string> cardIdWithListId;
     private Dictionary<string, string> changedCardIdWithListId;
@@ -27,7 +27,7 @@ public class Sorter : MonoBehaviour
     void SetUpSorter()
     {
 
-        listSortModifiers = GetComponentsInChildren<NoteColumnSortModifier>();
+        listSortModifiers = GetComponentsInChildren<BoardColumnSortModifier>();
         noteSortModifiers = new List<NoteSortModifier>();
         listIdsOfColumns = new string[listSortModifiers.Length];
         cardIdWithListId = new Dictionary<string, string>();
@@ -51,7 +51,7 @@ public class Sorter : MonoBehaviour
         {
             listSortModifiers[i].ActivateSortMode();
             listSortModifiers[i].meshRenderer.material = sortMaterials[i];
-            NoteColumnSortModifier columnSortModifier = listSortModifiers[i];
+            BoardColumnSortModifier columnSortModifier = listSortModifiers[i];
             BoardColumn boardColumn = columnSortModifier.boardColumn;
             boardColumn.dictationNoteColumn.SetActive(false);
             string listId = boardColumn.list.id;
@@ -80,11 +80,11 @@ public class Sorter : MonoBehaviour
         trelloBoardManager.DeactivateResort();
         for (int i = 0; i < listSortModifiers.Length; i++)
         {
-            NoteColumnSortModifier noteColumnSortModifier = listSortModifiers[i];
-            noteColumnSortModifier.DeactivateSortMode();
-            noteColumnSortModifier.meshRenderer.material = defaultColumnMaterial;
-            noteColumnSortModifier.boardColumn.dictationNoteColumn.SetActive(true);
-            noteColumnSortModifier.enabled = false;
+            BoardColumnSortModifier columnSortModifier = listSortModifiers[i];
+            columnSortModifier.DeactivateSortMode();
+            columnSortModifier.meshRenderer.material = defaultColumnMaterial;
+            columnSortModifier.boardColumn.dictationNoteColumn.SetActive(true);
+            columnSortModifier.enabled = false;
         }
         foreach (NoteSortModifier card in noteSortModifiers)
         {
@@ -114,8 +114,8 @@ public class Sorter : MonoBehaviour
         }
     }
 
-    public void ClickedList(NoteColumnSortModifier noteColumnSortModifier) {
-        int index = System.Array.IndexOf(listSortModifiers, noteColumnSortModifier);
+    public void ClickedList(BoardColumnSortModifier columnSortModifier) {
+        int index = System.Array.IndexOf(listSortModifiers, columnSortModifier);
         SetActiveColumn(index);
     }
 

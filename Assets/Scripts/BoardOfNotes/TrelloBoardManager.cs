@@ -38,7 +38,7 @@ public class TrelloBoardManager : MonoBehaviour
         while (this.isActiveAndEnabled)
         {
             yield return StartCoroutine(WebManager.Instance.Trello.Reader.GetTrelloBoardData());
-            UpdateTrelloBoard(WebManager.Instance.Trello.Reader.cardsByList);
+            UpdateBoardOfNotes(WebManager.Instance.Trello.Reader.cardsByList);
         }
     }
 
@@ -51,7 +51,7 @@ public class TrelloBoardManager : MonoBehaviour
     {
         isResorting = false;
         WebManager.Instance.Trello.Reader.GetTrelloBoardData();
-        UpdateTrelloBoard(new Dictionary<string, TrelloList>());
+        UpdateBoardOfNotes(new Dictionary<string, TrelloList>());
     }
 
     private void PlaceBoardColumns()
@@ -79,7 +79,7 @@ public class TrelloBoardManager : MonoBehaviour
         CleanupBoard();
     }
 
-    public void UpdateTrelloBoard(Dictionary<string, TrelloList> cardsByList)
+    public void UpdateBoardOfNotes(Dictionary<string, TrelloList> cardsByList)
     {
         if (!isResorting)
         {

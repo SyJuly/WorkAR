@@ -43,7 +43,7 @@ public class BoardColumn : MonoBehaviour {
     public void PlaceNotes()
     {
         listTitleTextField.text = list.name;
-        GetComponentInChildren<NoteDictationInputField>().idList = list.id;
+        GetComponentInChildren<OpenInputNote>().idList = list.id;
         float x = bounds.size.x;
         float y = bounds.size.y;
 

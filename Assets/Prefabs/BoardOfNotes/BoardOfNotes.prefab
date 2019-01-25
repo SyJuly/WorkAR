@@ -356,11 +356,10 @@ GameObject:
   - component: {fileID: 4933048465947060}
   - component: {fileID: 33389153448787750}
   - component: {fileID: 23000981451597332}
-  - component: {fileID: 65563401709159310}
   - component: {fileID: 114604780981427428}
   - component: {fileID: 7838371123954356195}
   m_Layer: 0
-  m_Name: Board
+  m_Name: BoardColumnParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -425,19 +424,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &65563401709159310
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1609841077137546}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114604780981427428
 MonoBehaviour:
   m_ObjectHideFlags: 0
