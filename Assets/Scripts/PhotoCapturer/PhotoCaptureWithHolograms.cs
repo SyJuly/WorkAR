@@ -10,6 +10,8 @@ public class PhotoCaptureWithHolograms : MonoBehaviour, IInputClickHandler
 {
     [SerializeField]
     GameObject photoObject;
+    
+    private CameraOverlay cameraOverlay;
 
     PhotoCapture photoCaptureObject = null;
     InputNote inputNote = null;
@@ -22,13 +24,15 @@ public class PhotoCaptureWithHolograms : MonoBehaviour, IInputClickHandler
     private void Start()
     {
         inputNote = GetComponentInParent<InputNote>();
+        cameraOverlay = Camera.main.GetComponentInChildren<CameraOverlay>();
+        cameraOverlay.Capturer = this;
     }
 
     void StartCapturing()
     {
         VuforiaBehaviour.Instance.enabled = false;
         isCapturing = true;
-        InputManager.Instance.AddGlobalListener(gameObject);
+        cameraOverlay.GetComponent<BoxCollider>().enabled = true;
         inputNote.StartCapturingMode();
     }
 
@@ -36,10 +40,7 @@ public class PhotoCaptureWithHolograms : MonoBehaviour, IInputClickHandler
     {
         VuforiaBehaviour.Instance.enabled = true;
         isCapturing = false;
-        if (InputManager.Instance != null)
-        {
-            InputManager.Instance.RemoveGlobalListener(gameObject);
-        }
+        cameraOverlay.GetComponent<BoxCollider>().enabled = false;
         inputNote.StopCapturingMode();
     }
 
@@ -72,13 +73,10 @@ public class PhotoCaptureWithHolograms : MonoBehaviour, IInputClickHandler
         if (!isCapturing)
         {
             StartCapturing();
-        } else
-        {
-            TakePhoto();
         }
     }
 
-    void TakePhoto()
+    public void TakePhoto()
     {
         Resolution cameraResolution = PhotoCapture.SupportedResolutions.OrderByDescending((res) => res.width * res.height).First();
         targetTexture = new Texture2D(cameraResolution.width, cameraResolution.height);

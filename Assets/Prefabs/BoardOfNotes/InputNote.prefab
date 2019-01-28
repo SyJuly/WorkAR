@@ -1335,9 +1335,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c655338633f4544180b3d90a593ac17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TagalongDistance: 1.2
+  TagalongDistance: 1.5
   EnforceDistance: 1
-  PositionUpdateSpeed: 8
+  PositionUpdateSpeed: 3
   SmoothMotion: 1
   SmoothingFactor: 0.75
   MinimumHorizontalOverlap: 0.1
@@ -1346,7 +1346,7 @@ MonoBehaviour:
   TargetVerticalOverlap: 1
   HorizontalRayCount: 3
   VerticalRayCount: 3
-  MinimumTagalongDistance: 1
+  MinimumTagalongDistance: 1.5
   MaintainFixedSize: 0
   DepthUpdateSpeed: 4
   DebugDrawLines: 0

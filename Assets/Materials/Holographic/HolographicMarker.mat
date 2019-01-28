@@ -5,11 +5,12 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: HolographicMarker
   m_Shader: {fileID: 4800000, guid: 29fed12d8547e354e90be987488147c1, type: 3}
   m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -42,6 +43,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Illum:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MKGlowTex:
+        m_Texture: {fileID: 2800000, guid: 0d5d9e747251cbf4faed06afeb7f47a8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -65,6 +74,8 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _Emission: 1
+    - _EmissionLM: 0
     - _FlickerSpeed: 1
     - _Fold: 1
     - _GlitchIntensity: 0
@@ -73,22 +84,28 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _GlowSpeed: 1
-    - _GlowTiling: 0.01
+    - _GlowTiling: 0.53
+    - _MKGlowPower: 2.5
+    - _MKGlowTexStrength: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RimPower: 4.29
-    - _ScanSpeed: 1
+    - _RimPower: 5
+    - _ScanSpeed: 0.3
     - _ScanTiling: 0.01
+    - _Shininess: 0.078125
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.8490566, g: 0.3003738, b: 0.31570417, a: 1}
     - _Direction: {r: 0, g: 1, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _MKGlowColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MKGlowTexColor: {r: 1, g: 1, b: 1, a: 1}
     - _MainColor: {r: 0.9339623, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0.5283019, g: 0, b: 0, a: 1}
+    - _SpecColor: {r: 0.5754717, g: 0, b: 0, a: 1}

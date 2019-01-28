@@ -7,31 +7,33 @@ using UnityEngine;
 public class MonthCalendar : MonoBehaviour {
 
     [SerializeField]
-    TextMeshPro monthDisplay;
+    private TextMeshPro monthDisplay;
 
-    Bounds bounds;
-
-    [SerializeField]
-    GameObject dayPrefab;
+    private Bounds bounds;
 
     [SerializeField]
-    GameObject weekDayPrefab;
+    private GameObject dayPrefab;
 
     [SerializeField]
-    float borderLeft = 0.05f;
+    private GameObject weekDayPrefab;
 
     [SerializeField]
-    float borderTop = 0.25f;
+    private float borderLeft = 0.05f;
 
-    int indexFirstDayOfWeekOfMonth = 0;
+    [SerializeField]
+    private float borderTop = 0.25f;
 
-    int daysInMonth = 30;
+    private int indexFirstDayOfWeekOfMonth = 0;
+
+    private int daysInMonth = 30;
 
     // days in a week
-    int numberOfRows = 7;
+    private int numberOfRows = 7;
 
     // possible weeks in a month plus one for weekdays display
-    int numberOfColumns = 6;
+    private int numberOfColumns = 6;
+
+    private DayField[] dayFields;
 
     private void Start()
     {
@@ -41,8 +43,16 @@ public class MonthCalendar : MonoBehaviour {
         DateTime firstOfMonth = new DateTime(today.Year, today.Month, 1);
         indexFirstDayOfWeekOfMonth = (int)firstOfMonth.DayOfWeek - 1;
         daysInMonth = DateTime.DaysInMonth(today.Year, today.Month);
+        dayFields = new DayField[daysInMonth];
         PlaceDayFields();
-        
+    }
+
+    public void UpdateEvents(GoogleCalendarEvent[] events)
+    {
+        foreach(DayField dayField in dayFields)
+        {
+            dayField.UpdateDayEvents(events);
+        }
     }
 
     private void PlaceDayFields()
@@ -67,10 +77,10 @@ public class MonthCalendar : MonoBehaviour {
             for (int i = 0; i < numberOfRows; i++)
             {
 
-                GameObject dayField = (n==0) ? GetNewWeekDayField(i) : GetNewDayField();
+                GameObject field = (n==0) ? GetNewWeekDayField(i) : GetNewDayField();
                 float fieldX = gameObject.transform.localPosition.x + divCounterX - leftAlign - divX / 2;
-                dayField.transform.localPosition = new Vector3(fieldX, fieldY, - 0.5f);
-                dayField.transform.localRotation = Quaternion.identity;
+                field.transform.localPosition = new Vector3(fieldX, fieldY, - 0.5f);
+                field.transform.localRotation = Quaternion.identity;
                 
                 divCounterX += divX;
                 
@@ -82,11 +92,13 @@ public class MonthCalendar : MonoBehaviour {
                         startIndexing = true;
                     } else if (n != 0)
                     {   //if dayField is before first week day of current month
-                        dayField.SetActive(false);
+                        field.SetActive(false);
                     }
                 }
                 if(startIndexing){
-                    dayField.GetComponent<DayField>().representedDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, dayIndex);
+                    DayField dayField = field.GetComponent<DayField>();
+                    dayField.representedDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, dayIndex);
+                    dayFields[dayIndex - 1] = dayField;
                     dayIndex++;
                     if (dayIndex > daysInMonth)
                     {

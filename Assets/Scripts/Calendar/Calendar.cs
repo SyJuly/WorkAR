@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Calendar : MonoBehaviour
 {
-    public GoogleCalendarEvent[] events;
+    private MonthCalendar monthCalendar;
 
     private void Start()
     {
+        monthCalendar = GetComponentInChildren<MonthCalendar>();
         StartCoroutine(UpdateCalendar());
     }
 
@@ -23,6 +24,6 @@ public class Calendar : MonoBehaviour
 
     private void UpdateEvents(GoogleCalendarEvent[] newEvents)
     {
-        events = newEvents;
+        monthCalendar.UpdateEvents(newEvents);
     }
 }
