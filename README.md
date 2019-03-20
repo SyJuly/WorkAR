@@ -30,10 +30,7 @@ More komplex widgets communicate with APIs such as the Google Calendar and the T
 
 ## Build & Deployment
 
-This application was developed for the Microsoft Hololens, using the Unity Engine.
-
-**Unity** version: 2018.3.0f2 (requiring UWP Build Support, Windows BuildSupport, Vuforia Augmented Reality Support)
-**Microsoft's [Mixed Reality Toolkit](https://github.com/Microsoft/MixedRealityToolkit-Unity/releases)**
+This application was developed for the Microsoft Hololens, using the Unity Engine (**Unity version**: 2018.3.0f2, requiring UWP Build Support, Windows BuildSupport, Vuforia Augmented Reality Support) and the **Microsoft's [Mixed Reality Toolkit](https://github.com/Microsoft/MixedRealityToolkit-Unity/releases)**.
 
 When the Holotoolkit is integrated, you can apply all UWP project settings. For this application use the .NET scripting backend. The following **capabilites** must be applied:
 
